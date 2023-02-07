@@ -1,0 +1,28 @@
+//if you don't know what a parameter does, visit:
+//https://developer.valvesoftware.com/wiki/$phong
+"VertexLitGeneric"
+{
+    "$basetexture" ""
+    "$bumpmap" ""
+    "$phongexponenttexture" ""
+
+    "$color2" "[0 0 0]"
+    "$blendtintbybasealpha" "1"
+    "$phong" "1"
+    "$phongboost" "3"                       //larger values create a more intense highlight, mess with it
+    "$phongwarptexture" "phongwarp_steel"   //change this if needed
+    "$phongalbedotint" "0"                  //try setting this to 1 and check if it looks ok
+    "$phongfresnelranges" "[ 0.1 0.5 1 ]"
+
+    "$basemapalphaenvmapmask" "1"
+    "$envmapfresnel" "1"
+
+    "Proxies"
+    {
+        "MwEnvMapTint"
+        {
+            "specularity" "0.5"             //0.25, 0.5, 0.75, 1
+            "max" "1"                       //change this if too bright in game
+        }
+    }
+}
