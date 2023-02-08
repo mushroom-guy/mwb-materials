@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace mwb_materials
@@ -22,14 +25,13 @@ namespace mwb_materials
         private static string GlossNomenclature = "_g";
         private static string MetalnessNomenclature = "_alpha";
         private static string NormalNomenclature = "_n";
-        private static Bitmap InvalidBitmap = new Bitmap(1, 1);
 
         public enum TextureChannel
         {
-            Alpha,
-            Red,
+            Blue,
             Green,
-            Blue
+            Red,
+            Alpha
         }
 
         public struct SourceTextureSet : IDisposable
@@ -50,147 +52,130 @@ namespace mwb_materials
                 Albedo?.Dispose();
                 Exponent?.Dispose();
                 Normal?.Dispose();
-
-                GC.SuppressFinalize(this);
             }
         }
 
         private static Color ConvertColorToRGB(Color col)
         {
-            float R = (float)col.R / 255.0f;
-            float G = (float)col.G / 255.0f;
-            float B = (float)col.B / 255.0f;
-            float A = (float)col.A / 255.0f;
+            double R = (double)col.R / 255.0;
+            double G = (double)col.G / 255.0;
+            double B = (double)col.B / 255.0;
+            double A = (double)col.A / 255.0;
 
-            if (R <= 0.04045f)
-                R /= 12.92f;
+            if (R <= 0.04045)
+                R /= 12.92;
             else
-                R = (float)Math.Pow((R + 0.055f) / 1.055f, 2.4f);
+                R = Math.Pow((R + 0.055) / 1.055, 2.4);
 
-            if (G <= 0.04045f)
-                G /= 12.92f;
+            if (G <= 0.04045)
+                G /= 12.92;
             else
-                G = (float)Math.Pow((G + 0.055f) / 1.055f, 2.4f);
+                G = Math.Pow((G + 0.055) / 1.055, 2.4);
 
-            if (B <= 0.04045f)
-                B /= 12.92f;
+            if (B <= 0.04045)
+                B /= 12.92;
             else
-                B = (float)Math.Pow((B + 0.055f) / 1.055f, 2.4f);
+                B = Math.Pow((B + 0.055) / 1.055, 2.4);
 
-            if (A <= 0.04045f)
-                A /= 12.92f;
+            if (A <= 0.04045)
+                A /= 12.92;
             else
-                A = (float)Math.Pow((A + 0.055f) / 1.055f, 2.4f);
+                A = Math.Pow((A + 0.055) / 1.055, 2.4);
 
             return Color.FromArgb(
-                (int)(A * 255.0f),
-                (int)(R * 255.0f),
-                (int)(G * 255.0f),
-                (int)(B * 255.0f));
+                (int)(A * 255.0),
+                (int)(R * 255.0),
+                (int)(G * 255.0),
+                (int)(B * 255.0));
         }
 
-        private static async Task ConvertImageToRGB(Bitmap src)
+        private static void ConvertImageToRGB(Bitmap src)
         {
-            if (src == InvalidBitmap)
+            if (src == null)
             {
                 return;
             }
 
-            await Task.Run(() =>
+            FastBitmap fastSrc = new FastBitmap(src);
+            fastSrc.Start(ImageLockMode.ReadWrite);
+
+            for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
             {
-                for (int y = 0; y < src.Height; y++)
-                {
-                    for (int x = 0; x < src.Width; x++)
-                    {
-                        src.SetPixel(x, y, ConvertColorToRGB(src.GetPixel(x, y)));
-                    }
-                }
-            });
+                fastSrc.WriteColor(cursor, ConvertColorToRGB(fastSrc.ReadColor(cursor)));
+            }
+
+            fastSrc.Stop();
         }
 
-        private static async Task DumpGrayscaleInChannel(Bitmap src, Bitmap grayscale, TextureChannel channel)
+        private static void DumpGrayscaleInChannel(Bitmap src, Bitmap grayscale, TextureChannel channel)
         {
-            if (src == InvalidBitmap || grayscale == InvalidBitmap)
+            if (src == null || grayscale == null)
             {
                 return;
             }
 
-            Bitmap grayscaleCopy = new Bitmap(grayscale);
+            FastBitmap fastSrc = new FastBitmap(src);
+            fastSrc.Start(ImageLockMode.ReadWrite);
 
-            await Task.Run(() =>
+            FastBitmap fastGrayscale = new FastBitmap(grayscale);
+            fastGrayscale.Start(ImageLockMode.ReadOnly);
+
+            for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
             {
-                for (int y = 0; y < src.Height; y++)
-                {
-                    for (int x = 0; x < src.Width; x++)
-                    {
-                        Color pixel = grayscaleCopy.GetPixel(x, y);
-                        int grayscaleVal = (pixel.R + pixel.G + pixel.B) / 3;
+                fastSrc.Bytes[cursor + (int)channel] = (byte)fastGrayscale.ReadGrayscale(cursor);
+            }
 
-                        pixel = src.GetPixel(x, y);
-
-                        byte[] colors = new byte[] { pixel.A, pixel.R, pixel.G, pixel.B };
-                        colors[(int)channel] = (byte)grayscaleVal;
-
-                        src.SetPixel(x, y, Color.FromArgb(colors[0], colors[1], colors[2], colors[3]));
-                    }
-                }
-
-                grayscaleCopy.Dispose();
-            });
+            fastSrc.Stop();
+            fastGrayscale.Stop();
         }
 
         private static async Task ApplyAmbientOcclusion(Bitmap src, Bitmap ao, int divStrength = 1)
         {
-            if (src == InvalidBitmap || ao == InvalidBitmap)
+            if (src == null)
             {
                 return;
             }
 
-            Bitmap aoCopy = new Bitmap(ao);
+            FastBitmap fastSrc = new FastBitmap(src);
+            FastBitmap fastAo = new FastBitmap(new Bitmap(ao));
 
             await Task.Run(() =>
             {
-                for (int y = 0; y < src.Height; y++)
-                {
-                    for (int x = 0; x < src.Width; x++)
-                    {
-                        Color aoColor = aoCopy.GetPixel(x, y);
-                        int aoTotal = 255 - ((aoColor.R + aoColor.G + aoColor.B) / 3);
-                        aoTotal /= divStrength;
+                fastSrc.Start(ImageLockMode.ReadWrite);
+                fastAo.Start(ImageLockMode.ReadOnly);
 
-                        Color rgb = src.GetPixel(x, y);
-                        src.SetPixel(x, y, Color.FromArgb(
-                            rgb.A,
-                            Math.Max(rgb.R - aoTotal, 0),
-                            Math.Max(rgb.G - aoTotal, 0),
-                            Math.Max(rgb.B - aoTotal, 0)));
-                    }
+                for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
+                {
+                    int gsValue = 255 - fastAo.ReadGrayscale(cursor);
+                    gsValue /= divStrength;
+
+                    fastSrc.Bytes[cursor] = (byte)Math.Max(fastSrc.Bytes[cursor] - gsValue, 0);
+                    fastSrc.Bytes[cursor + 1] = (byte)Math.Max(fastSrc.Bytes[cursor + 1] - gsValue, 0);
+                    fastSrc.Bytes[cursor + 2] = (byte)Math.Max(fastSrc.Bytes[cursor + 2] - gsValue, 0);
                 }
 
-                aoCopy.Dispose();
+                fastSrc.Stop();
+
+                fastAo.Stop();
+                fastAo.Dispose();
             });
         }
 
-        private static async Task<Bitmap> LoadImage(string file)
+        private static Bitmap LoadImage(string file)
         {
-            Bitmap image = await Task.Run<Bitmap>(() => { return new Bitmap(Image.FromFile(file)); });
-            return image;
+            return new Bitmap(Image.FromFile(file));
         }
 
-        private static async Task<Bitmap> EmptyImage()
+        public static async Task<SourceTextureSet> GenerateTexturesAsync(string[] files, Action<int, string> progressFunc)
         {
-            Bitmap image = await Task.Run<Bitmap>(() => { return InvalidBitmap; });
-            return image;
-        }
+            progressFunc(0, "Started");
 
-        public static async Task<SourceTextureSet> GenerateTexturesAsync(string[] files)
-        {
-            Task<Bitmap> albedoTask = EmptyImage();
-            Task<Bitmap> ambientOcclusionTask = EmptyImage();
-            Task<Bitmap> roughnessTask = EmptyImage();
-            Task<Bitmap> glossTask = EmptyImage();
-            Task<Bitmap> metalnessTask = EmptyImage();
-            Task<Bitmap> normalTask = EmptyImage();
+            Bitmap albedo = null;
+            Bitmap ambientOcclusion = null;
+            Bitmap roughness = null;
+            Bitmap gloss = null;
+            Bitmap metalness = null;
+            Bitmap normal = null;
 
             foreach (string file in files)
             {
@@ -198,92 +183,115 @@ namespace mwb_materials
                 name = name.ToLower();
 
                 if (name.EndsWith(AlbedoNomenclature))
-                    albedoTask = LoadImage(file);
+                {
+                    albedo = LoadImage(file);
+                    continue;
+                }
 
                 if (name.EndsWith(AmbientOcclusionNomenclature))
-                    ambientOcclusionTask = LoadImage(file);
+                {
+                    ambientOcclusion = LoadImage(file);
+                    continue;
+                }
 
                 if (name.EndsWith(RoughnessNomenclature))
-                    roughnessTask = LoadImage(file);
+                {
+                    roughness = LoadImage(file);
+                    continue;
+                }
 
                 if (name.EndsWith(GlossNomenclature))
-                    glossTask = LoadImage(file);
+                {   
+                    gloss = LoadImage(file);
+                    continue;
+                }
 
                 if (name.EndsWith(MetalnessNomenclature))
-                    metalnessTask = LoadImage(file);
+                {
+                    metalness = LoadImage(file);
+                    continue;
+                }
 
                 if (name.EndsWith(NormalNomenclature))
-                    normalTask = LoadImage(file);
+                {
+                    normal = LoadImage(file);
+                    continue;
+                }
             }
-
-            Bitmap albedo = await albedoTask;
-            Bitmap ambientOcclusion = await ambientOcclusionTask;
-            Bitmap roughness = await roughnessTask;
-            Bitmap gloss = await glossTask;
-            Bitmap metalness = await metalnessTask;
-            Bitmap normal = await normalTask;
 
             //convert to rgb:
             // roughness / gloss need to be converted from srgb
             // why not metalness as well? who knows
             // same for albedo (although i think we should, but color2 kinda does it already)
-            Task roughnessRgbTask = ConvertImageToRGB(roughness);
-            Task glossRgbTask = ConvertImageToRGB(gloss);
+            Task roughRgb = Task.Run(() => { ConvertImageToRGB(roughness); });
+            Task glossRgb = Task.Run(() => { ConvertImageToRGB(gloss); });
 
-            await roughnessRgbTask;
-            await glossRgbTask;
+            progressFunc(20, "Converting to RGB...");
+            await roughRgb; await glossRgb;
 
             //apply ao to the ones that need it
-            Task albedoAoTask = ApplyAmbientOcclusion(albedo, ambientOcclusion, 2);
-            Task metalnessAoTask = ApplyAmbientOcclusion(metalness, ambientOcclusion);
-            Task roughnessAoTask = ApplyAmbientOcclusion(roughness, ambientOcclusion);
-            Task glossAoTask = ApplyAmbientOcclusion(gloss, ambientOcclusion);
+            if (ambientOcclusion != null)
+            {
+                Task albedoAo = ApplyAmbientOcclusion(albedo, ambientOcclusion, 2);
+                Task metalnessAo = ApplyAmbientOcclusion(metalness, ambientOcclusion);
+                Task roughnessAo = ApplyAmbientOcclusion(roughness, ambientOcclusion);
+                Task glossAo = ApplyAmbientOcclusion(gloss, ambientOcclusion);
 
-            await albedoAoTask;
-            await metalnessAoTask;
-            await roughnessAoTask;
-            await glossAoTask;
+                progressFunc(50, "Applying ambient occlusion...");
+                await albedoAo; await metalnessAo; await roughnessAo; await glossAo;
+
+                ambientOcclusion.Dispose();
+            }
 
             //albedo:
             // put metalness in alpha channel
-            Task albedoGrayscaleTask = DumpGrayscaleInChannel(albedo, metalness, TextureChannel.Alpha);
+            Task albedoTask = Task.CompletedTask;
+            Task normalTask = Task.CompletedTask;
+
+            if (metalness != null)
+            {
+                albedoTask = Task.Run(() => { DumpGrayscaleInChannel(albedo, metalness, TextureChannel.Alpha); });
+            }
 
             //normal:
             // put roughness in alpha channel
-            Task normalGrayscaleTask = DumpGrayscaleInChannel(normal, (gloss != InvalidBitmap) ? gloss : roughness, TextureChannel.Alpha);
+            if (gloss != null || roughness != null)
+            {
+                normalTask = Task.Run(() => { DumpGrayscaleInChannel(normal, (gloss != null) ? gloss : roughness, TextureChannel.Alpha); });
+            }
+
+            progressFunc(70, "Generating Source textures...");
+            await albedoTask; await normalTask;
 
             //exponent:
             // put roughness in red channel
             // put metalness in green channel
             Bitmap exponent = null;
 
-            if (gloss != InvalidBitmap || roughness != InvalidBitmap)
+            if (gloss != null || roughness != null)
             {
-                Bitmap target = (gloss != InvalidBitmap) ? gloss : roughness;
-
+                Bitmap target = (gloss != null) ? gloss : roughness;
                 exponent = new Bitmap(target.Width, target.Height);
-                await DumpGrayscaleInChannel(exponent, target, TextureChannel.Red);
+
+                DumpGrayscaleInChannel(exponent, target, TextureChannel.Red);
             }
-            
-            if (metalness != InvalidBitmap)
+
+            if (metalness != null)
             {
                 if (exponent == null)
                 {
                     exponent = new Bitmap(metalness.Width, metalness.Height);
                 }
 
-                await DumpGrayscaleInChannel (exponent, metalness, TextureChannel.Green);
+                DumpGrayscaleInChannel(exponent, metalness, TextureChannel.Green);
             }
 
-            await albedoGrayscaleTask;
-            await normalGrayscaleTask;
-
             //dispose unused
-            ambientOcclusion?.Dispose();
             gloss?.Dispose();
             roughness?.Dispose();
             metalness?.Dispose();
 
+            progressFunc(100, "Done!");
             return new SourceTextureSet(albedo, exponent, normal);
         }
     }

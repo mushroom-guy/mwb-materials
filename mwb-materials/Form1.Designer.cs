@@ -36,6 +36,8 @@ namespace mwb_materials
             this.VmtName = new System.Windows.Forms.TextBox();
             this.VmtButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
+            this.ProgressLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -116,11 +118,30 @@ namespace mwb_materials
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Textures";
             // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Location = new System.Drawing.Point(12, 327);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(200, 23);
+            this.ProgressBar.TabIndex = 5;
+            // 
+            // ProgressLabel
+            // 
+            this.ProgressLabel.AutoSize = true;
+            this.ProgressLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.ProgressLabel.Location = new System.Drawing.Point(9, 353);
+            this.ProgressLabel.Name = "ProgressLabel";
+            this.ProgressLabel.Size = new System.Drawing.Size(35, 13);
+            this.ProgressLabel.TabIndex = 6;
+            this.ProgressLabel.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(223, 331);
+            this.ClientSize = new System.Drawing.Size(223, 375);
+            this.Controls.Add(this.ProgressLabel);
+            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -134,6 +155,7 @@ namespace mwb_materials
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -146,6 +168,8 @@ namespace mwb_materials
         private System.Windows.Forms.Button VmtButton;
         private System.Windows.Forms.TextBox VmtName;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ProgressBar ProgressBar;
+        private System.Windows.Forms.Label ProgressLabel;
     }
 }
 

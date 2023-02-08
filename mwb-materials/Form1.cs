@@ -19,6 +19,9 @@ namespace mwb_materials
         public Form1()
         {
             InitializeComponent();
+
+            ProgressLabel.Text = string.Empty;
+            ProgressBar.Value = 0;
         }
 
         private async void FolderButton_Click(object sender, EventArgs e)
@@ -28,16 +31,22 @@ namespace mwb_materials
             CommonFileDialogResult result = folderDialog.ShowDialog();
 
             if (result == CommonFileDialogResult.Ok)
-            {
+            {   
+                Enabled = false;
+
                 string path = folderDialog.FileName;
-                Task<MaterialManipulation.SourceTextureSet> texturesTask = MaterialManipulation.GenerateTexturesAsync(Directory.GetFiles(path));
-                MaterialManipulation.SourceTextureSet textures = await texturesTask;
+                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTexturesAsync(Directory.GetFiles(path), 
+                    (int progress, string operation) => { 
+                        ProgressBar.Value = progress; 
+                        ProgressLabel.Text = operation; 
+                    });
 
                 textures.Albedo?.Save(path + "\\albedo.png", ImageFormat.Png);
                 textures.Exponent?.Save(path + "\\exponent.png", ImageFormat.Png);
                 textures.Normal?.Save(path + "\\normal.png", ImageFormat.Png);
                 textures.Dispose();
 
+                Enabled = true;
                 MessageBox.Show("Generated textures!", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
