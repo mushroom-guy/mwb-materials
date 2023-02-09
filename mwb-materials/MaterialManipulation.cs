@@ -97,10 +97,11 @@ namespace mwb_materials
                 return;
             }
 
+            //Parallel.ForEach(SteppedIntegerList(0, src.Bytes.Length, 4), (cursor) =>
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
                 src.WriteColor(cursor, ConvertColorToRGB(src.ReadColor(cursor)));
-            }
+            }//);
         }
 
         private static void DumpGrayscaleInChannel(FastBitmap src, FastBitmap grayscale, TextureChannel channel)
@@ -110,9 +111,18 @@ namespace mwb_materials
                 return;
             }
 
+            //Parallel.ForEach(SteppedIntegerList(0, src.Bytes.Length, 4), (cursor) =>
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
                 src.Bytes[cursor + (int)channel] = (byte)grayscale.ReadGrayscale(cursor);
+            }//);
+        }
+
+        private static IEnumerable<int> SteppedIntegerList(int startIndex, int endEndex, int stepSize)
+        {
+            for (int i = startIndex; i < endEndex; i += stepSize)
+            {
+                yield return i;
             }
         }
 
@@ -123,6 +133,7 @@ namespace mwb_materials
                 return;
             }
 
+            //Parallel.ForEach(SteppedIntegerList(0, src.Bytes.Length, 4), (cursor) =>
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
                 int gsValue = 255 - ao.ReadGrayscale(cursor);
@@ -131,7 +142,7 @@ namespace mwb_materials
                 src.Bytes[cursor] = (byte)Math.Max(src.Bytes[cursor] - gsValue, 0);
                 src.Bytes[cursor + 1] = (byte)Math.Max(src.Bytes[cursor + 1] - gsValue, 0);
                 src.Bytes[cursor + 2] = (byte)Math.Max(src.Bytes[cursor + 2] - gsValue, 0);
-            }
+            }//);
         }
 
         private static FastBitmap CreateSourceAlbedo(FastBitmap albedo, FastBitmap ambientOcclusion, FastBitmap metalness)

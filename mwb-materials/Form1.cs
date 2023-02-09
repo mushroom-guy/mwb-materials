@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -28,7 +29,10 @@ namespace mwb_materials
             CommonFileDialogResult result = folderDialog.ShowDialog();
 
             if (result == CommonFileDialogResult.Ok)
-            {   
+            {
+                Stopwatch timer = new Stopwatch();
+                timer.Start();
+
                 Enabled = false;
 
                 string path = folderDialog.FileName;
@@ -40,7 +44,9 @@ namespace mwb_materials
                 textures.Dispose();
 
                 Enabled = true;
-                MessageBox.Show("Generated textures!", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                timer.Stop();
+                MessageBox.Show("Generated textures! (" + timer.Elapsed.ToString(@"m\:ss\.fff") + ")", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
