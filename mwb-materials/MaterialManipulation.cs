@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -89,93 +90,147 @@ namespace mwb_materials
                 (int)(B * 255.0));
         }
 
-        private static void ConvertImageToRGB(Bitmap src)
+        private static void ConvertImageToRGB(FastBitmap src)
         {
             if (src == null)
             {
                 return;
             }
 
-            FastBitmap fastSrc = new FastBitmap(src);
-            fastSrc.Start(ImageLockMode.ReadWrite);
-
-            for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
+            for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                fastSrc.WriteColor(cursor, ConvertColorToRGB(fastSrc.ReadColor(cursor)));
+                src.WriteColor(cursor, ConvertColorToRGB(src.ReadColor(cursor)));
             }
-
-            fastSrc.Stop();
         }
 
-        private static void DumpGrayscaleInChannel(Bitmap src, Bitmap grayscale, TextureChannel channel)
+        private static void DumpGrayscaleInChannel(FastBitmap src, FastBitmap grayscale, TextureChannel channel)
         {
             if (src == null || grayscale == null)
             {
                 return;
             }
 
-            FastBitmap fastSrc = new FastBitmap(src);
-            fastSrc.Start(ImageLockMode.ReadWrite);
-
-            FastBitmap fastGrayscale = new FastBitmap(grayscale);
-            fastGrayscale.Start(ImageLockMode.ReadOnly);
-
-            for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
+            for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                fastSrc.Bytes[cursor + (int)channel] = (byte)fastGrayscale.ReadGrayscale(cursor);
+                src.Bytes[cursor + (int)channel] = (byte)grayscale.ReadGrayscale(cursor);
             }
-
-            fastSrc.Stop();
-            fastGrayscale.Stop();
         }
 
-        private static async Task ApplyAmbientOcclusion(Bitmap src, Bitmap ao, int divStrength = 1)
+        private static void ApplyAmbientOcclusion(FastBitmap src, FastBitmap ao, int divStrength = 1)
         {
-            if (src == null)
+            if (src == null || ao == null)
             {
                 return;
             }
 
-            FastBitmap fastSrc = new FastBitmap(src);
-            FastBitmap fastAo = new FastBitmap(new Bitmap(ao));
-
-            await Task.Run(() =>
+            for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                fastSrc.Start(ImageLockMode.ReadWrite);
-                fastAo.Start(ImageLockMode.ReadOnly);
+                int gsValue = 255 - ao.ReadGrayscale(cursor);
+                gsValue /= divStrength;
 
-                for (int cursor = 0; cursor < fastSrc.Bytes.Length; cursor += 4)
-                {
-                    int gsValue = 255 - fastAo.ReadGrayscale(cursor);
-                    gsValue /= divStrength;
-
-                    fastSrc.Bytes[cursor] = (byte)Math.Max(fastSrc.Bytes[cursor] - gsValue, 0);
-                    fastSrc.Bytes[cursor + 1] = (byte)Math.Max(fastSrc.Bytes[cursor + 1] - gsValue, 0);
-                    fastSrc.Bytes[cursor + 2] = (byte)Math.Max(fastSrc.Bytes[cursor + 2] - gsValue, 0);
-                }
-
-                fastSrc.Stop();
-
-                fastAo.Stop();
-                fastAo.Dispose();
-            });
+                src.Bytes[cursor] = (byte)Math.Max(src.Bytes[cursor] - gsValue, 0);
+                src.Bytes[cursor + 1] = (byte)Math.Max(src.Bytes[cursor + 1] - gsValue, 0);
+                src.Bytes[cursor + 2] = (byte)Math.Max(src.Bytes[cursor + 2] - gsValue, 0);
+            }
         }
 
-        private static Bitmap LoadImage(string file)
+        private static FastBitmap CreateSourceAlbedo(FastBitmap albedo, FastBitmap ambientOcclusion, FastBitmap metalness)
         {
-            return new Bitmap(Image.FromFile(file));
+            if (albedo == null)
+            {
+                return null;
+            }
+
+            FastBitmap sourceAlbedo = new FastBitmap(new Bitmap(albedo.Source.Width, albedo.Source.Height));
+            sourceAlbedo.Start(ImageLockMode.ReadWrite);
+
+            albedo.DumpInto(sourceAlbedo);
+
+            if (ambientOcclusion != null)
+            {
+                ApplyAmbientOcclusion(sourceAlbedo, ambientOcclusion, 2);
+            }
+
+            if (metalness != null)
+            {
+                DumpGrayscaleInChannel(sourceAlbedo, metalness, TextureChannel.Alpha);
+            }
+
+            sourceAlbedo.Stop();
+            return sourceAlbedo;
         }
 
-        public static async Task<SourceTextureSet> GenerateTexturesAsync(string[] files, Action<int, string> progressFunc)
+        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness)
         {
-            progressFunc(0, "Started");
+            if (normal == null)
+            {
+                return null;
+            }
 
-            Bitmap albedo = null;
-            Bitmap ambientOcclusion = null;
-            Bitmap roughness = null;
-            Bitmap gloss = null;
-            Bitmap metalness = null;
-            Bitmap normal = null;
+            FastBitmap sourceNormal = new FastBitmap(new Bitmap(normal.Source.Width, normal.Source.Height));
+            sourceNormal.Start(ImageLockMode.ReadWrite);
+
+            normal.DumpInto(sourceNormal);
+
+            if (roughness != null)
+            {
+                DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
+            }
+
+            sourceNormal.Stop();
+            return sourceNormal;
+        }
+
+        private static FastBitmap CreateSourceExponent(FastBitmap roughness, FastBitmap metalness)
+        {
+            if (roughness == null && metalness == null)
+            {
+                return null;
+            }
+
+            Bitmap target = (roughness != null) ? roughness.Source : metalness.Source;
+
+            FastBitmap sourceExponent = new FastBitmap(new Bitmap(target.Width, target.Height));
+            sourceExponent.Start(ImageLockMode.ReadWrite);
+
+            if (roughness != null)
+            {
+                DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Red);
+            }
+
+            if (metalness != null)
+            {
+                DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green);
+            }
+
+            sourceExponent.Stop();
+            return sourceExponent;
+        }
+
+        private static FastBitmap LoadImage(string file)
+        {
+            Bitmap bitmap;
+
+            try
+            {
+                bitmap = new Bitmap(Image.FromFile(file));
+            }
+            catch (OutOfMemoryException)
+            {
+                throw new IOException("Only .PNG files allowed for now.");
+            }
+
+            return new FastBitmap(bitmap);
+        }
+
+        public static async Task<SourceTextureSet> GenerateTextures(string[] files)
+        {
+            FastBitmap albedo = null;
+            FastBitmap ambientOcclusion = null;
+            FastBitmap roughness = null;
+            FastBitmap gloss = null;
+            FastBitmap metalness = null;
+            FastBitmap normal = null;
 
             foreach (string file in files)
             {
@@ -201,7 +256,7 @@ namespace mwb_materials
                 }
 
                 if (name.EndsWith(GlossNomenclature))
-                {   
+                {
                     gloss = LoadImage(file);
                     continue;
                 }
@@ -215,84 +270,82 @@ namespace mwb_materials
                 if (name.EndsWith(NormalNomenclature))
                 {
                     normal = LoadImage(file);
-                    continue;
                 }
             }
 
-            //convert to rgb:
-            // roughness / gloss need to be converted from srgb
-            // why not metalness as well? who knows
-            // same for albedo (although i think we should, but color2 kinda does it already)
-            Task roughRgb = Task.Run(() => { ConvertImageToRGB(roughness); });
-            Task glossRgb = Task.Run(() => { ConvertImageToRGB(gloss); });
+            //apply ao and rgb conversion to the masks we need to use
+            ambientOcclusion?.Start(ImageLockMode.ReadOnly);
 
-            progressFunc(20, "Converting to RGB...");
-            await roughRgb; await glossRgb;
-
-            //apply ao to the ones that need it
-            if (ambientOcclusion != null)
+            //roughness: srgb -> rgb, ao
+            Task roughnessTask = Task.Run(() =>
             {
-                Task albedoAo = ApplyAmbientOcclusion(albedo, ambientOcclusion, 2);
-                Task metalnessAo = ApplyAmbientOcclusion(metalness, ambientOcclusion);
-                Task roughnessAo = ApplyAmbientOcclusion(roughness, ambientOcclusion);
-                Task glossAo = ApplyAmbientOcclusion(gloss, ambientOcclusion);
+                roughness?.Start(ImageLockMode.ReadWrite);
+                ConvertImageToRGB(roughness);
+                ApplyAmbientOcclusion(roughness, ambientOcclusion);
+                roughness?.Stop();
+            });
 
-                progressFunc(50, "Applying ambient occlusion...");
-                await albedoAo; await metalnessAo; await roughnessAo; await glossAo;
-
-                ambientOcclusion.Dispose();
-            }
-
-            //albedo:
-            // put metalness in alpha channel
-            Task albedoTask = Task.CompletedTask;
-            Task normalTask = Task.CompletedTask;
-
-            if (metalness != null)
+            //gloss: srgb -> rgb, ao
+            Task glossTask = Task.Run(() =>
             {
-                albedoTask = Task.Run(() => { DumpGrayscaleInChannel(albedo, metalness, TextureChannel.Alpha); });
-            }
+                gloss?.Start(ImageLockMode.ReadWrite);
+                ConvertImageToRGB(gloss);
+                ApplyAmbientOcclusion(gloss, ambientOcclusion);
+                gloss?.Stop();
+            });
 
-            //normal:
-            // put roughness in alpha channel
-            if (gloss != null || roughness != null)
+            //metalness: ao
+            Task metalnessTask = Task.Run(() =>
             {
-                normalTask = Task.Run(() => { DumpGrayscaleInChannel(normal, (gloss != null) ? gloss : roughness, TextureChannel.Alpha); });
-            }
+                metalness?.Start(ImageLockMode.ReadWrite);
+                ApplyAmbientOcclusion(metalness, ambientOcclusion);
+                metalness?.Stop();
+            });
 
-            progressFunc(70, "Generating Source textures...");
-            await albedoTask; await normalTask;
+            await roughnessTask; await glossTask; await metalnessTask;
 
-            //exponent:
-            // put roughness in red channel
-            // put metalness in green channel
-            Bitmap exponent = null;
+            ambientOcclusion?.Stop();
 
-            if (gloss != null || roughness != null)
+            //start edits
+            albedo?.Start(ImageLockMode.ReadOnly);
+            ambientOcclusion?.Start(ImageLockMode.ReadOnly);
+            roughness?.Start(ImageLockMode.ReadOnly);
+            gloss?.Start(ImageLockMode.ReadOnly);
+            metalness?.Start(ImageLockMode.ReadOnly);
+            normal?.Start(ImageLockMode.ReadOnly);
+
+            Task<FastBitmap> albedoTask = Task.Run(() =>
             {
-                Bitmap target = (gloss != null) ? gloss : roughness;
-                exponent = new Bitmap(target.Width, target.Height);
+                return CreateSourceAlbedo(albedo, ambientOcclusion, metalness);
+            });
 
-                DumpGrayscaleInChannel(exponent, target, TextureChannel.Red);
-            }
-
-            if (metalness != null)
+            Task<FastBitmap> normalTask = Task.Run(() =>
             {
-                if (exponent == null)
-                {
-                    exponent = new Bitmap(metalness.Width, metalness.Height);
-                }
+                return CreateSourceNormal(normal, (roughness != null) ? roughness : gloss);
+            });
 
-                DumpGrayscaleInChannel(exponent, metalness, TextureChannel.Green);
-            }
+            Task<FastBitmap> exponentTask = Task.Run(() =>
+            {
+                return CreateSourceExponent((roughness != null) ? roughness : gloss, metalness);
+            });
 
-            //dispose unused
-            gloss?.Dispose();
-            roughness?.Dispose();
-            metalness?.Dispose();
+            FastBitmap sourceAlbedo = await albedoTask;//CreateSourceAlbedo(albedo, ambientOcclusion, metalness);
+            FastBitmap sourceNormal = await normalTask;//CreateSourceNormal(normal, (roughness != null) ? roughness : gloss);
+            FastBitmap sourceExponent = await exponentTask;//CreateSourceExponent((roughness != null) ? roughness : gloss, metalness);
 
-            progressFunc(100, "Done!");
-            return new SourceTextureSet(albedo, exponent, normal);
+            //stop edits
+            albedo?.StopAndDispose();
+            ambientOcclusion?.StopAndDispose();
+            roughness?.StopAndDispose();
+            gloss?.StopAndDispose();
+            metalness?.StopAndDispose();
+            normal?.StopAndDispose();
+
+            //collect garbage from fastbitmaps
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+
+            return new SourceTextureSet(sourceAlbedo?.Source, sourceExponent?.Source, sourceNormal?.Source);
         }
     }
 }

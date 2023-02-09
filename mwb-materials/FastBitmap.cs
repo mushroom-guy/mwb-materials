@@ -11,28 +11,28 @@ namespace mwb_materials
 {
     class FastBitmap : IDisposable
     {
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern void DeleteObject(IntPtr hObject);
+
         public FastBitmap(Bitmap src)
         {
             Source = src;
-            bStarted = false;
         }
 
         public void Start(ImageLockMode Mode)
         {
-            Debug.Assert(bStarted == false, "FastBitmap has already started!");
+            Debug.Assert(Data == null, "FastBitmap has already started!");
 
             LockMode = Mode;
             Data = Source.LockBits(new Rectangle(0, 0, Source.Width, Source.Height), LockMode, PixelFormat.Format32bppArgb);
             Ptr = Data.Scan0;
             Bytes = new byte[Math.Abs(Data.Stride) * Data.Height];
             System.Runtime.InteropServices.Marshal.Copy(Ptr, Bytes, 0, Bytes.Length);
-
-            bStarted = true;
         }
 
         public void Stop()
         {
-            Debug.Assert(bStarted == true, "FastBitmap hasn't started yet!");
+            Debug.Assert(Data != null, "FastBitmap hasn't started yet!");
 
             if (LockMode == ImageLockMode.WriteOnly || LockMode == ImageLockMode.ReadWrite)
             {
@@ -40,29 +40,36 @@ namespace mwb_materials
             }
 
             Source.UnlockBits(Data);
-
-            bStarted = false;
+            Data = null;
+            Bytes = new byte[0];
+            DeleteObject(Ptr);
         }
 
         public Color ReadColor(int cursor)
         {
-            Debug.Assert(bStarted == true, "Trying to read color from FastBitmap that hasn't started yet!");
+            Debug.Assert(Data != null, "Trying to read color from FastBitmap that hasn't started yet!");
             return Color.FromArgb(Bytes[cursor + 3], Bytes[cursor + 2], Bytes[cursor + 1], Bytes[cursor]);
         }
 
         public int ReadGrayscale(int cursor)
         {
-            Debug.Assert(bStarted == true, "Trying to read grayscale from FastBitmap that hasn't started yet!");
+            Debug.Assert(Data != null, "Trying to read grayscale from FastBitmap that hasn't started yet!");
             return (Bytes[cursor] + Bytes[cursor + 1] + Bytes[cursor + 2]) / 3;
         }
 
         public void WriteColor(int cursor, Color col)
         {
-            Debug.Assert(bStarted == true, "Trying to write color in FastBitmap that hasn't started yet!");
+            Debug.Assert(Data != null, "Trying to write color in FastBitmap that hasn't started yet!");
             Bytes[cursor] = col.B;
             Bytes[cursor + 1] = col.G;
             Bytes[cursor + 2] = col.R;
             Bytes[cursor + 3] = col.A;
+        }
+
+        public void StopAndDispose()
+        {
+            Stop();
+            Dispose();
         }
 
         public void Dispose()
@@ -70,11 +77,16 @@ namespace mwb_materials
             Source.Dispose();
         }
 
+        public void DumpInto(FastBitmap Other)
+        {
+            Debug.Assert(Data != null, "FastBitmap hasn't started! Can't dump into target FastBitmap.");
+            System.Runtime.InteropServices.Marshal.Copy(Ptr, Other.Bytes, 0, Bytes.Length);
+        }
+
         public Bitmap Source { get; }
         public byte[] Bytes { get; private set; }
         private IntPtr Ptr;
         private BitmapData Data;
-        private bool bStarted;
         private ImageLockMode LockMode;
     }
 }

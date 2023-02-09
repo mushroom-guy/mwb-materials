@@ -19,9 +19,6 @@ namespace mwb_materials
         public Form1()
         {
             InitializeComponent();
-
-            ProgressLabel.Text = string.Empty;
-            ProgressBar.Value = 0;
         }
 
         private async void FolderButton_Click(object sender, EventArgs e)
@@ -35,11 +32,7 @@ namespace mwb_materials
                 Enabled = false;
 
                 string path = folderDialog.FileName;
-                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTexturesAsync(Directory.GetFiles(path), 
-                    (int progress, string operation) => { 
-                        ProgressBar.Value = progress; 
-                        ProgressLabel.Text = operation; 
-                    });
+                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(Directory.GetFiles(path));
 
                 textures.Albedo?.Save(path + "\\albedo.png", ImageFormat.Png);
                 textures.Exponent?.Save(path + "\\exponent.png", ImageFormat.Png);
