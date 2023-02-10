@@ -43,6 +43,7 @@ namespace mwb_materials
             this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
+            this.TintGloss = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -130,7 +131,7 @@ namespace mwb_materials
             // 
             this.groupBox3.Controls.Add(this.FolderButton);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox3.Location = new System.Drawing.Point(12, 296);
+            this.groupBox3.Location = new System.Drawing.Point(13, 386);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 99);
             this.groupBox3.TabIndex = 4;
@@ -139,6 +140,7 @@ namespace mwb_materials
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.TintGloss);
             this.groupBox4.Controls.Add(this.SettingsHelpButton);
             this.groupBox4.Controls.Add(this.MaxExponent);
             this.groupBox4.Controls.Add(this.label1);
@@ -147,7 +149,7 @@ namespace mwb_materials
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.groupBox4.Location = new System.Drawing.Point(12, 197);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 93);
+            this.groupBox4.Size = new System.Drawing.Size(200, 183);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Settings";
@@ -212,11 +214,24 @@ namespace mwb_materials
             this.SrgbCheck.Text = "Convert to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
             // 
+            // TintGloss
+            // 
+            this.TintGloss.AutoSize = true;
+            this.TintGloss.Checked = true;
+            this.TintGloss.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TintGloss.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TintGloss.Location = new System.Drawing.Point(6, 91);
+            this.TintGloss.Name = "TintGloss";
+            this.TintGloss.Size = new System.Drawing.Size(121, 17);
+            this.TintGloss.TabIndex = 5;
+            this.TintGloss.Text = "Tint gloss with metal";
+            this.TintGloss.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(225, 407);
+            this.ClientSize = new System.Drawing.Size(225, 497);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -253,6 +268,7 @@ namespace mwb_materials
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button HelpButton;
         private System.Windows.Forms.Button SettingsHelpButton;
+        private System.Windows.Forms.CheckBox TintGloss;
     }
 }
 

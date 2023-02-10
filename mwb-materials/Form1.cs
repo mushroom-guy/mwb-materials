@@ -41,13 +41,24 @@ namespace mwb_materials
 
                 foreach (string file in files)
                 {
-                    if (Path.GetExtension(file).ToLower() == ".png")
+                    try
                     {
-                        sanitizedFiles.Add(file);
+                        Image.FromFile(file);
                     }
+                    catch (OutOfMemoryException)
+                    {
+                        continue;
+                    }
+
+                    sanitizedFiles.Add(file);
                 }
 
-                MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties() { bSrgb = SrgbCheck.Checked, bAo = AoCheck.Checked, MaxExponent = (int)MaxExponent.Value };
+                MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties() {
+                    bSrgb = SrgbCheck.Checked,
+                    bAo = AoCheck.Checked,
+                    MaxExponent = (int)MaxExponent.Value,
+                    bTintGloss = TintGloss.Checked
+                };
                 MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
 
                 Directory.CreateDirectory(path + "\\temp");
@@ -129,7 +140,9 @@ namespace mwb_materials
                 "If your metal/gloss/rough textures already have AO applied you can skip this step with the setting. \n" +
                 "\n" +
                 "\"Max non-metals exponent\" is for any part of the texture that isn't touched by metalness texture (metallic parts get up to 155, Source's default). " +
-                "Usually the default is fine, unless you see some parts of the model not behaving correctly (plastic-looking).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "Usually the default is fine, unless you see some parts of the model not behaving correctly (plastic-looking). \n" +
+                "\n" +
+                "You can disable metalness \"leaking\" into the gloss (can help with brushed metals).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
