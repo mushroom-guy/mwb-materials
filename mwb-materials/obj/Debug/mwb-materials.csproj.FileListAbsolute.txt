@@ -18,3 +18,6 @@ F:\source\git\mwb-materials\mwb-materials\bin\Debug\Microsoft.WindowsAPICodePack
 F:\source\git\mwb-materials\mwb-materials\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.pdb
 F:\source\git\mwb-materials\mwb-materials\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.xml
 F:\source\git\mwb-materials\mwb-materials\obj\Debug\mwb-materials.csproj.CopyComplete
+F:\source\git\mwb-materials\mwb-materials\bin\Debug\vtfcmd\DevIL.dll
+F:\source\git\mwb-materials\mwb-materials\bin\Debug\vtfcmd\VTFCmd.exe
+F:\source\git\mwb-materials\mwb-materials\bin\Debug\vtfcmd\VTFLib.dll

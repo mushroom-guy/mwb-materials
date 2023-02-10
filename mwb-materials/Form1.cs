@@ -36,11 +36,50 @@ namespace mwb_materials
                 Enabled = false;
 
                 string path = folderDialog.FileName;
-                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(Directory.GetFiles(path));
+                string[] files = Directory.GetFiles(path);
+                List<string> sanitizedFiles = new List<string>();
 
-                textures.Albedo?.Save(path + "\\albedo.png", ImageFormat.Png);
-                textures.Exponent?.Save(path + "\\exponent.png", ImageFormat.Png);
-                textures.Normal?.Save(path + "\\normal.png", ImageFormat.Png);
+                foreach (string file in files)
+                {
+                    if (Path.GetExtension(file).ToLower() == ".png")
+                    {
+                        sanitizedFiles.Add(file);
+                    }
+                }
+
+                MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties() { bSrgb = SrgbCheck.Checked, bAo = AoCheck.Checked, MaxExponent = (int)MaxExponent.Value };
+                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
+
+                Directory.CreateDirectory(path + "\\temp");
+                Directory.CreateDirectory(path + "\\output");
+
+                string folderName = Path.GetFileName(path);
+                string outputName;
+
+                if (textures.Albedo != null)
+                {
+                    outputName = folderName + "_rgb.png";
+
+                    textures.Albedo?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
+                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
+                }
+
+                if (textures.Exponent != null)
+                {
+                    outputName = folderName + "_e.png";
+
+                    textures.Exponent.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
+                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\",VtfCmdInterface.FormatDXT1, false);
+                }
+
+                if (textures.Normal != null)
+                {
+                    outputName = folderName + "_n.png";
+
+                    textures.Normal?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
+                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
+                }
+
                 textures.Dispose();
 
                 Enabled = true;
@@ -70,6 +109,27 @@ namespace mwb_materials
 
                 MessageBox.Show("Saved VMT file: " + name, "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Make a folder and dump your PNGs in there. The VTFs will be exported into this folder under the \"output\" folder (they will also take the folder's name) \n" +
+                "\n" +
+                "This system uses GLOSS primarily, which means if it finds a roughness texture it will invert it. \n" +
+                "\n" +
+                "Metalness needs to be a grayscale image, so not a specular (it should have no color). \n" +
+                "\n" +
+                "Tool will use any textures it finds, doesn't require any to be present.", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void SettingsHelpButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("By default we assume your metalness and roughness masks are sRGB, you can override this with the setting. \n" +
+                "\n" +
+                "If your metal/gloss/rough textures already have AO applied you can skip this step with the setting. \n" +
+                "\n" +
+                "\"Max non-metals exponent\" is for any part of the texture that isn't touched by metalness texture (metallic parts get up to 155, Source's default). " +
+                "Usually the default is fine, unless you see some parts of the model not behaving correctly (plastic-looking).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
