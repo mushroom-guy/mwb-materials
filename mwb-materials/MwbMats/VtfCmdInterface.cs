@@ -11,9 +11,9 @@ namespace mwb_materials
 {
     class VtfCmdInterface
     {
-        public static string FormatDXT1 = "dxt1";
-        public static string FormatDXT5 = "dxt5";
-        public static string FormatRGBA8888 = "rgba8888";
+        public static readonly string FormatDXT1 = "dxt1";
+        public static readonly string FormatDXT5 = "dxt5";
+        public static readonly string FormatRGBA8888 = "rgba8888";
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key, string val)
         {
@@ -26,8 +26,10 @@ namespace mwb_materials
             processInfo.Arguments += "-" + key + " ";
         }
 
-        public static void ExportFile(string file, string outputFolder, string format, bool bNoMips)
+        public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips)
         {
+            TaskCompletionSource<bool> completion = new TaskCompletionSource<bool>();
+
             ProcessStartInfo programInfo = new ProcessStartInfo();
             programInfo.WindowStyle = ProcessWindowStyle.Hidden;
             programInfo.CreateNoWindow = true;
@@ -53,7 +55,10 @@ namespace mwb_materials
             runProgram.Exited += (object sender, EventArgs a) =>
             {
                 File.Delete(file);
+                completion.TrySetResult(true);
             };
+
+            await completion.Task;
         }
     }
 }

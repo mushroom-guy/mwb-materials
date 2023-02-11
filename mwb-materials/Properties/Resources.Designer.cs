@@ -69,5 +69,15 @@ namespace mwb_materials.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] default_vmt1 {
+            get {
+                object obj = ResourceManager.GetObject("default_vmt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

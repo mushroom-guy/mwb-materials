@@ -38,12 +38,15 @@ namespace mwb_materials
             this.VmtButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.VmtDestinationButton = new System.Windows.Forms.Button();
+            this.AlbedoSrgbCheck = new System.Windows.Forms.CheckBox();
+            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.SettingsHelpButton = new System.Windows.Forms.Button();
             this.MaxExponent = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
-            this.TintGloss = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -140,7 +143,10 @@ namespace mwb_materials
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.TintGloss);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.VmtDestinationButton);
+            this.groupBox4.Controls.Add(this.AlbedoSrgbCheck);
+            this.groupBox4.Controls.Add(this.VmtDestinationPath);
             this.groupBox4.Controls.Add(this.SettingsHelpButton);
             this.groupBox4.Controls.Add(this.MaxExponent);
             this.groupBox4.Controls.Add(this.label1);
@@ -153,6 +159,46 @@ namespace mwb_materials
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Settings";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.Control;
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(6, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "VMT textures path";
+            // 
+            // VmtDestinationButton
+            // 
+            this.VmtDestinationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.VmtDestinationButton.Location = new System.Drawing.Point(173, 107);
+            this.VmtDestinationButton.Name = "VmtDestinationButton";
+            this.VmtDestinationButton.Size = new System.Drawing.Size(21, 21);
+            this.VmtDestinationButton.TabIndex = 7;
+            this.VmtDestinationButton.Text = "...";
+            this.VmtDestinationButton.UseVisualStyleBackColor = true;
+            this.VmtDestinationButton.Click += new System.EventHandler(this.VmtDestinationButton_Click);
+            // 
+            // AlbedoSrgbCheck
+            // 
+            this.AlbedoSrgbCheck.AutoSize = true;
+            this.AlbedoSrgbCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.AlbedoSrgbCheck.Location = new System.Drawing.Point(6, 42);
+            this.AlbedoSrgbCheck.Name = "AlbedoSrgbCheck";
+            this.AlbedoSrgbCheck.Size = new System.Drawing.Size(164, 17);
+            this.AlbedoSrgbCheck.TabIndex = 6;
+            this.AlbedoSrgbCheck.Text = "Convert albedo to linear RGB";
+            this.AlbedoSrgbCheck.UseVisualStyleBackColor = true;
+            // 
+            // VmtDestinationPath
+            // 
+            this.VmtDestinationPath.Location = new System.Drawing.Point(6, 107);
+            this.VmtDestinationPath.Name = "VmtDestinationPath";
+            this.VmtDestinationPath.Size = new System.Drawing.Size(163, 20);
+            this.VmtDestinationPath.TabIndex = 7;
             // 
             // SettingsHelpButton
             // 
@@ -167,7 +213,7 @@ namespace mwb_materials
             // 
             // MaxExponent
             // 
-            this.MaxExponent.Location = new System.Drawing.Point(6, 65);
+            this.MaxExponent.Location = new System.Drawing.Point(6, 157);
             this.MaxExponent.Name = "MaxExponent";
             this.MaxExponent.Size = new System.Drawing.Size(38, 20);
             this.MaxExponent.TabIndex = 4;
@@ -182,11 +228,11 @@ namespace mwb_materials
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(50, 67);
+            this.label1.Location = new System.Drawing.Point(50, 159);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 13);
+            this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Max non-metals exponent";
+            this.label1.Text = "Max exponent";
             // 
             // AoCheck
             // 
@@ -194,7 +240,7 @@ namespace mwb_materials
             this.AoCheck.Checked = true;
             this.AoCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AoCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.AoCheck.Location = new System.Drawing.Point(6, 42);
+            this.AoCheck.Location = new System.Drawing.Point(6, 65);
             this.AoCheck.Name = "AoCheck";
             this.AoCheck.Size = new System.Drawing.Size(161, 17);
             this.AoCheck.TabIndex = 1;
@@ -209,23 +255,10 @@ namespace mwb_materials
             this.SrgbCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.SrgbCheck.Location = new System.Drawing.Point(6, 19);
             this.SrgbCheck.Name = "SrgbCheck";
-            this.SrgbCheck.Size = new System.Drawing.Size(129, 17);
+            this.SrgbCheck.Size = new System.Drawing.Size(162, 17);
             this.SrgbCheck.TabIndex = 0;
-            this.SrgbCheck.Text = "Convert to linear RGB";
+            this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
-            // 
-            // TintGloss
-            // 
-            this.TintGloss.AutoSize = true;
-            this.TintGloss.Checked = true;
-            this.TintGloss.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TintGloss.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TintGloss.Location = new System.Drawing.Point(6, 91);
-            this.TintGloss.Name = "TintGloss";
-            this.TintGloss.Size = new System.Drawing.Size(121, 17);
-            this.TintGloss.TabIndex = 5;
-            this.TintGloss.Text = "Tint gloss with metal";
-            this.TintGloss.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -268,7 +301,10 @@ namespace mwb_materials
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button HelpButton;
         private System.Windows.Forms.Button SettingsHelpButton;
-        private System.Windows.Forms.CheckBox TintGloss;
+        private System.Windows.Forms.CheckBox AlbedoSrgbCheck;
+        private System.Windows.Forms.Button VmtDestinationButton;
+        private System.Windows.Forms.TextBox VmtDestinationPath;
+        private System.Windows.Forms.Label label3;
     }
 }
 

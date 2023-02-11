@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using mwb_materials.MwbMats;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,9 +56,9 @@ namespace mwb_materials
 
                 MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties() {
                     bSrgb = SrgbCheck.Checked,
+                    bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAo = AoCheck.Checked,
-                    MaxExponent = (int)MaxExponent.Value,
-                    bTintGloss = TintGloss.Checked
+                    MaxExponent = Math.Max((int)MaxExponent.Value, 1)
                 };
                 MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
 
@@ -65,6 +66,7 @@ namespace mwb_materials
                 Directory.CreateDirectory(path + "\\output");
 
                 string folderName = Path.GetFileName(path);
+                Dictionary<string, object> vmtValues = new Dictionary<string, object>();
                 string outputName;
 
                 if (textures.Albedo != null)
@@ -72,7 +74,8 @@ namespace mwb_materials
                     outputName = folderName + "_rgb.png";
 
                     textures.Albedo?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
+                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
+                    vmtValues.Add("ALBEDONAME", outputName.Replace(".png", string.Empty));
                 }
 
                 if (textures.Exponent != null)
@@ -80,7 +83,8 @@ namespace mwb_materials
                     outputName = folderName + "_e.png";
 
                     textures.Exponent.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\",VtfCmdInterface.FormatDXT1, false);
+                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\",VtfCmdInterface.FormatDXT5, false);
+                    vmtValues.Add("EXPONENTNAME", outputName.Replace(".png", string.Empty));
                 }
 
                 if (textures.Normal != null)
@@ -88,13 +92,28 @@ namespace mwb_materials
                     outputName = folderName + "_n.png";
 
                     textures.Normal?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
+                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
+                    vmtValues.Add("NORMALNAME", outputName.Replace(".png", string.Empty));
                 }
 
                 textures.Dispose();
 
-                Enabled = true;
+                if (VmtDestinationPath.Text != string.Empty)
+                {
+                    string p = VmtDestinationPath.Text.Replace("materials", string.Empty);
+                    p = p.Trim(new char[] { '\\' });
+                    vmtValues.Add("EXPORTPATH", p);
+                }
+                else
+                {
+                    vmtValues.Add("EXPORTPATH", "");
+                }
 
+                VmtGenerator.Generate(path + "\\output\\", folderName, vmtValues);
+
+
+                Directory.Delete(path + "\\temp");
+                Enabled = true;
                 timer.Stop();
                 MessageBox.Show("Generated textures! (" + timer.Elapsed.ToString(@"m\:ss\.fff") + ")", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -108,17 +127,8 @@ namespace mwb_materials
 
             if (result == CommonFileDialogResult.Ok)
             {
-                string name = VmtName.Text
-                    .Trim()
-                    .Replace(".vmt", string.Empty);
-
-                using (StreamWriter sw = File.CreateText(folderDialog.FileName + "\\" + name + ".vmt"))
-                {
-                    byte[] bytes = Properties.Resources.default_vmt;
-                    sw.BaseStream.Write(bytes, 0, bytes.Length);
-                }
-
-                MessageBox.Show("Saved VMT file: " + name, "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                VmtGenerator.Generate(folderDialog.FileName, VmtName.Text);
+                MessageBox.Show("Saved VMT file: " + VmtName.Text, "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -139,10 +149,30 @@ namespace mwb_materials
                 "\n" +
                 "If your metal/gloss/rough textures already have AO applied you can skip this step with the setting. \n" +
                 "\n" +
-                "\"Max non-metals exponent\" is for any part of the texture that isn't touched by metalness texture (metallic parts get up to 155, Source's default). " +
-                "Usually the default is fine, unless you see some parts of the model not behaving correctly (plastic-looking). \n" +
-                "\n" +
-                "You can disable metalness \"leaking\" into the gloss (can help with brushed metals).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "You can specify your textures' path for the VMT parameters (this does not move the output to that path!).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void VmtDestinationButton_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog folderDialog = new CommonOpenFileDialog();
+            folderDialog.IsFolderPicker = true;
+            CommonFileDialogResult result = folderDialog.ShowDialog();
+
+            if (result == CommonFileDialogResult.Ok)
+            {
+                VmtDestinationPath.Text = folderDialog.FileName;
+                VmtDestinationPath.Text.Trim(new char[] { '\\' });
+
+                if (!VmtDestinationPath.Text.Contains("materials"))
+                {
+                    VmtDestinationPath.Text = string.Empty;
+                    MessageBox.Show("Not a valid Source material path");
+                }
+                else
+                {
+                    VmtDestinationPath.Text = VmtDestinationPath.Text.Substring(VmtDestinationPath.Text.IndexOf("materials"));
+                }
+            }
         }
     }
 }

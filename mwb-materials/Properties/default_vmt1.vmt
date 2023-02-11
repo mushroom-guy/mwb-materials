@@ -2,16 +2,21 @@
 //https://developer.valvesoftware.com/wiki/$phong
 "VertexLitGeneric"
 {
-    "$basetexture" "${EXPORTPATH}\${ALBEDONAME}"
-    "$bumpmap" "${EXPORTPATH}\${NORMALNAME}"
-    "$phongexponenttexture" "${EXPORTPATH}\${EXPONENTNAME}"
+    "$basetexture" "${ALBEDONAME}"
+    "$bumpmap" "${NORMALNAME}"
+    "$phongexponenttexture" "${EXPONENTNAME}"
 
     "$color2" "[0 0 0]"
     "$blendtintbybasealpha" "1"
     "$phong" "1"
     "$phongboost" "1"                       //larger values create a more intense highlight, mess with it
     "$phongalbedotint" "0"                  //try setting this to 1 and check if it looks ok
-    "$phongfresnelranges" "[1 1 0]"
+    "$phongfresnelranges" "[ 1 1 1 ]"
+
+    "$rimlight" "1"
+    "$rimlightexponent" "100"
+    "$rimmask" "1"
+    "$rimlightboost" "10"
 
     "$basemapalphaenvmapmask" "1"
     "$envmapfresnel" "1"
