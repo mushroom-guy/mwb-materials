@@ -69,13 +69,18 @@ namespace mwb_materials
                 Dictionary<string, object> vmtValues = new Dictionary<string, object>();
                 string outputName;
 
+                Task albedoTask = Task.CompletedTask;
+                Task exponentTask = Task.CompletedTask;
+                Task normalTask = Task.CompletedTask;
+
                 if (textures.Albedo != null)
                 {
                     outputName = folderName + "_rgb.png";
 
                     textures.Albedo?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
                     vmtValues.Add("ALBEDONAME", outputName.Replace(".png", string.Empty));
+
+                    albedoTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
                 }
 
                 if (textures.Exponent != null)
@@ -83,8 +88,9 @@ namespace mwb_materials
                     outputName = folderName + "_e.png";
 
                     textures.Exponent.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\",VtfCmdInterface.FormatDXT5, false);
                     vmtValues.Add("EXPONENTNAME", outputName.Replace(".png", string.Empty));
+
+                    exponentTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT1, false);
                 }
 
                 if (textures.Normal != null)
@@ -92,9 +98,12 @@ namespace mwb_materials
                     outputName = folderName + "_n.png";
 
                     textures.Normal?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    await VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
                     vmtValues.Add("NORMALNAME", outputName.Replace(".png", string.Empty));
+
+                    normalTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
                 }
+
+                await albedoTask; await exponentTask; await normalTask;
 
                 textures.Dispose();
 
@@ -110,7 +119,6 @@ namespace mwb_materials
                 }
 
                 VmtGenerator.Generate(path + "\\output\\", folderName, vmtValues);
-
 
                 Directory.Delete(path + "\\temp");
                 Enabled = true;
