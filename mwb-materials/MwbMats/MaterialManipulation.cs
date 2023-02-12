@@ -239,17 +239,19 @@ namespace mwb_materials
             {
                 double metal = metalness.ReadGrayscale(cursor);
                 metal /= 255.0;
+                metal = 1.0 - metal;
+                metal *= 3.0;
+                metal = Math.Min(metal, 1.0);
 
                 double rough = roughness.ReadGrayscale(cursor);
                 rough /= 255.0;
 
-                rough *= metal;
-                rough = 1.0 - rough;
-                //rough *= 0.7;
+                //metal *= rough;
+                //metal *= 1.4;
 
-                albedo.Bytes[cursor] = (byte)(albedo.Bytes[cursor] * rough);
-                albedo.Bytes[cursor + 1] = (byte)(albedo.Bytes[cursor + 1] * rough);
-                albedo.Bytes[cursor + 2] = (byte)(albedo.Bytes[cursor + 2] * rough);
+                albedo.Bytes[cursor] = (byte)(albedo.Bytes[cursor] * metal);
+                albedo.Bytes[cursor + 1] = (byte)(albedo.Bytes[cursor + 1] * metal);
+                albedo.Bytes[cursor + 2] = (byte)(albedo.Bytes[cursor + 2] * metal);
             }//);
         }
 
@@ -281,7 +283,7 @@ namespace mwb_materials
             return sourceAlbedo;
         }
 
-        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness)
+        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness, FastBitmap metalness, bool bTintGloss)
         {
             if (normal == null)
             {
@@ -296,6 +298,11 @@ namespace mwb_materials
             if (roughness != null)
             {
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
+
+                if (bTintGloss)
+                {
+                    DumpGrayscaleInChannel(sourceNormal, metalness, TextureChannel.Alpha, TextureOperation.Add);
+                }
             }
 
             sourceNormal.Stop();
@@ -344,6 +351,7 @@ namespace mwb_materials
             public bool bAlbedoSrgb { get; set; }
             public bool bAo { get; set; }
             public int MaxExponent { get; set; }
+            public bool bTintGloss { get; set; }
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -474,7 +482,7 @@ namespace mwb_materials
 
             Task<FastBitmap> normalTask = Task.Run(() =>
             {
-                return CreateSourceNormal(normal, (gloss != null) ? gloss : roughness);
+                return CreateSourceNormal(normal, (gloss != null) ? gloss : roughness, metalness, props.bTintGloss);
             });
 
             Task<FastBitmap> exponentTask = Task.Run(() =>

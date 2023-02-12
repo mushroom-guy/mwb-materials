@@ -58,7 +58,8 @@ namespace mwb_materials
                     bSrgb = SrgbCheck.Checked,
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAo = AoCheck.Checked,
-                    MaxExponent = Math.Max((int)MaxExponent.Value, 1)
+                    MaxExponent = Math.Max((int)MaxExponent.Value, 1),
+                    bTintGloss = TintGlossCheck.Checked
                 };
                 MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
 
@@ -149,15 +150,6 @@ namespace mwb_materials
                 "Metalness needs to be a grayscale image, so not a specular (it should have no color). \n" +
                 "\n" +
                 "Tool will use any textures it finds, doesn't require any to be present.", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void SettingsHelpButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("By default we assume your metalness and roughness masks are sRGB, you can override this with the setting. \n" +
-                "\n" +
-                "If your metal/gloss/rough textures already have AO applied you can skip this step with the setting. \n" +
-                "\n" +
-                "You can specify your textures' path for the VMT parameters (this does not move the output to that path!).", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void VmtDestinationButton_Click(object sender, EventArgs e)

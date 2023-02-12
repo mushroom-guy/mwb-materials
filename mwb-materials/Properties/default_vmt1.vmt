@@ -2,27 +2,29 @@
 //https://developer.valvesoftware.com/wiki/$phong
 "VertexLitGeneric"
 {
-    "$basetexture" "${ALBEDONAME}"
-    "$bumpmap" "${NORMALNAME}"
-    "$phongexponenttexture" "${EXPONENTNAME}"
+    "$basetexture" "${EXPORTPATH}\${ALBEDONAME}"
+    "$bumpmap" "${EXPORTPATH}\${NORMALNAME}"
+    "$phongexponenttexture" "${EXPORTPATH}\${EXPONENTNAME}"
 
     "$color2" "[0 0 0]"
     "$blendtintbybasealpha" "1"
     "$phong" "1"
     "$phongboost" "1"                       //larger values create a more intense highlight, mess with it
     "$phongalbedotint" "0"                  //try setting this to 1 and check if it looks ok
-    "$phongfresnelranges" "[ 1 1 1 ]"
+    "$phongfresnelranges" "[1 0.5 0]"       //this isn't good for all material setups. glossy surfaces likely need higher 2nd and 3rd numbers.
 
     "$rimlight" "1"
     "$rimlightexponent" "100"
     "$rimmask" "1"
-    "$rimlightboost" "10"
+    "$rimlightboost" "1"
 
     "$basemapalphaenvmapmask" "1"
     "$envmapfresnel" "1"
 
-    //"$envmap" "env_cubemap"                //uncomment this if you're using it outside of MWB (hlmv or other setups)
-    //"$envmaptint" "[1 1 1]"                //uncomment this if you're using it outside of MWB (hlmv or other setups)
+    //DEBUG
+    //"$envmap" "env_cubemap"
+    //"$envmaptint" "[1 1 1]"
+    //DEBUG
 
     "Proxies"
     {
