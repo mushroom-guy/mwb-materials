@@ -38,6 +38,7 @@ namespace mwb_materials
             this.VmtButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.TintGlossCheck = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.VmtDestinationButton = new System.Windows.Forms.Button();
             this.AlbedoSrgbCheck = new System.Windows.Forms.CheckBox();
@@ -46,7 +47,6 @@ namespace mwb_materials
             this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
-            this.TintGlossCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -160,6 +160,19 @@ namespace mwb_materials
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Settings";
             // 
+            // TintGlossCheck
+            // 
+            this.TintGlossCheck.AutoSize = true;
+            this.TintGlossCheck.Checked = true;
+            this.TintGlossCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TintGlossCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TintGlossCheck.Location = new System.Drawing.Point(6, 88);
+            this.TintGlossCheck.Name = "TintGlossCheck";
+            this.TintGlossCheck.Size = new System.Drawing.Size(171, 17);
+            this.TintGlossCheck.TabIndex = 9;
+            this.TintGlossCheck.Text = "Stronger phong with metalness";
+            this.TintGlossCheck.UseVisualStyleBackColor = true;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -248,17 +261,6 @@ namespace mwb_materials
             this.SrgbCheck.TabIndex = 0;
             this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
-            // 
-            // TintGlossCheck
-            // 
-            this.TintGlossCheck.AutoSize = true;
-            this.TintGlossCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TintGlossCheck.Location = new System.Drawing.Point(6, 88);
-            this.TintGlossCheck.Name = "TintGlossCheck";
-            this.TintGlossCheck.Size = new System.Drawing.Size(171, 17);
-            this.TintGlossCheck.TabIndex = 9;
-            this.TintGlossCheck.Text = "Stronger phong with metalness";
-            this.TintGlossCheck.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
