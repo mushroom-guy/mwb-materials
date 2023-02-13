@@ -91,7 +91,7 @@ namespace mwb_materials
                     textures.Exponent.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
                     vmtValues.Add("EXPONENTNAME", outputName.Replace(".png", string.Empty));
 
-                    exponentTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT1, false);
+                    exponentTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
                 }
 
                 if (textures.Normal != null)

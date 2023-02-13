@@ -319,8 +319,8 @@ namespace mwb_materials
                 DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green);
 
                 //rimlight
-                //DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Alpha);
-                //DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha, TextureOperation.Divide);
+                DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Alpha);
+                DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha, TextureOperation.Divide);
             }
 
             sourceExponent.Stop();
