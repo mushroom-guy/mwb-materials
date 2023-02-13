@@ -172,6 +172,19 @@ namespace mwb_materials
             }
         }
 
+        private static void MultiplyColorChannel(FastBitmap src, byte multiplier, TextureChannel channel)
+        {
+            if (src == null)
+            {
+                return;
+            }
+
+            for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
+            {
+                src.Bytes[cursor + (int)channel] = (byte)Math.Min(src.Bytes[cursor + (int)channel] * multiplier, 255);
+            }
+        }
+
         private static void Invert(FastBitmap src)
         {
             if (src == null)
@@ -317,9 +330,12 @@ namespace mwb_materials
             if (metalness != null)
             {
                 DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green);
+                //albedo tint boost, not needed atm
+                //MultiplyColorChannel(sourceExponent, 3, TextureChannel.Green);
 
                 //rimlight
                 DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Alpha);
+                //rimlight is completely driven by metalness, no need to couple it with roughness
                 //DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha, TextureOperation.Divide);
             }
 
