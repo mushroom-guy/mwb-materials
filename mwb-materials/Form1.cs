@@ -59,8 +59,10 @@ namespace mwb_materials
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAo = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
-                    bTintGloss = TintGlossCheck.Checked
+                    bTintGloss = TintGlossCheck.Checked,
+                    bMetalnessIgnoreGloss = NoRoughMetalCheck.Checked
                 };
+
                 MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
 
                 Directory.CreateDirectory(path + "\\temp");

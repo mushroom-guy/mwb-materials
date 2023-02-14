@@ -253,7 +253,7 @@ namespace mwb_materials
             }
         }
 
-        private static FastBitmap CreateSourceAlbedo(FastBitmap albedo, FastBitmap ambientOcclusion, FastBitmap metalness, FastBitmap roughness)
+        private static FastBitmap CreateSourceAlbedo(FastBitmap albedo, FastBitmap ambientOcclusion, FastBitmap metalness, FastBitmap roughness, bool bMetalnessIgnoreGloss)
         {
             if (albedo == null)
             {
@@ -273,7 +273,11 @@ namespace mwb_materials
             if (metalness != null)
             {
                 DumpGrayscaleInChannel(sourceAlbedo, metalness, TextureChannel.Alpha);
-                DumpGrayscaleInChannel(sourceAlbedo, roughness, TextureChannel.Alpha, TextureOperation.Multiply);
+
+                if (!bMetalnessIgnoreGloss)
+                {
+                    DumpGrayscaleInChannel(sourceAlbedo, roughness, TextureChannel.Alpha, TextureOperation.Multiply);
+                }
 
                 //rimlight
                 //DesaturateAlbedoFromMetalness(sourceAlbedo, metalness, roughness);
@@ -355,6 +359,7 @@ namespace mwb_materials
             public bool bAo { get; set; }
             public int MaxExponent { get; set; }
             public bool bTintGloss { get; set; }
+            public bool bMetalnessIgnoreGloss { get; set; }
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -480,7 +485,7 @@ namespace mwb_materials
 
             Task<FastBitmap> albedoTask = Task.Run(() =>
             {
-                return CreateSourceAlbedo(albedo, ambientOcclusion, metalness, (gloss != null) ? gloss : roughness);
+                return CreateSourceAlbedo(albedo, ambientOcclusion, metalness, (gloss != null) ? gloss : roughness, props.bMetalnessIgnoreGloss);
             });
 
             Task<FastBitmap> normalTask = Task.Run(() =>
