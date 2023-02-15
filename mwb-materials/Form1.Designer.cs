@@ -38,6 +38,8 @@ namespace mwb_materials
             this.VmtButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
+            this.DesaturateAlbedoCheck = new System.Windows.Forms.CheckBox();
             this.NoRoughMetalCheck = new System.Windows.Forms.CheckBox();
             this.TintGlossCheck = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,8 +50,6 @@ namespace mwb_materials
             this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
-            this.DesaturateAlbedoCheck = new System.Windows.Forms.CheckBox();
-            this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -177,6 +177,30 @@ namespace mwb_materials
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Settings";
             // 
+            // OpenGlNormalCheck
+            // 
+            this.OpenGlNormalCheck.AutoSize = true;
+            this.OpenGlNormalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 156);
+            this.OpenGlNormalCheck.Name = "OpenGlNormalCheck";
+            this.OpenGlNormalCheck.Size = new System.Drawing.Size(100, 17);
+            this.OpenGlNormalCheck.TabIndex = 12;
+            this.OpenGlNormalCheck.Text = "OpenGL normal";
+            this.OpenGlNormalCheck.UseVisualStyleBackColor = true;
+            // 
+            // DesaturateAlbedoCheck
+            // 
+            this.DesaturateAlbedoCheck.AutoSize = true;
+            this.DesaturateAlbedoCheck.Checked = true;
+            this.DesaturateAlbedoCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.DesaturateAlbedoCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.DesaturateAlbedoCheck.Location = new System.Drawing.Point(5, 133);
+            this.DesaturateAlbedoCheck.Name = "DesaturateAlbedoCheck";
+            this.DesaturateAlbedoCheck.Size = new System.Drawing.Size(185, 17);
+            this.DesaturateAlbedoCheck.TabIndex = 11;
+            this.DesaturateAlbedoCheck.Text = "Desaturate albedo with metalness";
+            this.DesaturateAlbedoCheck.UseVisualStyleBackColor = true;
+            // 
             // NoRoughMetalCheck
             // 
             this.NoRoughMetalCheck.AutoSize = true;
@@ -290,30 +314,6 @@ namespace mwb_materials
             this.SrgbCheck.TabIndex = 0;
             this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
-            // 
-            // DesaturateAlbedoCheck
-            // 
-            this.DesaturateAlbedoCheck.AutoSize = true;
-            this.DesaturateAlbedoCheck.Checked = true;
-            this.DesaturateAlbedoCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.DesaturateAlbedoCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.DesaturateAlbedoCheck.Location = new System.Drawing.Point(5, 133);
-            this.DesaturateAlbedoCheck.Name = "DesaturateAlbedoCheck";
-            this.DesaturateAlbedoCheck.Size = new System.Drawing.Size(119, 17);
-            this.DesaturateAlbedoCheck.TabIndex = 11;
-            this.DesaturateAlbedoCheck.Text = "Conductive material";
-            this.DesaturateAlbedoCheck.UseVisualStyleBackColor = true;
-            // 
-            // OpenGlNormalCheck
-            // 
-            this.OpenGlNormalCheck.AutoSize = true;
-            this.OpenGlNormalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 156);
-            this.OpenGlNormalCheck.Name = "OpenGlNormalCheck";
-            this.OpenGlNormalCheck.Size = new System.Drawing.Size(100, 17);
-            this.OpenGlNormalCheck.TabIndex = 12;
-            this.OpenGlNormalCheck.Text = "OpenGL normal";
-            this.OpenGlNormalCheck.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

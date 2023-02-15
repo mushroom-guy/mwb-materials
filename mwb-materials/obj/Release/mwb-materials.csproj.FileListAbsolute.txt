@@ -20,3 +20,4 @@ F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.CoreC
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.CopyComplete
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.exe
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.pdb
+F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.AssemblyReference.cache

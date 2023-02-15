@@ -185,7 +185,7 @@ namespace mwb_materials
 
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
+            toolTip1.InitialDelay = 0;
             toolTip1.ReshowDelay = 500;
 
             // Force the ToolTip text to be displayed whether or not the form is active.
@@ -197,9 +197,7 @@ namespace mwb_materials
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
             toolTip1.SetToolTip(TintGlossCheck, "Generate a stronger phong and tighter exponent using metalness. Ideal for conductive materials.");
             toolTip1.SetToolTip(NoRoughMetalCheck, "Generate env mapping wherever metalness is, regardless of gloss.");
-            toolTip1.SetToolTip(DesaturateAlbedoCheck, "With conductive materials, albedo gets desaturated. \n" +
-                "Turning this off will allow reflections without albedo color loss. \n" +
-                "If your material isn't conductive (eyes, skin, etc...) turn this off.");
+            toolTip1.SetToolTip(DesaturateAlbedoCheck, "Turn metallic parts darker. If your material isn't conductive (eyes, skin, etc...) turn this off.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
             toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT (does not move the textures there - they'll still be in /output");
         }
