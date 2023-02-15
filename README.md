@@ -21,7 +21,8 @@ cool m
 
 ![pbr11](https://media.discordapp.net/attachments/973910088576303174/1075395024767963157/image.png)
 
-![diceboy](https://cdn.discordapp.com/attachments/424661475282649101/1075404512531075072/image.png)
+![diceboy](https://cdn.discordapp.com/attachments/424661475282649101/1075404512531075072/image.png) 
+![diceboy2](https://cdn.discordapp.com/attachments/424661475282649101/1075404931328127017/image.png)
 
 awesome tbh
 
