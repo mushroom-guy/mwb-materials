@@ -201,6 +201,19 @@ namespace mwb_materials
             }
         }
 
+        private static void Invert(FastBitmap src, TextureChannel channel)
+        {
+            if (src == null)
+            {
+                return;
+            }
+
+            for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
+            {
+                src.Bytes[cursor + (int)channel] = (byte)(255 - src.Bytes[cursor]);
+            }
+        }
+
         private static void ApplyAmbientOcclusion(FastBitmap src, FastBitmap ao, float divStrength = 1.0f)
         {
             if (src == null || ao == null)
@@ -282,8 +295,11 @@ namespace mwb_materials
                     DumpGrayscaleInChannel(sourceAlbedo, roughness, TextureChannel.Alpha, TextureOperation.Multiply);
                 }
 
-                //rimlight
-                DesaturateAlbedoFromMetalness(sourceAlbedo, metalness, roughness);
+                //conductive material
+                if (props.bDesaturateAlbedo)
+                {
+                    DesaturateAlbedoFromMetalness(sourceAlbedo, metalness, roughness);
+                }
             }
 
             sourceAlbedo.Stop();
@@ -369,6 +385,8 @@ namespace mwb_materials
             public int MaxExponent { get; set; }
             public bool bTintGloss { get; set; }
             public bool bMetalnessIgnoreGloss { get; set; }
+            public bool bDesaturateAlbedo { get; set; }
+            public bool bOpenGlNormal { get; set; }
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -478,6 +496,19 @@ namespace mwb_materials
                 });
 
                 await albedoSrgbTask;
+            }
+
+            if (props.bOpenGlNormal)
+            {
+                //invert green channel
+                Task normalOpenGlTask = Task.Run(() =>
+                {
+                    normal?.Start(ImageLockMode.ReadWrite);
+                    Invert(normal, TextureChannel.Green);
+                    normal?.Stop();
+                });
+
+                await normalOpenGlTask;
             }
 
             await roughnessTask; await glossTask; await metalnessTask;

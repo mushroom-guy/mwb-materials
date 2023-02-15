@@ -1,3 +1,6 @@
+F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\DevIL.dll
+F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\VTFCmd.exe
+F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\VTFLib.dll
 F:\source\git\mwb-materials\mwb-materials\bin\Release\mwb-materials.exe.config
 F:\source\git\mwb-materials\mwb-materials\bin\Release\mwb-materials.exe
 F:\source\git\mwb-materials\mwb-materials\bin\Release\mwb-materials.pdb
@@ -17,7 +20,3 @@ F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.CoreC
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.CopyComplete
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.exe
 F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.pdb
-F:\source\git\mwb-materials\mwb-materials\obj\Release\mwb-materials.csproj.AssemblyReference.cache
-F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\DevIL.dll
-F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\VTFCmd.exe
-F:\source\git\mwb-materials\mwb-materials\bin\Release\vtfcmd\VTFLib.dll

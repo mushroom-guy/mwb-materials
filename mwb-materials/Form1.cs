@@ -60,7 +60,8 @@ namespace mwb_materials
                     bAo = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
                     bTintGloss = TintGlossCheck.Checked,
-                    bMetalnessIgnoreGloss = NoRoughMetalCheck.Checked
+                    bMetalnessIgnoreGloss = NoRoughMetalCheck.Checked,
+                    bDesaturateAlbedo = DesaturateAlbedoCheck.Checked
                 };
 
                 MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
@@ -175,6 +176,32 @@ namespace mwb_materials
                     VmtDestinationPath.Text = VmtDestinationPath.Text.Substring(VmtDestinationPath.Text.IndexOf("materials"));
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Create the ToolTip and associate with the Form container.
+            ToolTip toolTip1 = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+
+            toolTip1.SetToolTip(SrgbCheck, "Most PBR workflows use sRGB colorspace for their masks. Tick this off if your textures don't.");
+            toolTip1.SetToolTip(AlbedoSrgbCheck, "Some assets may use sRGB colorspace for albedo. Tick this off if your texture doesn't.");
+            toolTip1.SetToolTip(AoCheck, "Apply ambient occlusion to masks.");
+            toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
+            toolTip1.SetToolTip(TintGlossCheck, "Generate a stronger phong and tighter exponent using metalness. Ideal for conductive materials.");
+            toolTip1.SetToolTip(NoRoughMetalCheck, "Generate env mapping wherever metalness is, regardless of gloss.");
+            toolTip1.SetToolTip(DesaturateAlbedoCheck, "With conductive materials, albedo gets desaturated. \n" +
+                "Turning this off will allow reflections without albedo color loss. \n" +
+                "If your material isn't conductive (eyes, skin, etc...) turn this off.");
+            toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
+            toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT (does not move the textures there - they'll still be in /output");
         }
     }
 }
