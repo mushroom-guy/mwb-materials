@@ -48,6 +48,8 @@ namespace mwb_materials
                 BatchExporter.BatchProperties bProps = new BatchExporter.BatchProperties()
                 {
                     VmtRootPath = VmtDestinationPath.Text,
+                    bMoveOutput = BatchMoveOutputCheck.Checked,
+                    bIncludeFolders = BatchIncludeFoldersCheck.Checked,
                     GenerateProps = props
                 };
 
@@ -111,10 +113,10 @@ namespace mwb_materials
                     VmtDestinationPath.Text = string.Empty;
                     MessageBox.Show("Not a valid Source material path");
                 }
-                else
+                /*else
                 {
                     VmtDestinationPath.Text = VmtDestinationPath.Text.Substring(VmtDestinationPath.Text.IndexOf("materials"));
-                }
+                }*/
             }
         }
 

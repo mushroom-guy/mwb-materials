@@ -13,7 +13,9 @@ namespace mwb_materials.MwbMats
     {
         public struct BatchProperties
         {
-            public string VmtRootPath { get; set; }
+            public string VmtRootPath { get; internal set; }
+            public bool bMoveOutput { get; internal set; }
+            public bool bIncludeFolders { get; internal set; }
             public MaterialManipulation.GenerateProperties GenerateProps { get; set; }
         }
 
@@ -74,6 +76,17 @@ namespace mwb_materials.MwbMats
             Task normalTask = Task.CompletedTask;
 
             string outputName;
+            string movePath = string.Empty;
+
+            if (props.bMoveOutput && props.VmtRootPath != string.Empty)
+            {
+                movePath = props.VmtRootPath;
+
+                if (props.bIncludeFolders)
+                {
+                    movePath += path.Replace(startPath, string.Empty);
+                }
+            }
 
             if (textures.Albedo != null)
             {
@@ -82,7 +95,7 @@ namespace mwb_materials.MwbMats
                 textures.Albedo?.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("ALBEDONAME", outputName);
 
-                albedoTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false);
+                albedoTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false, movePath);
             }
 
             if (textures.Exponent != null)
@@ -92,7 +105,7 @@ namespace mwb_materials.MwbMats
                 textures.Exponent.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("EXPONENTNAME", outputName);
 
-                exponentTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false);
+                exponentTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false, movePath);
             }
 
             if (textures.Normal != null)
@@ -102,25 +115,25 @@ namespace mwb_materials.MwbMats
                 textures.Normal?.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("NORMALNAME", outputName);
 
-                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatRGBA8888, true);
+                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatRGBA8888, true, movePath);
             }
 
             await albedoTask; await exponentTask; await normalTask;
 
             textures.Dispose();
 
-            string vmtPath = string.Empty;
+            string vmtPath = movePath;
 
             if (props.VmtRootPath != string.Empty)
             {
-                vmtPath = props.VmtRootPath.Replace("materials", string.Empty);
+                vmtPath = vmtPath.Substring(vmtPath.IndexOf("materials"));
+                vmtPath = vmtPath.Replace("materials", string.Empty);
                 vmtPath = vmtPath.Trim(new char[] { '\\' });
             }
 
-            vmtPath += path.Replace(startPath, string.Empty);
             vmtValues.Add("EXPORTPATH", vmtPath);
 
-            VmtGenerator.Generate(outputPath, folderName, vmtValues);
+            VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);
         }
 

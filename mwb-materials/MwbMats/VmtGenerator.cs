@@ -16,7 +16,7 @@ namespace mwb_materials.MwbMats
             name = name.Trim().Replace(".vmt", string.Empty);
         }
 
-        public static void Generate(string path, string name, Dictionary<string, object> values)
+        public static void Generate(string path, string name, Dictionary<string, object> values, string movePath)
         {
             SanitizeName(ref name);
             string content = Encoding.UTF8.GetString(VmtBytes);
@@ -31,6 +31,21 @@ namespace mwb_materials.MwbMats
             using (StreamWriter sw = File.CreateText(path + "\\" + name + ".vmt"))
             {
                 sw.BaseStream.Write(newBytes, 0, newBytes.Length);
+            }
+
+            if (movePath != string.Empty)
+            {
+                string fileSrc = path + "\\" + Path.GetFileNameWithoutExtension(name) + ".vmt";
+                string fileDest = movePath + "\\" + Path.GetFileNameWithoutExtension(name) + ".vmt";
+
+                Directory.CreateDirectory(movePath);
+
+                if (File.Exists(fileDest))
+                {
+                    File.Delete(fileDest);
+                }
+
+                File.Move(fileSrc, fileDest);
             }
         }
 

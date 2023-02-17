@@ -51,6 +51,8 @@ namespace mwb_materials
             this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
+            this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
+            this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -60,11 +62,11 @@ namespace mwb_materials
             // 
             // FolderButton
             // 
-            this.FolderButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FolderButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.FolderButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FolderButton.Location = new System.Drawing.Point(3, 16);
+            this.FolderButton.Location = new System.Drawing.Point(3, 63);
             this.FolderButton.Name = "FolderButton";
-            this.FolderButton.Size = new System.Drawing.Size(215, 80);
+            this.FolderButton.Size = new System.Drawing.Size(215, 33);
             this.FolderButton.TabIndex = 0;
             this.FolderButton.Text = "Open Folder(s)";
             this.FolderButton.UseVisualStyleBackColor = true;
@@ -144,6 +146,8 @@ namespace mwb_materials
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.BatchMoveOutputCheck);
+            this.groupBox3.Controls.Add(this.BatchIncludeFoldersCheck);
             this.groupBox3.Controls.Add(this.FolderButton);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -152,7 +156,7 @@ namespace mwb_materials
             this.groupBox3.Size = new System.Drawing.Size(221, 99);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Textures";
+            this.groupBox3.Text = "Batch";
             // 
             // groupBox4
             // 
@@ -340,6 +344,32 @@ namespace mwb_materials
             this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
             // 
+            // BatchIncludeFoldersCheck
+            // 
+            this.BatchIncludeFoldersCheck.AutoSize = true;
+            this.BatchIncludeFoldersCheck.Checked = true;
+            this.BatchIncludeFoldersCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BatchIncludeFoldersCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BatchIncludeFoldersCheck.Location = new System.Drawing.Point(8, 19);
+            this.BatchIncludeFoldersCheck.Name = "BatchIncludeFoldersCheck";
+            this.BatchIncludeFoldersCheck.Size = new System.Drawing.Size(188, 17);
+            this.BatchIncludeFoldersCheck.TabIndex = 14;
+            this.BatchIncludeFoldersCheck.Text = "Include folders in generated VMTs";
+            this.BatchIncludeFoldersCheck.UseVisualStyleBackColor = true;
+            // 
+            // BatchMoveOutputCheck
+            // 
+            this.BatchMoveOutputCheck.AutoSize = true;
+            this.BatchMoveOutputCheck.Checked = true;
+            this.BatchMoveOutputCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BatchMoveOutputCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BatchMoveOutputCheck.Location = new System.Drawing.Point(8, 42);
+            this.BatchMoveOutputCheck.Name = "BatchMoveOutputCheck";
+            this.BatchMoveOutputCheck.Size = new System.Drawing.Size(148, 17);
+            this.BatchMoveOutputCheck.TabIndex = 15;
+            this.BatchMoveOutputCheck.Text = "Move output to VMT path";
+            this.BatchMoveOutputCheck.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -362,6 +392,7 @@ namespace mwb_materials
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).EndInit();
@@ -393,6 +424,8 @@ namespace mwb_materials
         private System.Windows.Forms.CheckBox DesaturateAlbedoCheck;
         private System.Windows.Forms.CheckBox OpenGlNormalCheck;
         private System.Windows.Forms.CheckBox TighterPhongCheck;
+        private System.Windows.Forms.CheckBox BatchMoveOutputCheck;
+        private System.Windows.Forms.CheckBox BatchIncludeFoldersCheck;
     }
 }
 

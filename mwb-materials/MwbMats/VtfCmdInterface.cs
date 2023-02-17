@@ -26,7 +26,7 @@ namespace mwb_materials
             processInfo.Arguments += "-" + key + " ";
         }
 
-        public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips)
+        public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips, string moveOutputPath)
         {
             TaskCompletionSource<bool> completion = new TaskCompletionSource<bool>();
 
@@ -55,6 +55,22 @@ namespace mwb_materials
             runProgram.Exited += (object sender, EventArgs a) =>
             {
                 File.Delete(file);
+
+                if (moveOutputPath != string.Empty)
+                {
+                    string fileSrc = outputFolder + Path.GetFileNameWithoutExtension(file) + ".vtf";
+                    string fileDest = moveOutputPath + "\\" + Path.GetFileNameWithoutExtension(file) + ".vtf";
+
+                    Directory.CreateDirectory(moveOutputPath);
+
+                    if (File.Exists(fileDest))
+                    {
+                        File.Delete(fileDest);
+                    }
+
+                    File.Move(fileSrc, fileDest);
+                }
+
                 completion.TrySetResult(true);
             };
 
