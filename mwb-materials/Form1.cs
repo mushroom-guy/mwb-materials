@@ -32,102 +32,42 @@ namespace mwb_materials
             if (result == CommonFileDialogResult.Ok)
             {
                 Stopwatch timer = new Stopwatch();
-                timer.Start();
-
-                Enabled = false;
-
-                string path = folderDialog.FileName;
-                string[] files = Directory.GetFiles(path);
-                List<string> sanitizedFiles = new List<string>();
-
-                foreach (string file in files)
+                MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties()
                 {
-                    try
-                    {
-                        Image.FromFile(file);
-                    }
-                    catch (OutOfMemoryException)
-                    {
-                        continue;
-                    }
-
-                    sanitizedFiles.Add(file);
-                }
-
-                MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties() {
                     bSrgb = SrgbCheck.Checked,
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAo = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
-                    bTintGloss = TintGlossCheck.Checked,
+                    bTighterPhong = TighterPhongCheck.Checked,
                     bMetalnessIgnoreGloss = NoRoughMetalCheck.Checked,
-                    bDesaturateAlbedo = DesaturateAlbedoCheck.Checked
+                    bDesaturateAlbedo = DesaturateAlbedoCheck.Checked,
+                    bBrighterPhong = BrighterPhongCheck.Checked,
+                    bOpenGlNormal = OpenGlNormalCheck.Checked
                 };
 
-                MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props);
-
-                Directory.CreateDirectory(path + "\\temp");
-                Directory.CreateDirectory(path + "\\output");
-
-                string folderName = Path.GetFileName(path);
-                Dictionary<string, object> vmtValues = new Dictionary<string, object>();
-                string outputName;
-
-                Task albedoTask = Task.CompletedTask;
-                Task exponentTask = Task.CompletedTask;
-                Task normalTask = Task.CompletedTask;
-
-                if (textures.Albedo != null)
+                BatchExporter.BatchProperties bProps = new BatchExporter.BatchProperties()
                 {
-                    outputName = folderName + "_rgb.png";
+                    VmtRootPath = VmtDestinationPath.Text,
+                    GenerateProps = props
+                };
 
-                    textures.Albedo?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    vmtValues.Add("ALBEDONAME", outputName.Replace(".png", string.Empty));
+                timer.Start();
+                Enabled = false;
 
-                    albedoTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
-                }
+                BatchProgressForm bpForm = new BatchProgressForm();
+                bpForm.Show();
+                bpForm.Enabled = false;
 
-                if (textures.Exponent != null)
+                await BatchExporter.StartBatch(folderDialog.FileName, bProps, (string folder) =>
                 {
-                    outputName = folderName + "_e.png";
+                    bpForm.SetFolderName(folder);
+                });
 
-                    textures.Exponent.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    vmtValues.Add("EXPONENTNAME", outputName.Replace(".png", string.Empty));
-
-                    exponentTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatDXT5, false);
-                }
-
-                if (textures.Normal != null)
-                {
-                    outputName = folderName + "_n.png";
-
-                    textures.Normal?.Save(path + "\\temp\\" + outputName, ImageFormat.Png);
-                    vmtValues.Add("NORMALNAME", outputName.Replace(".png", string.Empty));
-
-                    normalTask = VtfCmdInterface.ExportFile(path + "\\temp\\" + outputName, path + "\\output\\", VtfCmdInterface.FormatRGBA8888, true);
-                }
-
-                await albedoTask; await exponentTask; await normalTask;
-
-                textures.Dispose();
-
-                if (VmtDestinationPath.Text != string.Empty)
-                {
-                    string p = VmtDestinationPath.Text.Replace("materials", string.Empty);
-                    p = p.Trim(new char[] { '\\' });
-                    vmtValues.Add("EXPORTPATH", p);
-                }
-                else
-                {
-                    vmtValues.Add("EXPORTPATH", "");
-                }
-
-                VmtGenerator.Generate(path + "\\output\\", folderName, vmtValues);
-
-                Directory.Delete(path + "\\temp");
-                Enabled = true;
                 timer.Stop();
+                Enabled = true;
+
                 MessageBox.Show("Generated textures! (" + timer.Elapsed.ToString(@"m\:ss\.fff") + ")", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bpForm.Close();
             }
         }
 
@@ -195,7 +135,8 @@ namespace mwb_materials
             toolTip1.SetToolTip(AlbedoSrgbCheck, "Some assets may use sRGB colorspace for albedo. Tick this off if your texture doesn't.");
             toolTip1.SetToolTip(AoCheck, "Apply ambient occlusion to masks.");
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
-            toolTip1.SetToolTip(TintGlossCheck, "Generate a stronger phong and tighter exponent using metalness. Ideal for conductive materials.");
+            toolTip1.SetToolTip(BrighterPhongCheck, "Generate a stronger phong using metalness. Ideal for conductive materials.");
+            toolTip1.SetToolTip(TighterPhongCheck, "Generate a tighter exponent using metalness. Ideal for conductive materials.");
             toolTip1.SetToolTip(NoRoughMetalCheck, "Generate env mapping wherever metalness is, regardless of gloss.");
             toolTip1.SetToolTip(DesaturateAlbedoCheck, "Turn metallic parts darker. If your material isn't conductive (eyes, skin, etc...) turn this off.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");

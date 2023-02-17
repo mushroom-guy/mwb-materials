@@ -38,10 +38,11 @@ namespace mwb_materials
             this.VmtButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.TighterPhongCheck = new System.Windows.Forms.CheckBox();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.DesaturateAlbedoCheck = new System.Windows.Forms.CheckBox();
             this.NoRoughMetalCheck = new System.Windows.Forms.CheckBox();
-            this.TintGlossCheck = new System.Windows.Forms.CheckBox();
+            this.BrighterPhongCheck = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.VmtDestinationButton = new System.Windows.Forms.Button();
             this.AlbedoSrgbCheck = new System.Windows.Forms.CheckBox();
@@ -65,7 +66,7 @@ namespace mwb_materials
             this.FolderButton.Name = "FolderButton";
             this.FolderButton.Size = new System.Drawing.Size(215, 80);
             this.FolderButton.TabIndex = 0;
-            this.FolderButton.Text = "Open Folder";
+            this.FolderButton.Text = "Open Folder(s)";
             this.FolderButton.UseVisualStyleBackColor = true;
             this.FolderButton.Click += new System.EventHandler(this.FolderButton_Click);
             // 
@@ -146,7 +147,7 @@ namespace mwb_materials
             this.groupBox3.Controls.Add(this.FolderButton);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox3.Location = new System.Drawing.Point(0, 445);
+            this.groupBox3.Location = new System.Drawing.Point(0, 457);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(221, 99);
             this.groupBox3.TabIndex = 4;
@@ -155,10 +156,11 @@ namespace mwb_materials
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.TighterPhongCheck);
             this.groupBox4.Controls.Add(this.OpenGlNormalCheck);
             this.groupBox4.Controls.Add(this.DesaturateAlbedoCheck);
             this.groupBox4.Controls.Add(this.NoRoughMetalCheck);
-            this.groupBox4.Controls.Add(this.TintGlossCheck);
+            this.groupBox4.Controls.Add(this.BrighterPhongCheck);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.VmtDestinationButton);
             this.groupBox4.Controls.Add(this.AlbedoSrgbCheck);
@@ -169,19 +171,32 @@ namespace mwb_materials
             this.groupBox4.Controls.Add(this.SrgbCheck);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox4.Location = new System.Drawing.Point(0, 179);
+            this.groupBox4.Location = new System.Drawing.Point(0, 172);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
-            this.groupBox4.Size = new System.Drawing.Size(221, 266);
+            this.groupBox4.Size = new System.Drawing.Size(221, 285);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Settings";
+            // 
+            // TighterPhongCheck
+            // 
+            this.TighterPhongCheck.AutoSize = true;
+            this.TighterPhongCheck.Checked = true;
+            this.TighterPhongCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TighterPhongCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TighterPhongCheck.Location = new System.Drawing.Point(5, 110);
+            this.TighterPhongCheck.Name = "TighterPhongCheck";
+            this.TighterPhongCheck.Size = new System.Drawing.Size(164, 17);
+            this.TighterPhongCheck.TabIndex = 13;
+            this.TighterPhongCheck.Text = "Tighter phong with metalness";
+            this.TighterPhongCheck.UseVisualStyleBackColor = true;
             // 
             // OpenGlNormalCheck
             // 
             this.OpenGlNormalCheck.AutoSize = true;
             this.OpenGlNormalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 156);
+            this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 179);
             this.OpenGlNormalCheck.Name = "OpenGlNormalCheck";
             this.OpenGlNormalCheck.Size = new System.Drawing.Size(100, 17);
             this.OpenGlNormalCheck.TabIndex = 12;
@@ -194,7 +209,7 @@ namespace mwb_materials
             this.DesaturateAlbedoCheck.Checked = true;
             this.DesaturateAlbedoCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DesaturateAlbedoCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.DesaturateAlbedoCheck.Location = new System.Drawing.Point(5, 133);
+            this.DesaturateAlbedoCheck.Location = new System.Drawing.Point(5, 156);
             this.DesaturateAlbedoCheck.Name = "DesaturateAlbedoCheck";
             this.DesaturateAlbedoCheck.Size = new System.Drawing.Size(185, 17);
             this.DesaturateAlbedoCheck.TabIndex = 11;
@@ -205,42 +220,42 @@ namespace mwb_materials
             // 
             this.NoRoughMetalCheck.AutoSize = true;
             this.NoRoughMetalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.NoRoughMetalCheck.Location = new System.Drawing.Point(5, 110);
+            this.NoRoughMetalCheck.Location = new System.Drawing.Point(5, 133);
             this.NoRoughMetalCheck.Name = "NoRoughMetalCheck";
             this.NoRoughMetalCheck.Size = new System.Drawing.Size(138, 17);
             this.NoRoughMetalCheck.TabIndex = 10;
             this.NoRoughMetalCheck.Text = "Metalness ignores gloss";
             this.NoRoughMetalCheck.UseVisualStyleBackColor = true;
             // 
-            // TintGlossCheck
+            // BrighterPhongCheck
             // 
-            this.TintGlossCheck.AutoSize = true;
-            this.TintGlossCheck.Checked = true;
-            this.TintGlossCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TintGlossCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TintGlossCheck.Location = new System.Drawing.Point(5, 87);
-            this.TintGlossCheck.Name = "TintGlossCheck";
-            this.TintGlossCheck.Size = new System.Drawing.Size(171, 17);
-            this.TintGlossCheck.TabIndex = 9;
-            this.TintGlossCheck.Text = "Stronger phong with metalness";
-            this.TintGlossCheck.UseVisualStyleBackColor = true;
+            this.BrighterPhongCheck.AutoSize = true;
+            this.BrighterPhongCheck.Checked = true;
+            this.BrighterPhongCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BrighterPhongCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BrighterPhongCheck.Location = new System.Drawing.Point(5, 87);
+            this.BrighterPhongCheck.Name = "BrighterPhongCheck";
+            this.BrighterPhongCheck.Size = new System.Drawing.Size(167, 17);
+            this.BrighterPhongCheck.TabIndex = 9;
+            this.BrighterPhongCheck.Text = "Brighter phong with metalness";
+            this.BrighterPhongCheck.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(5, 223);
+            this.label3.Location = new System.Drawing.Point(5, 242);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.Size = new System.Drawing.Size(115, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "VMT textures path";
+            this.label3.Text = "VMT textures root path";
             // 
             // VmtDestinationButton
             // 
             this.VmtDestinationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.VmtDestinationButton.Location = new System.Drawing.Point(197, 239);
+            this.VmtDestinationButton.Location = new System.Drawing.Point(197, 258);
             this.VmtDestinationButton.Name = "VmtDestinationButton";
             this.VmtDestinationButton.Size = new System.Drawing.Size(21, 21);
             this.VmtDestinationButton.TabIndex = 7;
@@ -261,14 +276,24 @@ namespace mwb_materials
             // 
             // VmtDestinationPath
             // 
-            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 239);
+            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 258);
             this.VmtDestinationPath.Name = "VmtDestinationPath";
             this.VmtDestinationPath.Size = new System.Drawing.Size(186, 20);
             this.VmtDestinationPath.TabIndex = 7;
             // 
             // MaxExponent
             // 
-            this.MaxExponent.Location = new System.Drawing.Point(5, 200);
+            this.MaxExponent.Location = new System.Drawing.Point(5, 202);
+            this.MaxExponent.Maximum = new decimal(new int[] {
+            155,
+            0,
+            0,
+            0});
+            this.MaxExponent.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.MaxExponent.Name = "MaxExponent";
             this.MaxExponent.Size = new System.Drawing.Size(38, 20);
             this.MaxExponent.TabIndex = 4;
@@ -283,7 +308,7 @@ namespace mwb_materials
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(49, 202);
+            this.label1.Location = new System.Drawing.Point(49, 204);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 3;
@@ -320,7 +345,7 @@ namespace mwb_materials
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(221, 544);
+            this.ClientSize = new System.Drawing.Size(221, 556);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -363,10 +388,11 @@ namespace mwb_materials
         private System.Windows.Forms.Button VmtDestinationButton;
         private System.Windows.Forms.TextBox VmtDestinationPath;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox TintGlossCheck;
+        private System.Windows.Forms.CheckBox BrighterPhongCheck;
         private System.Windows.Forms.CheckBox NoRoughMetalCheck;
         private System.Windows.Forms.CheckBox DesaturateAlbedoCheck;
         private System.Windows.Forms.CheckBox OpenGlNormalCheck;
+        private System.Windows.Forms.CheckBox TighterPhongCheck;
     }
 }
 

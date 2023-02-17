@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mwb_materials.MwbMats;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -172,7 +173,7 @@ namespace mwb_materials
             }
         }
 
-        private static void MultiplyColorChannel(FastBitmap src, byte multiplier, TextureChannel channel)
+        private static void MultiplyColorChannel(FastBitmap src, float multiplier, TextureChannel channel)
         {
             if (src == null)
             {
@@ -181,7 +182,7 @@ namespace mwb_materials
 
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                src.Bytes[cursor + (int)channel] = (byte)Math.Min(src.Bytes[cursor + (int)channel] * multiplier, 255);
+                src.Bytes[cursor + (int)channel] = (byte)Math.Min(src.Bytes[cursor + (int)channel] * multiplier, 255.0f);
             }
         }
 
@@ -214,7 +215,7 @@ namespace mwb_materials
             }
         }
 
-        private static void ApplyAmbientOcclusion(FastBitmap src, FastBitmap ao, float divStrength = 1.0f)
+        private static void ApplyAmbientOcclusion(FastBitmap src, FastBitmap ao)
         {
             if (src == null || ao == null)
             {
@@ -223,12 +224,12 @@ namespace mwb_materials
 
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                int gsValue = 255 - ao.ReadGrayscale(cursor);
-                gsValue = (int)(gsValue / divStrength);
+                float gsValue = ao.ReadGrayscale(cursor);
+                gsValue /= 255.0f;
 
-                src.Bytes[cursor] = (byte)Math.Max(src.Bytes[cursor] - gsValue, 0);
-                src.Bytes[cursor + 1] = (byte)Math.Max(src.Bytes[cursor + 1] - gsValue, 0);
-                src.Bytes[cursor + 2] = (byte)Math.Max(src.Bytes[cursor + 2] - gsValue, 0);
+                src.Bytes[cursor] = (byte)Math.Min(src.Bytes[cursor] * gsValue, 255.0f);
+                src.Bytes[cursor + 1] = (byte)Math.Min(src.Bytes[cursor + 1] * gsValue, 255.0f);
+                src.Bytes[cursor + 2] = (byte)Math.Min(src.Bytes[cursor + 2] * gsValue, 255.0f);
             }
         }
 
@@ -239,9 +240,9 @@ namespace mwb_materials
             return (foreground == 255.0) ? 255.0 : Math.Min((background * background) / (255.0 - foreground), 255.0);
         }
 
-        public static Color LerpColor(Color s, Color t, float k)
+        private static Color LerpColor(Color s, Color t, float k)
         {
-            var bk = (1 - k);
+            var bk = (1.0f - k);
             var a = s.A * bk + t.A * k;
             var r = s.R * bk + t.R * k;
             var g = s.G * bk + t.G * k;
@@ -262,9 +263,12 @@ namespace mwb_materials
                 metal /= 255.0f;
 
                 Color albedoOriginalColor = albedo.ReadColor(cursor);
-                Color albedoMetallicColor = ConvertColorToRGB(albedoOriginalColor);
-                Color result = LerpColor(albedoOriginalColor, albedoMetallicColor, metal);
+                Color albedoMetallicColor = LerpColor(albedoOriginalColor, albedoOriginalColor.Mul(0.1f), metal);
 
+                float rough = roughness.ReadGrayscale(cursor);
+                rough /= 255.0f;
+
+                Color result = LerpColor(albedoOriginalColor, albedoMetallicColor, 1.0f - rough);
                 albedo.WriteColor(cursor, result);
             }
         }
@@ -283,7 +287,7 @@ namespace mwb_materials
 
             if (ambientOcclusion != null)
             {
-                ApplyAmbientOcclusion(sourceAlbedo, ambientOcclusion, 2.0f);
+                ApplyAmbientOcclusion(sourceAlbedo, ambientOcclusion);
             }
 
             if (metalness != null)
@@ -293,6 +297,11 @@ namespace mwb_materials
                 if (!props.bMetalnessIgnoreGloss)
                 {
                     DumpGrayscaleInChannel(sourceAlbedo, roughness, TextureChannel.Alpha, TextureOperation.Multiply);
+                }
+
+                if (props.bAo)
+                {
+                    DumpGrayscaleInChannel(sourceAlbedo, ambientOcclusion, TextureChannel.Alpha, TextureOperation.Multiply);
                 }
 
                 //conductive material
@@ -306,7 +315,7 @@ namespace mwb_materials
             return sourceAlbedo;
         }
 
-        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness, FastBitmap metalness, ref GenerateProperties props)
+        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness, FastBitmap metalness, FastBitmap ambientOcclusion, ref GenerateProperties props)
         {
             if (normal == null)
             {
@@ -322,9 +331,14 @@ namespace mwb_materials
             {
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
 
-                if (props.bTintGloss)
+                if (props.bBrighterPhong)
                 {
                     DumpGrayscaleInChannel(sourceNormal, metalness, TextureChannel.Alpha, TextureOperation.Add);
+                }
+
+                if (props.bAo)
+                {
+                    DumpGrayscaleInChannel(sourceNormal, ambientOcclusion, TextureChannel.Alpha, TextureOperation.Multiply);
                 }
             }
 
@@ -332,7 +346,7 @@ namespace mwb_materials
             return sourceNormal;
         }
 
-        private static FastBitmap CreateSourceExponent(FastBitmap roughness, FastBitmap metalness, ref GenerateProperties props)
+        private static FastBitmap CreateSourceExponent(FastBitmap roughness, FastBitmap metalness, FastBitmap ambientOcclusion, ref GenerateProperties props)
         {
             if (roughness == null && metalness == null)
             {
@@ -348,7 +362,7 @@ namespace mwb_materials
             {
                 DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Red);
 
-                if (props.bTintGloss)
+                if (props.bTighterPhong)
                 {
                     DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Red, TextureOperation.Add);
                 }
@@ -359,13 +373,19 @@ namespace mwb_materials
             if (metalness != null)
             {
                 DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green);
-                //albedo tint boost, not needed atm
-                //MultiplyColorChannel(sourceExponent, 3, TextureChannel.Green);
+
+                if (props.bAo)
+                {
+                    DumpGrayscaleInChannel(sourceExponent, ambientOcclusion, TextureChannel.Green, TextureOperation.Multiply);
+                }
 
                 //rimlight
                 DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Alpha);
-                //rimlight is completely driven by metalness, no need to couple it with roughness
-                //DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha, TextureOperation.Divide);
+
+                if (props.bAo)
+                {
+                    DumpGrayscaleInChannel(sourceExponent, ambientOcclusion, TextureChannel.Alpha, TextureOperation.Multiply);
+                }
             }
 
             sourceExponent.Stop();
@@ -383,7 +403,8 @@ namespace mwb_materials
             public bool bAlbedoSrgb { get; set; }
             public bool bAo { get; set; }
             public int MaxExponent { get; set; }
-            public bool bTintGloss { get; set; }
+            public bool bTighterPhong { get; set; }
+            public bool bBrighterPhong { get; set; }
             public bool bMetalnessIgnoreGloss { get; set; }
             public bool bDesaturateAlbedo { get; set; }
             public bool bOpenGlNormal { get; set; }
@@ -439,8 +460,7 @@ namespace mwb_materials
                 }
             }
 
-            //apply ao and rgb conversion to the masks we need to use
-            ambientOcclusion?.Start(ImageLockMode.ReadOnly);
+            //apply rgb conversion to the masks we need to use
 
             //roughness: srgb -> rgb, ao
             Task roughnessTask = Task.Run(() =>
@@ -451,9 +471,6 @@ namespace mwb_materials
 
                 if (props.bSrgb)
                     ConvertImageToRGB(roughness);
-
-                if (props.bAo)
-                    ApplyAmbientOcclusion(roughness, ambientOcclusion);
 
                 roughness?.Stop();
             });
@@ -466,9 +483,6 @@ namespace mwb_materials
                 if (props.bSrgb)
                     ConvertImageToRGB(gloss);
 
-                if (props.bAo)
-                    ApplyAmbientOcclusion(gloss, ambientOcclusion);
-
                 gloss?.Stop();
             });
 
@@ -479,9 +493,6 @@ namespace mwb_materials
 
                 if (props.bSrgb)
                     ConvertImageToRGB(metalness);
-
-                if (props.bAo)
-                    ApplyAmbientOcclusion(metalness, ambientOcclusion);
 
                 metalness?.Stop();
             });
@@ -513,8 +524,6 @@ namespace mwb_materials
 
             await roughnessTask; await glossTask; await metalnessTask;
 
-            ambientOcclusion?.Stop();
-
             //start edits
             albedo?.Start(ImageLockMode.ReadOnly);
             ambientOcclusion?.Start(ImageLockMode.ReadOnly);
@@ -530,12 +539,12 @@ namespace mwb_materials
 
             Task<FastBitmap> normalTask = Task.Run(() =>
             {
-                return CreateSourceNormal(normal, (gloss != null) ? gloss : roughness, metalness, ref props);
+                return CreateSourceNormal(normal, (gloss != null) ? gloss : roughness, metalness, ambientOcclusion, ref props);
             });
 
             Task<FastBitmap> exponentTask = Task.Run(() =>
             {
-                return CreateSourceExponent((gloss != null) ? gloss : roughness, metalness, ref props);
+                return CreateSourceExponent((gloss != null) ? gloss : roughness, metalness, ambientOcclusion, ref props);
             });
 
             FastBitmap sourceAlbedo = await albedoTask;
