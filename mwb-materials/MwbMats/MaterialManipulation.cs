@@ -290,9 +290,15 @@ namespace mwb_materials
                 ApplyAmbientOcclusion(sourceAlbedo, ambientOcclusion);
             }
 
+            if (roughness != null)
+            {
+                DumpGrayscaleInChannel(sourceAlbedo, roughness, TextureChannel.Alpha);
+                MultiplyColorChannel(sourceAlbedo, 0.1f, TextureChannel.Alpha);
+            }
+
             if (metalness != null)
             {
-                DumpGrayscaleInChannel(sourceAlbedo, metalness, TextureChannel.Alpha);
+                DumpGrayscaleInChannel(sourceAlbedo, metalness, TextureChannel.Alpha, TextureOperation.Add);
 
                 if (!props.bMetalnessIgnoreGloss)
                 {
