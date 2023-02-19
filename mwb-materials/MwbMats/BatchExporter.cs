@@ -115,7 +115,7 @@ namespace mwb_materials.MwbMats
                 textures.Normal?.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("NORMALNAME", outputName);
 
-                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatRGBA8888, true, movePath);
+                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, true, movePath);
             }
 
             await albedoTask; await exponentTask; await normalTask;

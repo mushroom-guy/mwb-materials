@@ -242,6 +242,7 @@ namespace mwb_materials
 
         private static Color LerpColor(Color s, Color t, float k)
         {
+            k = Math.Min(Math.Max(k, 0.0f), 1.0f);
             var bk = (1.0f - k);
             var a = s.A * bk + t.A * k;
             var r = s.R * bk + t.R * k;

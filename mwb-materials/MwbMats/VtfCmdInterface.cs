@@ -17,13 +17,13 @@ namespace mwb_materials
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key, string val)
         {
-            processInfo.Arguments += "-" + key + " ";
-            processInfo.Arguments += val + " ";
+            processInfo.Arguments += " -" + key;
+            processInfo.Arguments += " " + val;
         }
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key)
         {
-            processInfo.Arguments += "-" + key + " ";
+            processInfo.Arguments += " -" + key;
         }
 
         public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips, string moveOutputPath)
@@ -38,8 +38,8 @@ namespace mwb_materials
             programInfo.FileName = "vtfcmd\\VTFCmd.exe";
 
             programInfo.Arguments = string.Empty;
-            AddProcessArgument(programInfo, "file", file);
-            AddProcessArgument(programInfo, "output", outputFolder);
+            AddProcessArgument(programInfo, "file", "\"" + file + "\"");
+            AddProcessArgument(programInfo, "output", "\"" + outputFolder + "\"");
             AddProcessArgument(programInfo, "format", format);
             AddProcessArgument(programInfo, "alphaformat", format);
             
