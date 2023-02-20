@@ -29,5 +29,9 @@ cool m
 ![downfall1](https://media.discordapp.net/attachments/484785909099790346/1076865941499031564/pbr3.png)
 ![downfall2](https://media.discordapp.net/attachments/484785909099790346/1076865940865683537/pbr1.png)
 
+![ruski](https://media.discordapp.net/attachments/484785909099790346/1077309187689824266/image.png)
+![ruski2](https://cdn.discordapp.com/attachments/484785909099790346/1077309188063113306/image.png)
+![ruski3](https://media.discordapp.net/attachments/484785909099790346/1077304605739859978/image.png)
+
 
 if you send me nice pic i will add to homepage :steamhappy:
