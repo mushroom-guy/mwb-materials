@@ -38,8 +38,8 @@ namespace mwb_materials
             programInfo.FileName = "vtfcmd\\VTFCmd.exe";
 
             programInfo.Arguments = string.Empty;
-            AddProcessArgument(programInfo, "file", "\"" + file + "\"");
-            AddProcessArgument(programInfo, "output", "\"" + outputFolder + "\"");
+            AddProcessArgument(programInfo, "file", file);
+            AddProcessArgument(programInfo, "output", outputFolder);
             AddProcessArgument(programInfo, "format", format);
             AddProcessArgument(programInfo, "alphaformat", format);
             

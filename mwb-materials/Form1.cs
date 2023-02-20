@@ -36,11 +36,9 @@ namespace mwb_materials
                 {
                     bSrgb = SrgbCheck.Checked,
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
-                    bAo = AoCheck.Checked,
+                    bAoMasks = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
                     bTighterPhong = TighterPhongCheck.Checked,
-                    bMetalnessIgnoreGloss = NoRoughMetalCheck.Checked,
-                    bDesaturateAlbedo = DesaturateAlbedoCheck.Checked,
                     bBrighterPhong = BrighterPhongCheck.Checked,
                     bOpenGlNormal = OpenGlNormalCheck.Checked
                 };
@@ -139,8 +137,6 @@ namespace mwb_materials
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
             toolTip1.SetToolTip(BrighterPhongCheck, "Generate a stronger phong using metalness. Ideal for conductive materials.");
             toolTip1.SetToolTip(TighterPhongCheck, "Generate a tighter exponent using metalness. Ideal for conductive materials.");
-            toolTip1.SetToolTip(NoRoughMetalCheck, "Generate env mapping wherever metalness is, regardless of gloss.");
-            toolTip1.SetToolTip(DesaturateAlbedoCheck, "Turn metallic parts darker. If your material isn't conductive (eyes, skin, etc...) turn this off.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
             toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT (does not move the textures there - they'll still be in /output");
         }
