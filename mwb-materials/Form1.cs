@@ -38,7 +38,9 @@ namespace mwb_materials
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAoMasks = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
-                    bOpenGlNormal = OpenGlNormalCheck.Checked
+                    bOpenGlNormal = OpenGlNormalCheck.Checked,
+                    PhongBoost = Math.Max((int)PhongBoost.Value, 1),
+                    bPhongAlbedoTint = PhongAlbedoTintCheck.Checked
                 };
 
                 BatchExporter.BatchProperties bProps = new BatchExporter.BatchProperties()

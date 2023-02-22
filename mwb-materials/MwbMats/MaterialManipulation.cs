@@ -265,14 +265,6 @@ namespace mwb_materials
                     float metal = metalness.ReadGrayscale(cursor);
                     metal /= 255.0f;
 
-                    float rough = 0.0f;
-
-                    if (roughness != null)
-                    {
-                        rough = roughness.ReadGrayscale(cursor);
-                        rough /= 255.0f;
-                    }
-
                     Color metallic = Color.FromArgb(245, 255, 255, 255);
                     Color nonMetallic = Color.FromArgb(0, 255, 255, 255);
 
@@ -302,15 +294,15 @@ namespace mwb_materials
                 //phong
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
 
-                if (props.bPhongAlbedoTint)
-                {
-                    //we darken the non metals so when we phong boost by the same amount they appear normal
-                    //and the metals will behave normally
-                    DivideColorChannel(sourceNormal, (byte)props.PhongBoost, TextureChannel.Alpha);
-                }
-
                 if (metalness != null)
                 {
+                    if (props.bPhongAlbedoTint)
+                    {
+                        //we darken the non metals so when we phong boost by the same amount they appear normal
+                        //and the metals will behave normally
+                        DivideColorChannel(sourceNormal, (byte)props.PhongBoost, TextureChannel.Alpha);
+                    }
+
                     //make metals brighter depending on roughness and albedo
                     for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
                     {
