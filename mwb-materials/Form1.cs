@@ -38,8 +38,6 @@ namespace mwb_materials
                     bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAoMasks = AoCheck.Checked,
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
-                    bTighterPhong = TighterPhongCheck.Checked,
-                    bBrighterPhong = BrighterPhongCheck.Checked,
                     bOpenGlNormal = OpenGlNormalCheck.Checked
                 };
 
@@ -135,10 +133,15 @@ namespace mwb_materials
             toolTip1.SetToolTip(AlbedoSrgbCheck, "Some assets may use sRGB colorspace for albedo. Tick this off if your texture doesn't.");
             toolTip1.SetToolTip(AoCheck, "Apply ambient occlusion to masks.");
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
-            toolTip1.SetToolTip(BrighterPhongCheck, "Generate a stronger phong using metalness. Ideal for conductive materials.");
-            toolTip1.SetToolTip(TighterPhongCheck, "Generate a tighter exponent using metalness. Ideal for conductive materials.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
             toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT (does not move the textures there - they'll still be in /output");
+            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Be careful: higher the number the worse the exponent gets!");
+            toolTip1.SetToolTip(PhongAlbedoTintCheck, "Enable this if your metals are colored (enables phong albedo tint).");
+        }
+
+        private void PhongAlbedoTintCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            PhongBoost.Enabled = PhongAlbedoTintCheck.Checked;
         }
     }
 }

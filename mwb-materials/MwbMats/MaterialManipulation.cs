@@ -265,7 +265,7 @@ namespace mwb_materials
                     float metal = metalness.ReadGrayscale(cursor);
                     metal /= 255.0f;
 
-                    float rough = 1.0f; //we assume this is really glossy
+                    float rough = 0.0f;
 
                     if (roughness != null)
                     {
@@ -273,7 +273,7 @@ namespace mwb_materials
                         rough /= 255.0f;
                     }
 
-                    Color metallic = Color.FromArgb(240, 255, 255, 255);
+                    Color metallic = Color.FromArgb(245, 255, 255, 255);
                     Color nonMetallic = Color.FromArgb(0, 255, 255, 255);
 
                     Color result = nonMetallic.LerpColor(metallic, metal);
@@ -285,7 +285,7 @@ namespace mwb_materials
             return sourceAlbedo;
         }
 
-        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap roughness, FastBitmap metalness, FastBitmap ambientOcclusion, ref GenerateProperties props)
+        private static FastBitmap CreateSourceNormal(FastBitmap normal, FastBitmap albedo, FastBitmap roughness, FastBitmap metalness, FastBitmap ambientOcclusion, ref GenerateProperties props)
         {
             if (normal == null)
             {
@@ -302,9 +302,40 @@ namespace mwb_materials
                 //phong
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
 
-                if (props.bBrighterPhong)
+                if (props.bPhongAlbedoTint)
                 {
-                    DumpGrayscaleInChannel(sourceNormal, metalness, TextureChannel.Alpha, TextureOperation.Add);
+                    //we darken the non metals so when we phong boost by the same amount they appear normal
+                    //and the metals will behave normally
+                    DivideColorChannel(sourceNormal, (byte)props.PhongBoost, TextureChannel.Alpha);
+                }
+
+                if (metalness != null)
+                {
+                    //make metals brighter depending on roughness and albedo
+                    for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
+                    {
+                        float metal = metalness.ReadGrayscale(cursor);
+                        metal /= 255.0f;
+
+                        float rough = 0.0f;
+
+                        if (roughness != null)
+                        {
+                            rough = roughness.ReadGrayscale(cursor);
+                            rough /= 255.0f;
+                        }
+
+                        Color metallic = Color.FromArgb(255, 255, 255, 255);
+                        Color nonMetallic = Color.FromArgb(0, 255, 255, 255);
+
+                        //float alb = albedo.ReadGrayscale(cursor);
+                        //alb /= 255.0f;
+                        float alb = albedo.ReadColor(cursor).GetLuminance();
+                        alb = (float)Math.Pow(alb, 6.0);
+
+                        Color result = nonMetallic.LerpColor(metallic, Math.Min((metal * rough) + (alb * 0.5f * metal), 1.0f));
+                        sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)Math.Min(sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] + result.A, 255);
+                    }
                 }
 
                 if (props.bAoMasks)
@@ -334,10 +365,8 @@ namespace mwb_materials
                 //phong exponent
                 DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Red);
 
-                if (props.bTighterPhong)
-                {
-                    DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Red, TextureOperation.Add);
-                }
+                //make metals tighter
+                //DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Red, TextureOperation.Add);
 
                 DivideColorChannel(sourceExponent, (byte)(155 / props.MaxExponent), TextureChannel.Red);
             }
@@ -368,13 +397,13 @@ namespace mwb_materials
 
         public struct GenerateProperties
         {
-            public bool bSrgb { get; set; }
-            public bool bAlbedoSrgb { get; set; }
-            public bool bAoMasks { get; set; }
-            public int MaxExponent { get; set; }
-            public bool bTighterPhong { get; set; }
-            public bool bBrighterPhong { get; set; }
-            public bool bOpenGlNormal { get; set; }
+            public bool bSrgb { get; internal set; }
+            public bool bAlbedoSrgb { get; internal set; }
+            public bool bAoMasks { get; internal set; }
+            public int MaxExponent { get; internal set; }
+            public bool bOpenGlNormal { get; internal set; }
+            public bool bPhongAlbedoTint { get; internal set; }
+            public int PhongBoost { get; internal set; }
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -506,7 +535,7 @@ namespace mwb_materials
 
             Task<FastBitmap> normalTask = Task.Run(() =>
             {
-                return CreateSourceNormal(normal, (gloss != null) ? gloss : roughness, metalness, ambientOcclusion, ref props);
+                return CreateSourceNormal(normal, albedo, (gloss != null) ? gloss : roughness, metalness, ambientOcclusion, ref props);
             });
 
             Task<FastBitmap> exponentTask = Task.Run(() =>

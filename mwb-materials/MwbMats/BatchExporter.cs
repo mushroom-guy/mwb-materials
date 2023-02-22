@@ -132,6 +132,8 @@ namespace mwb_materials.MwbMats
             }
 
             vmtValues.Add("EXPORTPATH", vmtPath);
+            vmtValues.Add("PHONGALBEDOTINT", props.GenerateProps.bPhongAlbedoTint ? 1 : 0);
+            vmtValues.Add("PHONGBOOST", props.GenerateProps.bPhongAlbedoTint ? Math.Max(props.GenerateProps.PhongBoost, 1) : 1);
 
             VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);

@@ -24,5 +24,10 @@ namespace mwb_materials.MwbMats
             var b = s.B * bk + t.B * k;
             return Color.FromArgb((int)a, (int)r, (int)g, (int)b);
         }
+
+        public static float GetLuminance(this Color c)
+        {
+            return (0.299f * c.R + 0.587f * c.G + 0.114f * c.B);
+        }
     }
 }
