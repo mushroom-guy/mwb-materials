@@ -33,61 +33,61 @@ namespace mwb_materials
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+            System.Windows.Forms.Label label10;
+            System.Windows.Forms.Label label9;
+            System.Windows.Forms.Label label8;
             System.Windows.Forms.GroupBox groupBox5;
+            System.Windows.Forms.Label label7;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label5;
             System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox3;
             System.Windows.Forms.GroupBox groupBox4;
             System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label7;
-            System.Windows.Forms.Label label8;
-            System.Windows.Forms.Label label9;
-            System.Windows.Forms.Label label10;
+            this.ExponentMipMapsCheck = new System.Windows.Forms.CheckBox();
+            this.NormalMipMapsCheck = new System.Windows.Forms.CheckBox();
+            this.ExponentCompression = new System.Windows.Forms.ComboBox();
+            this.NormalCompression = new System.Windows.Forms.ComboBox();
             this.AlbedoCompression = new System.Windows.Forms.ComboBox();
             this.AlbedoMipMapsCheck = new System.Windows.Forms.CheckBox();
-            this.FolderButton = new System.Windows.Forms.Button();
             this.HelpButton = new System.Windows.Forms.Button();
             this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
-            this.PhongAlbedoTintCheck = new System.Windows.Forms.CheckBox();
-            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
+            this.FolderButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.VmtDestinationButton = new System.Windows.Forms.Button();
+            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
+            this.GlossyFresnelCheck = new System.Windows.Forms.CheckBox();
+            this.PhongAlbedoTintCheck = new System.Windows.Forms.CheckBox();
             this.PhongBoost = new System.Windows.Forms.NumericUpDown();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AlbedoSrgbCheck = new System.Windows.Forms.CheckBox();
             this.MaxExponent = new System.Windows.Forms.NumericUpDown();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
-            this.NormalCompression = new System.Windows.Forms.ComboBox();
-            this.ExponentCompression = new System.Windows.Forms.ComboBox();
-            this.NormalMipMapsCheck = new System.Windows.Forms.CheckBox();
-            this.ExponentMipMapsCheck = new System.Windows.Forms.CheckBox();
-            this.GlossyFresnelCheck = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            label10 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
             groupBox5 = new System.Windows.Forms.GroupBox();
+            label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox4 = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
-            label7 = new System.Windows.Forms.Label();
-            label8 = new System.Windows.Forms.Label();
-            label9 = new System.Windows.Forms.Label();
-            label10 = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PhongBoost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -151,6 +151,86 @@ namespace mwb_materials
             tableLayoutPanel1.Size = new System.Drawing.Size(218, 90);
             tableLayoutPanel1.TabIndex = 6;
             // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            label10.ForeColor = System.Drawing.Color.ForestGreen;
+            label10.Location = new System.Drawing.Point(3, 60);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(35, 30);
+            label10.TabIndex = 22;
+            label10.Text = "E";
+            label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            label9.Location = new System.Drawing.Point(3, 29);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(35, 31);
+            label9.TabIndex = 21;
+            label9.Text = "N";
+            label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            label8.ForeColor = System.Drawing.Color.Red;
+            label8.Location = new System.Drawing.Point(3, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(35, 29);
+            label8.TabIndex = 10;
+            label8.Text = "RGB";
+            label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ExponentMipMapsCheck
+            // 
+            this.ExponentMipMapsCheck.AutoSize = true;
+            this.ExponentMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ExponentMipMapsCheck.Checked = true;
+            this.ExponentMipMapsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ExponentMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExponentMipMapsCheck.Location = new System.Drawing.Point(188, 63);
+            this.ExponentMipMapsCheck.Name = "ExponentMipMapsCheck";
+            this.ExponentMipMapsCheck.Size = new System.Drawing.Size(27, 24);
+            this.ExponentMipMapsCheck.TabIndex = 20;
+            this.ExponentMipMapsCheck.UseVisualStyleBackColor = true;
+            // 
+            // NormalMipMapsCheck
+            // 
+            this.NormalMipMapsCheck.AutoSize = true;
+            this.NormalMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NormalMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NormalMipMapsCheck.Location = new System.Drawing.Point(188, 32);
+            this.NormalMipMapsCheck.Name = "NormalMipMapsCheck";
+            this.NormalMipMapsCheck.Size = new System.Drawing.Size(27, 25);
+            this.NormalMipMapsCheck.TabIndex = 19;
+            this.NormalMipMapsCheck.UseVisualStyleBackColor = true;
+            // 
+            // ExponentCompression
+            // 
+            this.ExponentCompression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExponentCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ExponentCompression.FormattingEnabled = true;
+            this.ExponentCompression.Location = new System.Drawing.Point(44, 63);
+            this.ExponentCompression.Name = "ExponentCompression";
+            this.ExponentCompression.Size = new System.Drawing.Size(138, 21);
+            this.ExponentCompression.TabIndex = 18;
+            // 
+            // NormalCompression
+            // 
+            this.NormalCompression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NormalCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NormalCompression.FormattingEnabled = true;
+            this.NormalCompression.Location = new System.Drawing.Point(44, 32);
+            this.NormalCompression.Name = "NormalCompression";
+            this.NormalCompression.Size = new System.Drawing.Size(138, 21);
+            this.NormalCompression.TabIndex = 16;
+            // 
             // AlbedoCompression
             // 
             this.AlbedoCompression.DisplayMember = "DXT5";
@@ -190,6 +270,16 @@ namespace mwb_materials
             groupBox5.TabStop = false;
             groupBox5.Text = "VTFs";
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            label7.Location = new System.Drawing.Point(2, 16);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(43, 13);
+            label7.TabIndex = 9;
+            label7.Text = "Texture";
+            // 
             // label6
             // 
             label6.AutoSize = true;
@@ -209,18 +299,6 @@ namespace mwb_materials
             label5.Size = new System.Drawing.Size(67, 13);
             label5.TabIndex = 7;
             label5.Text = "Compression";
-            // 
-            // FolderButton
-            // 
-            this.FolderButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.FolderButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FolderButton.Location = new System.Drawing.Point(3, 63);
-            this.FolderButton.Name = "FolderButton";
-            this.FolderButton.Size = new System.Drawing.Size(218, 33);
-            this.FolderButton.TabIndex = 0;
-            this.FolderButton.Text = "Open Folder(s)";
-            this.FolderButton.UseVisualStyleBackColor = true;
-            this.FolderButton.Click += new System.EventHandler(this.FolderButton_Click);
             // 
             // groupBox1
             // 
@@ -285,6 +363,18 @@ namespace mwb_materials
             this.BatchIncludeFoldersCheck.Text = "Include folders in generated VMTs";
             this.BatchIncludeFoldersCheck.UseVisualStyleBackColor = true;
             // 
+            // FolderButton
+            // 
+            this.FolderButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.FolderButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FolderButton.Location = new System.Drawing.Point(3, 63);
+            this.FolderButton.Name = "FolderButton";
+            this.FolderButton.Size = new System.Drawing.Size(218, 33);
+            this.FolderButton.TabIndex = 0;
+            this.FolderButton.Text = "Open Folder(s)";
+            this.FolderButton.UseVisualStyleBackColor = true;
+            this.FolderButton.Click += new System.EventHandler(this.FolderButton_Click);
+            // 
             // groupBox4
             // 
             groupBox4.Controls.Add(this.tableLayoutPanel2);
@@ -308,26 +398,23 @@ namespace mwb_materials
             groupBox4.TabStop = false;
             groupBox4.Text = "Settings";
             // 
-            // PhongAlbedoTintCheck
+            // tableLayoutPanel2
             // 
-            this.PhongAlbedoTintCheck.AutoSize = true;
-            this.PhongAlbedoTintCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.PhongAlbedoTintCheck.Location = new System.Drawing.Point(5, 136);
-            this.PhongAlbedoTintCheck.Name = "PhongAlbedoTintCheck";
-            this.PhongAlbedoTintCheck.Size = new System.Drawing.Size(62, 17);
-            this.PhongAlbedoTintCheck.TabIndex = 15;
-            this.PhongAlbedoTintCheck.Text = "Colored";
-            this.PhongAlbedoTintCheck.UseVisualStyleBackColor = true;
-            this.PhongAlbedoTintCheck.CheckedChanged += new System.EventHandler(this.PhongAlbedoTintCheck_CheckedChanged);
-            // 
-            // VmtDestinationPath
-            // 
-            this.VmtDestinationPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.VmtDestinationPath.Location = new System.Drawing.Point(3, 28);
-            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.VmtDestinationPath.Name = "VmtDestinationPath";
-            this.VmtDestinationPath.Size = new System.Drawing.Size(188, 20);
-            this.VmtDestinationPath.TabIndex = 7;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.38739F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.61261F));
+            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationButton, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationPath, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(label3, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 184);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74074F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25926F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(222, 54);
+            this.tableLayoutPanel2.TabIndex = 17;
             // 
             // VmtDestinationButton
             // 
@@ -340,6 +427,38 @@ namespace mwb_materials
             this.VmtDestinationButton.Text = "...";
             this.VmtDestinationButton.UseVisualStyleBackColor = true;
             this.VmtDestinationButton.Click += new System.EventHandler(this.VmtDestinationButton_Click);
+            // 
+            // VmtDestinationPath
+            // 
+            this.VmtDestinationPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.VmtDestinationPath.Location = new System.Drawing.Point(3, 28);
+            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.VmtDestinationPath.Name = "VmtDestinationPath";
+            this.VmtDestinationPath.Size = new System.Drawing.Size(188, 20);
+            this.VmtDestinationPath.TabIndex = 7;
+            // 
+            // GlossyFresnelCheck
+            // 
+            this.GlossyFresnelCheck.AutoSize = true;
+            this.GlossyFresnelCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.GlossyFresnelCheck.Location = new System.Drawing.Point(5, 161);
+            this.GlossyFresnelCheck.Name = "GlossyFresnelCheck";
+            this.GlossyFresnelCheck.Size = new System.Drawing.Size(91, 17);
+            this.GlossyFresnelCheck.TabIndex = 16;
+            this.GlossyFresnelCheck.Text = "Glossy fresnel";
+            this.GlossyFresnelCheck.UseVisualStyleBackColor = true;
+            // 
+            // PhongAlbedoTintCheck
+            // 
+            this.PhongAlbedoTintCheck.AutoSize = true;
+            this.PhongAlbedoTintCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.PhongAlbedoTintCheck.Location = new System.Drawing.Point(5, 136);
+            this.PhongAlbedoTintCheck.Name = "PhongAlbedoTintCheck";
+            this.PhongAlbedoTintCheck.Size = new System.Drawing.Size(62, 17);
+            this.PhongAlbedoTintCheck.TabIndex = 15;
+            this.PhongAlbedoTintCheck.Text = "Colored";
+            this.PhongAlbedoTintCheck.UseVisualStyleBackColor = true;
+            this.PhongAlbedoTintCheck.CheckedChanged += new System.EventHandler(this.PhongAlbedoTintCheck_CheckedChanged);
             // 
             // PhongBoost
             // 
@@ -445,125 +564,6 @@ namespace mwb_materials
             this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
             // 
-            // NormalCompression
-            // 
-            this.NormalCompression.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NormalCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.NormalCompression.FormattingEnabled = true;
-            this.NormalCompression.Location = new System.Drawing.Point(44, 32);
-            this.NormalCompression.Name = "NormalCompression";
-            this.NormalCompression.Size = new System.Drawing.Size(138, 21);
-            this.NormalCompression.TabIndex = 16;
-            // 
-            // ExponentCompression
-            // 
-            this.ExponentCompression.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ExponentCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ExponentCompression.FormattingEnabled = true;
-            this.ExponentCompression.Location = new System.Drawing.Point(44, 63);
-            this.ExponentCompression.Name = "ExponentCompression";
-            this.ExponentCompression.Size = new System.Drawing.Size(138, 21);
-            this.ExponentCompression.TabIndex = 18;
-            // 
-            // NormalMipMapsCheck
-            // 
-            this.NormalMipMapsCheck.AutoSize = true;
-            this.NormalMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NormalMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NormalMipMapsCheck.Location = new System.Drawing.Point(188, 32);
-            this.NormalMipMapsCheck.Name = "NormalMipMapsCheck";
-            this.NormalMipMapsCheck.Size = new System.Drawing.Size(27, 25);
-            this.NormalMipMapsCheck.TabIndex = 19;
-            this.NormalMipMapsCheck.UseVisualStyleBackColor = true;
-            // 
-            // ExponentMipMapsCheck
-            // 
-            this.ExponentMipMapsCheck.AutoSize = true;
-            this.ExponentMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ExponentMipMapsCheck.Checked = true;
-            this.ExponentMipMapsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ExponentMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ExponentMipMapsCheck.Location = new System.Drawing.Point(188, 63);
-            this.ExponentMipMapsCheck.Name = "ExponentMipMapsCheck";
-            this.ExponentMipMapsCheck.Size = new System.Drawing.Size(27, 24);
-            this.ExponentMipMapsCheck.TabIndex = 20;
-            this.ExponentMipMapsCheck.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            label7.Location = new System.Drawing.Point(2, 16);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(43, 13);
-            label7.TabIndex = 9;
-            label7.Text = "Texture";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            label8.ForeColor = System.Drawing.Color.Red;
-            label8.Location = new System.Drawing.Point(3, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(35, 29);
-            label8.TabIndex = 10;
-            label8.Text = "RGB";
-            label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            label9.Location = new System.Drawing.Point(3, 29);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(35, 31);
-            label9.TabIndex = 21;
-            label9.Text = "N";
-            label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            label10.ForeColor = System.Drawing.Color.ForestGreen;
-            label10.Location = new System.Drawing.Point(3, 60);
-            label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(35, 30);
-            label10.TabIndex = 22;
-            label10.Text = "E";
-            label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // GlossyFresnelCheck
-            // 
-            this.GlossyFresnelCheck.AutoSize = true;
-            this.GlossyFresnelCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.GlossyFresnelCheck.Location = new System.Drawing.Point(5, 161);
-            this.GlossyFresnelCheck.Name = "GlossyFresnelCheck";
-            this.GlossyFresnelCheck.Size = new System.Drawing.Size(91, 17);
-            this.GlossyFresnelCheck.TabIndex = 16;
-            this.GlossyFresnelCheck.Text = "Glossy fresnel";
-            this.GlossyFresnelCheck.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.38739F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.61261F));
-            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationButton, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationPath, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(label3, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 184);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74074F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25926F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(222, 54);
-            this.tableLayoutPanel2.TabIndex = 17;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -591,10 +591,10 @@ namespace mwb_materials
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PhongBoost)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PhongBoost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).EndInit();
             this.ResumeLayout(false);
 
         }
