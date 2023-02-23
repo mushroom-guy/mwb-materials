@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,32 @@ namespace mwb_materials
         public FastBitmap(Bitmap src)
         {
             Source = src;
+        }
+
+        public void Resize(int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(Source.HorizontalResolution, Source.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(Source, destRect, 0, 0, Source.Width, Source.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            Source.Dispose();
+            Source = destImage;
         }
 
         public void Start(ImageLockMode Mode)
@@ -83,7 +110,7 @@ namespace mwb_materials
             System.Runtime.InteropServices.Marshal.Copy(Ptr, Other.Bytes, 0, Bytes.Length);
         }
 
-        public Bitmap Source { get; }
+        public Bitmap Source { get; private set; }
         public byte[] Bytes { get; private set; }
         private IntPtr Ptr;
         private BitmapData Data;
