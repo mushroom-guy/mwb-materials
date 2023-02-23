@@ -17,6 +17,12 @@ namespace mwb_materials.MwbMats
             public bool bMoveOutput { get; internal set; }
             public bool bIncludeFolders { get; internal set; }
             public MaterialManipulation.GenerateProperties GenerateProps { get; set; }
+            public string AlbedoCompression { get; internal set; }
+            public string NormalCompression { get; internal set; }
+            public string ExponentCompression { get; internal set; }
+            public bool bAlbedoMipMaps { get; internal set; }
+            public bool bNormalMipMaps { get; internal set; }
+            public bool bExponentMipMaps { get; internal set; }
         }
 
         private static async Task GenerateInFolder(string path, BatchProperties props, string startPath, Action<string> folderFunc)
@@ -95,7 +101,7 @@ namespace mwb_materials.MwbMats
                 textures.Albedo?.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("ALBEDONAME", outputName);
 
-                albedoTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false, movePath);
+                albedoTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, props.AlbedoCompression, !props.bAlbedoMipMaps, movePath);
             }
 
             if (textures.Exponent != null)
@@ -105,7 +111,7 @@ namespace mwb_materials.MwbMats
                 textures.Exponent.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("EXPONENTNAME", outputName);
 
-                exponentTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, false, movePath);
+                exponentTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, props.ExponentCompression, !props.bExponentMipMaps, movePath);
             }
 
             if (textures.Normal != null)
@@ -115,7 +121,7 @@ namespace mwb_materials.MwbMats
                 textures.Normal?.Save(tempPath + outputName + ".png", ImageFormat.Png);
                 vmtValues.Add("NORMALNAME", outputName);
 
-                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, VtfCmdInterface.FormatDXT5, true, movePath);
+                normalTask = VtfCmdInterface.ExportFile(tempPath + outputName + ".png", outputPath, props.NormalCompression, !props.bNormalMipMaps, movePath);
             }
 
             await albedoTask; await exponentTask; await normalTask;
@@ -134,6 +140,7 @@ namespace mwb_materials.MwbMats
             vmtValues.Add("EXPORTPATH", vmtPath);
             vmtValues.Add("PHONGALBEDOTINT", props.GenerateProps.bPhongAlbedoTint ? 1 : 0);
             vmtValues.Add("PHONGBOOST", props.GenerateProps.bPhongAlbedoTint ? Math.Max(props.GenerateProps.PhongBoost, 1) : 1);
+            vmtValues.Add("FRESNEL", props.GenerateProps.bGlossyFresnel ? "[1 2.5 0]" : "[1 0.5 0]");
 
             VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);

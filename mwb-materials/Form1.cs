@@ -40,7 +40,8 @@ namespace mwb_materials
                     MaxExponent = Math.Max((int)MaxExponent.Value, 1),
                     bOpenGlNormal = OpenGlNormalCheck.Checked,
                     PhongBoost = Math.Max((int)PhongBoost.Value, 1),
-                    bPhongAlbedoTint = PhongAlbedoTintCheck.Checked
+                    bPhongAlbedoTint = PhongAlbedoTintCheck.Checked,
+                    bGlossyFresnel = GlossyFresnelCheck.Checked
                 };
 
                 BatchExporter.BatchProperties bProps = new BatchExporter.BatchProperties()
@@ -48,6 +49,12 @@ namespace mwb_materials
                     VmtRootPath = VmtDestinationPath.Text,
                     bMoveOutput = BatchMoveOutputCheck.Checked,
                     bIncludeFolders = BatchIncludeFoldersCheck.Checked,
+                    AlbedoCompression = AlbedoCompression.Text,
+                    NormalCompression = NormalCompression.Text,
+                    ExponentCompression = ExponentCompression.Text,
+                    bAlbedoMipMaps = AlbedoMipMapsCheck.Checked,
+                    bNormalMipMaps = NormalMipMapsCheck.Checked,
+                    bExponentMipMaps = ExponentMipMapsCheck.Checked,
                     GenerateProps = props
                 };
 
@@ -66,21 +73,8 @@ namespace mwb_materials
                 timer.Stop();
                 Enabled = true;
 
-                MessageBox.Show("Generated textures! (" + timer.Elapsed.ToString(@"m\:ss\.fff") + ")", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 bpForm.Close();
-            }
-        }
-
-        private void VmtButton_Click(object sender, EventArgs e)
-        {
-            CommonOpenFileDialog folderDialog = new CommonOpenFileDialog();
-            folderDialog.IsFolderPicker = true;
-            CommonFileDialogResult result = folderDialog.ShowDialog();
-
-            if (result == CommonFileDialogResult.Ok)
-            {
-                VmtGenerator.Generate(folderDialog.FileName, VmtName.Text);
-                MessageBox.Show("Saved VMT file: " + VmtName.Text, "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Generated textures! (" + timer.Elapsed.ToString(@"m\:ss\.fff") + ")", "MWB Mats", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -136,14 +130,29 @@ namespace mwb_materials
             toolTip1.SetToolTip(AoCheck, "Apply ambient occlusion to masks.");
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
-            toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT (does not move the textures there - they'll still be in /output");
-            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Be careful: higher the number the worse the exponent gets!");
+            toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT.");
+            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Note that this changes the final output of the exponent texture.\nIf your materials are fully metallic, keep this at 1.\nMake sure to experiment with what looks right, but 3 is usually good enough.");
             toolTip1.SetToolTip(PhongAlbedoTintCheck, "Enable this if your metals are colored (enables phong albedo tint).");
+            toolTip1.SetToolTip(GlossyFresnelCheck, "Enable this to have bright silhouettes (good for glossy and round objects).");
+            toolTip1.SetToolTip(BatchMoveOutputCheck, "Move the output folder contents to VMT texture path.");
+            toolTip1.SetToolTip(BatchIncludeFoldersCheck, "Add folder hierarchy to VMT texture paths (when doing more than one folder).");
+
+            string[] compressionFormats = new string[] { VtfCmdInterface.FormatDXT5, VtfCmdInterface.FormatRGBA8888 };
+
+            AlbedoCompression.Items.AddRange(compressionFormats);
+            AlbedoCompression.SelectedIndex = 0;
+
+            NormalCompression.Items.AddRange(compressionFormats);
+            NormalCompression.SelectedIndex = 1;
+
+            ExponentCompression.Items.AddRange(compressionFormats);
+            ExponentCompression.SelectedIndex = 0;
         }
 
         private void PhongAlbedoTintCheck_CheckedChanged(object sender, EventArgs e)
         {
             PhongBoost.Enabled = PhongAlbedoTintCheck.Checked;
         }
+
     }
 }

@@ -11,9 +11,9 @@ namespace mwb_materials
 {
     class VtfCmdInterface
     {
-        public static readonly string FormatDXT1 = "dxt1";
-        public static readonly string FormatDXT5 = "dxt5";
-        public static readonly string FormatRGBA8888 = "rgba8888";
+        public static readonly string FormatDXT1 = "DXT1";
+        public static readonly string FormatDXT5 = "DXT5";
+        public static readonly string FormatRGBA8888 = "RGBA8888";
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key, string val)
         {
@@ -46,6 +46,11 @@ namespace mwb_materials
             if (bNoMips)
             {
                 AddProcessArgument(programInfo, "nomipmaps");
+            }
+            else
+            {
+                AddProcessArgument(programInfo, "mfilter", "GAUSSIAN");
+                AddProcessArgument(programInfo, "msharpen", "SHARPENSOFT");
             }
 
             Process runProgram = new Process();

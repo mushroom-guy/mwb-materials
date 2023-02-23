@@ -23,9 +23,11 @@ namespace mwb_materials
     {
         private static readonly string AlbedoNomenclature = "_rgb";
         private static readonly string AmbientOcclusionNomenclature = "_o";
+        private static readonly string AmbientOcclusionAltNomenclature = "_ao";
         private static readonly string RoughnessNomenclature = "_r";
         private static readonly string GlossNomenclature = "_g";
         private static readonly string MetalnessNomenclature = "_alpha";
+        private static readonly string MetalnessAltNomenclature = "_m";
         private static readonly string NormalNomenclature = "_n";
 
         public enum TextureChannel
@@ -265,12 +267,16 @@ namespace mwb_materials
                     float metal = metalness.ReadGrayscale(cursor);
                     metal /= 255.0f;
 
-                    Color metallic = Color.FromArgb(245, 255, 255, 255);
-                    Color nonMetallic = Color.FromArgb(0, 255, 255, 255);
+                    float metallic = 245f;
+                    float nonMetallic = 0f;
 
-                    Color result = nonMetallic.LerpColor(metallic, metal);
-                    sourceAlbedo.Bytes[cursor + (int)TextureChannel.Alpha] = result.A;
+                    float result = nonMetallic.Lerp(metallic, metal);
+                    sourceAlbedo.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)result;
                 }
+            }
+            else
+            {
+                DumpColorInChannel(sourceAlbedo, 0, TextureChannel.Alpha);
             }
 
             sourceAlbedo.Stop();
@@ -303,7 +309,7 @@ namespace mwb_materials
                         DivideColorChannel(sourceNormal, (byte)props.PhongBoost, TextureChannel.Alpha);
                     }
 
-                    //make metals brighter depending on roughness and albedo
+                    //make metals brighter depending on roughness
                     for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
                     {
                         float metal = metalness.ReadGrayscale(cursor);
@@ -317,16 +323,15 @@ namespace mwb_materials
                             rough /= 255.0f;
                         }
 
-                        Color metallic = Color.FromArgb(255, 255, 255, 255);
-                        Color nonMetallic = Color.FromArgb(0, 255, 255, 255);
+                        float metallic = 255.0f;
+                        float nonMetallic = 0.0f;
 
-                        //float alb = albedo.ReadGrayscale(cursor);
-                        //alb /= 255.0f;
-                        float alb = albedo.ReadColor(cursor).GetLuminance();
-                        alb = (float)Math.Pow(alb, 6.0);
+                        /*float alb = albedo.ReadColor(cursor).GetLuminance();
+                        alb = (float)Math.Pow(alb, 6);
+                        alb *= 0.25f;*/
 
-                        Color result = nonMetallic.LerpColor(metallic, Math.Min((metal * rough) + (alb * 0.5f * metal), 1.0f));
-                        sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)Math.Min(sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] + result.A, 255);
+                        float result = nonMetallic.Lerp(metallic, Math.Min((/*alb + */rough) * metal, 1.0f));
+                        sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)Math.Min(sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] + result, 255);
                     }
                 }
 
@@ -396,6 +401,29 @@ namespace mwb_materials
             public bool bOpenGlNormal { get; internal set; }
             public bool bPhongAlbedoTint { get; internal set; }
             public int PhongBoost { get; internal set; }
+            public bool bGlossyFresnel { get; internal set; }
+        }
+
+        private static void SetBiggestWidthAndHeight(ref int width, ref int height, FastBitmap bmp)
+        {
+            width = bmp.Source.Width > width ? bmp.Source.Width : width;
+            height = bmp.Source.Height > height ? bmp.Source.Height : height;
+        }
+
+        private static void ResizeIfSmaller(FastBitmap bmp, int width, int height)
+        {
+            if (bmp == null)
+            {
+                return;
+            }
+
+            //technically shouldn't be bigger :D :(
+            if (bmp.Source.Width >= width && bmp.Source.Height >= height)
+            {
+                return;
+            }
+
+            bmp.Resize(width, height);
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -407,6 +435,9 @@ namespace mwb_materials
             FastBitmap metalness = null;
             FastBitmap normal = null;
 
+            int biggestWidth = 0;
+            int biggestHeight = 0;
+
             foreach (string file in files)
             {
                 string name = Path.GetFileNameWithoutExtension(file);
@@ -415,38 +446,52 @@ namespace mwb_materials
                 if (name.EndsWith(AlbedoNomenclature))
                 {
                     albedo = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, albedo);
                     continue;
                 }
 
-                if (name.EndsWith(AmbientOcclusionNomenclature))
+                if (name.EndsWith(AmbientOcclusionNomenclature) || name.EndsWith(AmbientOcclusionAltNomenclature))
                 {
                     ambientOcclusion = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, ambientOcclusion);
                     continue;
                 }
 
                 if (name.EndsWith(RoughnessNomenclature))
                 {
                     roughness = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, roughness);
                     continue;
                 }
 
                 if (name.EndsWith(GlossNomenclature))
                 {
                     gloss = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, gloss);
                     continue;
                 }
 
-                if (name.EndsWith(MetalnessNomenclature))
+                if (name.EndsWith(MetalnessNomenclature) || name.EndsWith(MetalnessAltNomenclature))
                 {
                     metalness = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, metalness);
                     continue;
                 }
 
                 if (name.EndsWith(NormalNomenclature))
                 {
                     normal = LoadImage(file);
+                    SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, normal);
                 }
             }
+
+            //resize textures
+            ResizeIfSmaller(albedo, biggestWidth, biggestHeight);
+            ResizeIfSmaller(ambientOcclusion, biggestWidth, biggestHeight);
+            ResizeIfSmaller(roughness, biggestWidth, biggestHeight);
+            ResizeIfSmaller(gloss, biggestWidth, biggestHeight);
+            ResizeIfSmaller(metalness, biggestWidth, biggestHeight);
+            ResizeIfSmaller(normal, biggestWidth, biggestHeight);
 
             //apply rgb conversion to the masks we need to use
 

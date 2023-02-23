@@ -25,9 +25,15 @@ namespace mwb_materials.MwbMats
             return Color.FromArgb((int)a, (int)r, (int)g, (int)b);
         }
 
+        public static float Lerp(this float a, float t, float k)
+        {
+            k = Math.Min(Math.Max(k, 0.0f), 1.0f);
+            return (a * (1.0f - k)) + (t * k);
+        }
+
         public static float GetLuminance(this Color c)
         {
-            return (0.299f * c.R + 0.587f * c.G + 0.114f * c.B);
+            return (0.299f * (c.R / 255.0f) + 0.587f * (c.G / 255.0f) + 0.114f * (c.B / 255.0f));
         }
     }
 }

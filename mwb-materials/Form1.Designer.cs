@@ -32,36 +32,183 @@ namespace mwb_materials
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label4;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+            System.Windows.Forms.GroupBox groupBox5;
+            System.Windows.Forms.Label label6;
+            System.Windows.Forms.Label label5;
+            System.Windows.Forms.GroupBox groupBox1;
+            System.Windows.Forms.GroupBox groupBox3;
+            System.Windows.Forms.GroupBox groupBox4;
+            System.Windows.Forms.Label label1;
+            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label label8;
+            System.Windows.Forms.Label label9;
+            System.Windows.Forms.Label label10;
+            this.AlbedoCompression = new System.Windows.Forms.ComboBox();
+            this.AlbedoMipMapsCheck = new System.Windows.Forms.CheckBox();
             this.FolderButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.HelpButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.VmtName = new System.Windows.Forms.TextBox();
-            this.VmtButton = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
+            this.PhongAlbedoTintCheck = new System.Windows.Forms.CheckBox();
+            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.VmtDestinationButton = new System.Windows.Forms.Button();
+            this.PhongBoost = new System.Windows.Forms.NumericUpDown();
+            this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AlbedoSrgbCheck = new System.Windows.Forms.CheckBox();
             this.MaxExponent = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.AoCheck = new System.Windows.Forms.CheckBox();
             this.SrgbCheck = new System.Windows.Forms.CheckBox();
-            this.PhongBoost = new System.Windows.Forms.NumericUpDown();
-            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
-            this.PhongAlbedoTintCheck = new System.Windows.Forms.CheckBox();
+            this.NormalCompression = new System.Windows.Forms.ComboBox();
+            this.ExponentCompression = new System.Windows.Forms.ComboBox();
+            this.NormalMipMapsCheck = new System.Windows.Forms.CheckBox();
+            this.ExponentMipMapsCheck = new System.Windows.Forms.CheckBox();
+            this.GlossyFresnelCheck = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).BeginInit();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            groupBox5 = new System.Windows.Forms.GroupBox();
+            label6 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBox3 = new System.Windows.Forms.GroupBox();
+            groupBox4 = new System.Windows.Forms.GroupBox();
+            label1 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
+            label10 = new System.Windows.Forms.Label();
+            tableLayoutPanel1.SuspendLayout();
+            groupBox5.SuspendLayout();
+            groupBox1.SuspendLayout();
+            groupBox3.SuspendLayout();
+            groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PhongBoost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            label2.Location = new System.Drawing.Point(5, 15);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(137, 78);
+            label2.TabIndex = 2;
+            label2.Text = "_rgb - albedo\r\n_alpha, _m - metalness\r\n_g - gloss\r\n_r - roughness\r\n_o, _ao - ambi" +
+    "ent occlusion\r\n_n - normal\r\n";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = System.Drawing.SystemColors.Control;
+            label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            label3.Location = new System.Drawing.Point(0, 0);
+            label3.Margin = new System.Windows.Forms.Padding(0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(194, 22);
+            label3.TabIndex = 8;
+            label3.Text = "VMT textures root path";
+            label3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.BackColor = System.Drawing.SystemColors.Control;
+            label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            label4.Location = new System.Drawing.Point(122, 137);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(34, 13);
+            label4.TabIndex = 14;
+            label4.Text = "Boost";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 144F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            tableLayoutPanel1.Controls.Add(label10, 0, 2);
+            tableLayoutPanel1.Controls.Add(label9, 0, 1);
+            tableLayoutPanel1.Controls.Add(label8, 0, 0);
+            tableLayoutPanel1.Controls.Add(this.ExponentMipMapsCheck, 2, 2);
+            tableLayoutPanel1.Controls.Add(this.NormalMipMapsCheck, 2, 1);
+            tableLayoutPanel1.Controls.Add(this.ExponentCompression, 1, 2);
+            tableLayoutPanel1.Controls.Add(this.NormalCompression, 1, 1);
+            tableLayoutPanel1.Controls.Add(this.AlbedoCompression, 1, 0);
+            tableLayoutPanel1.Controls.Add(this.AlbedoMipMapsCheck, 2, 0);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            tableLayoutPanel1.Location = new System.Drawing.Point(3, 36);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.3871F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.6129F));
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(218, 90);
+            tableLayoutPanel1.TabIndex = 6;
+            // 
+            // AlbedoCompression
+            // 
+            this.AlbedoCompression.DisplayMember = "DXT5";
+            this.AlbedoCompression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AlbedoCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AlbedoCompression.FormattingEnabled = true;
+            this.AlbedoCompression.Location = new System.Drawing.Point(44, 3);
+            this.AlbedoCompression.Name = "AlbedoCompression";
+            this.AlbedoCompression.Size = new System.Drawing.Size(138, 21);
+            this.AlbedoCompression.TabIndex = 0;
+            // 
+            // AlbedoMipMapsCheck
+            // 
+            this.AlbedoMipMapsCheck.AutoSize = true;
+            this.AlbedoMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.AlbedoMipMapsCheck.Checked = true;
+            this.AlbedoMipMapsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AlbedoMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AlbedoMipMapsCheck.Location = new System.Drawing.Point(188, 3);
+            this.AlbedoMipMapsCheck.Name = "AlbedoMipMapsCheck";
+            this.AlbedoMipMapsCheck.Size = new System.Drawing.Size(27, 23);
+            this.AlbedoMipMapsCheck.TabIndex = 1;
+            this.AlbedoMipMapsCheck.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(label7);
+            groupBox5.Controls.Add(label6);
+            groupBox5.Controls.Add(label5);
+            groupBox5.Controls.Add(tableLayoutPanel1);
+            groupBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            groupBox5.ForeColor = System.Drawing.SystemColors.ControlDark;
+            groupBox5.Location = new System.Drawing.Point(0, 343);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new System.Drawing.Size(224, 129);
+            groupBox5.TabIndex = 7;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "VTFs";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            label6.Location = new System.Drawing.Point(189, 16);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(29, 13);
+            label6.TabIndex = 8;
+            label6.Text = "Mips";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            label5.Location = new System.Drawing.Point(77, 16);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(67, 13);
+            label5.TabIndex = 7;
+            label5.Text = "Compression";
             // 
             // FolderButton
             // 
@@ -75,30 +222,19 @@ namespace mwb_materials
             this.FolderButton.UseVisualStyleBackColor = true;
             this.FolderButton.Click += new System.EventHandler(this.FolderButton_Click);
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            label2.Location = new System.Drawing.Point(5, 15);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(113, 78);
-            label2.TabIndex = 2;
-            label2.Text = "_rgb - albedo\r\n_alpha - metalness\r\n_g - gloss\r\n_r - roughness\r\n_o - ambient occlu" +
-    "sion\r\n_n - normal\r\n";
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.HelpButton);
-            this.groupBox1.Controls.Add(label2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            this.groupBox1.Size = new System.Drawing.Size(224, 99);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Texture Layout";
+            groupBox1.Controls.Add(this.HelpButton);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            groupBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            groupBox1.Location = new System.Drawing.Point(0, 0);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            groupBox1.Size = new System.Drawing.Size(224, 99);
+            groupBox1.TabIndex = 3;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Texture Layout";
             // 
             // HelpButton
             // 
@@ -111,55 +247,19 @@ namespace mwb_materials
             this.HelpButton.UseVisualStyleBackColor = true;
             this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.VmtName);
-            this.groupBox2.Controls.Add(this.VmtButton);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox2.Location = new System.Drawing.Point(0, 99);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
-            this.groupBox2.Size = new System.Drawing.Size(224, 74);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Preset VMT";
-            // 
-            // VmtName
-            // 
-            this.VmtName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.VmtName.Location = new System.Drawing.Point(2, 15);
-            this.VmtName.Name = "VmtName";
-            this.VmtName.Size = new System.Drawing.Size(222, 20);
-            this.VmtName.TabIndex = 6;
-            this.VmtName.Text = "example_vmt";
-            // 
-            // VmtButton
-            // 
-            this.VmtButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.VmtButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.VmtButton.Location = new System.Drawing.Point(2, 37);
-            this.VmtButton.Margin = new System.Windows.Forms.Padding(0);
-            this.VmtButton.Name = "VmtButton";
-            this.VmtButton.Size = new System.Drawing.Size(222, 33);
-            this.VmtButton.TabIndex = 5;
-            this.VmtButton.Text = "Generate VMT";
-            this.VmtButton.UseVisualStyleBackColor = true;
-            this.VmtButton.Click += new System.EventHandler(this.VmtButton_Click);
-            // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.BatchMoveOutputCheck);
-            this.groupBox3.Controls.Add(this.BatchIncludeFoldersCheck);
-            this.groupBox3.Controls.Add(this.FolderButton);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox3.Location = new System.Drawing.Point(0, 386);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(224, 99);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Batch";
+            groupBox3.Controls.Add(this.BatchMoveOutputCheck);
+            groupBox3.Controls.Add(this.BatchIncludeFoldersCheck);
+            groupBox3.Controls.Add(this.FolderButton);
+            groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            groupBox3.Location = new System.Drawing.Point(0, 472);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(224, 99);
+            groupBox3.TabIndex = 4;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Batch";
             // 
             // BatchMoveOutputCheck
             // 
@@ -177,8 +277,6 @@ namespace mwb_materials
             // BatchIncludeFoldersCheck
             // 
             this.BatchIncludeFoldersCheck.AutoSize = true;
-            this.BatchIncludeFoldersCheck.Checked = true;
-            this.BatchIncludeFoldersCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.BatchIncludeFoldersCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BatchIncludeFoldersCheck.Location = new System.Drawing.Point(8, 19);
             this.BatchIncludeFoldersCheck.Name = "BatchIncludeFoldersCheck";
@@ -189,27 +287,82 @@ namespace mwb_materials
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.PhongAlbedoTintCheck);
-            this.groupBox4.Controls.Add(this.VmtDestinationPath);
-            this.groupBox4.Controls.Add(this.VmtDestinationButton);
-            this.groupBox4.Controls.Add(label4);
-            this.groupBox4.Controls.Add(label3);
-            this.groupBox4.Controls.Add(this.PhongBoost);
-            this.groupBox4.Controls.Add(this.OpenGlNormalCheck);
-            this.groupBox4.Controls.Add(this.AlbedoSrgbCheck);
-            this.groupBox4.Controls.Add(this.MaxExponent);
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Controls.Add(this.AoCheck);
-            this.groupBox4.Controls.Add(this.SrgbCheck);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.groupBox4.Location = new System.Drawing.Point(0, 173);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
-            this.groupBox4.Size = new System.Drawing.Size(224, 212);
-            this.groupBox4.TabIndex = 5;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Settings";
+            groupBox4.Controls.Add(this.tableLayoutPanel2);
+            groupBox4.Controls.Add(this.GlossyFresnelCheck);
+            groupBox4.Controls.Add(this.PhongAlbedoTintCheck);
+            groupBox4.Controls.Add(label4);
+            groupBox4.Controls.Add(this.PhongBoost);
+            groupBox4.Controls.Add(this.OpenGlNormalCheck);
+            groupBox4.Controls.Add(this.AlbedoSrgbCheck);
+            groupBox4.Controls.Add(this.MaxExponent);
+            groupBox4.Controls.Add(label1);
+            groupBox4.Controls.Add(this.AoCheck);
+            groupBox4.Controls.Add(this.SrgbCheck);
+            groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            groupBox4.Location = new System.Drawing.Point(0, 99);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
+            groupBox4.Size = new System.Drawing.Size(224, 242);
+            groupBox4.TabIndex = 5;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Settings";
+            // 
+            // PhongAlbedoTintCheck
+            // 
+            this.PhongAlbedoTintCheck.AutoSize = true;
+            this.PhongAlbedoTintCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.PhongAlbedoTintCheck.Location = new System.Drawing.Point(5, 136);
+            this.PhongAlbedoTintCheck.Name = "PhongAlbedoTintCheck";
+            this.PhongAlbedoTintCheck.Size = new System.Drawing.Size(62, 17);
+            this.PhongAlbedoTintCheck.TabIndex = 15;
+            this.PhongAlbedoTintCheck.Text = "Colored";
+            this.PhongAlbedoTintCheck.UseVisualStyleBackColor = true;
+            this.PhongAlbedoTintCheck.CheckedChanged += new System.EventHandler(this.PhongAlbedoTintCheck_CheckedChanged);
+            // 
+            // VmtDestinationPath
+            // 
+            this.VmtDestinationPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.VmtDestinationPath.Location = new System.Drawing.Point(3, 28);
+            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.VmtDestinationPath.Name = "VmtDestinationPath";
+            this.VmtDestinationPath.Size = new System.Drawing.Size(188, 20);
+            this.VmtDestinationPath.TabIndex = 7;
+            // 
+            // VmtDestinationButton
+            // 
+            this.VmtDestinationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.VmtDestinationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.VmtDestinationButton.Location = new System.Drawing.Point(197, 27);
+            this.VmtDestinationButton.Name = "VmtDestinationButton";
+            this.VmtDestinationButton.Size = new System.Drawing.Size(22, 22);
+            this.VmtDestinationButton.TabIndex = 7;
+            this.VmtDestinationButton.Text = "...";
+            this.VmtDestinationButton.UseVisualStyleBackColor = true;
+            this.VmtDestinationButton.Click += new System.EventHandler(this.VmtDestinationButton_Click);
+            // 
+            // PhongBoost
+            // 
+            this.PhongBoost.Enabled = false;
+            this.PhongBoost.Location = new System.Drawing.Point(80, 135);
+            this.PhongBoost.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.PhongBoost.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PhongBoost.Name = "PhongBoost";
+            this.PhongBoost.Size = new System.Drawing.Size(38, 20);
+            this.PhongBoost.TabIndex = 13;
+            this.PhongBoost.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // OpenGlNormalCheck
             // 
@@ -221,29 +374,6 @@ namespace mwb_materials
             this.OpenGlNormalCheck.TabIndex = 12;
             this.OpenGlNormalCheck.Text = "OpenGL normal";
             this.OpenGlNormalCheck.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.BackColor = System.Drawing.SystemColors.Control;
-            label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            label3.Location = new System.Drawing.Point(5, 172);
-            label3.Margin = new System.Windows.Forms.Padding(0);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(115, 13);
-            label3.TabIndex = 8;
-            label3.Text = "VMT textures root path";
-            // 
-            // VmtDestinationButton
-            // 
-            this.VmtDestinationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.VmtDestinationButton.Location = new System.Drawing.Point(200, 188);
-            this.VmtDestinationButton.Name = "VmtDestinationButton";
-            this.VmtDestinationButton.Size = new System.Drawing.Size(21, 21);
-            this.VmtDestinationButton.TabIndex = 7;
-            this.VmtDestinationButton.Text = "...";
-            this.VmtDestinationButton.UseVisualStyleBackColor = true;
-            this.VmtDestinationButton.Click += new System.EventHandler(this.VmtDestinationButton_Click);
             // 
             // AlbedoSrgbCheck
             // 
@@ -280,14 +410,14 @@ namespace mwb_materials
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.Control;
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(49, 112);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Max exponent";
+            label1.AutoSize = true;
+            label1.BackColor = System.Drawing.SystemColors.Control;
+            label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            label1.Location = new System.Drawing.Point(49, 112);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(74, 13);
+            label1.TabIndex = 3;
+            label1.Text = "Max exponent";
             // 
             // AoCheck
             // 
@@ -315,69 +445,135 @@ namespace mwb_materials
             this.SrgbCheck.Text = "Convert masks to linear RGB";
             this.SrgbCheck.UseVisualStyleBackColor = true;
             // 
-            // PhongBoost
+            // NormalCompression
             // 
-            this.PhongBoost.Enabled = false;
-            this.PhongBoost.Location = new System.Drawing.Point(80, 135);
-            this.PhongBoost.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.PhongBoost.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PhongBoost.Name = "PhongBoost";
-            this.PhongBoost.Size = new System.Drawing.Size(38, 20);
-            this.PhongBoost.TabIndex = 13;
-            this.PhongBoost.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.NormalCompression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NormalCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NormalCompression.FormattingEnabled = true;
+            this.NormalCompression.Location = new System.Drawing.Point(44, 32);
+            this.NormalCompression.Name = "NormalCompression";
+            this.NormalCompression.Size = new System.Drawing.Size(138, 21);
+            this.NormalCompression.TabIndex = 16;
             // 
-            // label4
+            // ExponentCompression
             // 
-            label4.AutoSize = true;
-            label4.BackColor = System.Drawing.SystemColors.Control;
-            label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            label4.Location = new System.Drawing.Point(122, 137);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(34, 13);
-            label4.TabIndex = 14;
-            label4.Text = "Boost";
+            this.ExponentCompression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExponentCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ExponentCompression.FormattingEnabled = true;
+            this.ExponentCompression.Location = new System.Drawing.Point(44, 63);
+            this.ExponentCompression.Name = "ExponentCompression";
+            this.ExponentCompression.Size = new System.Drawing.Size(138, 21);
+            this.ExponentCompression.TabIndex = 18;
             // 
-            // VmtDestinationPath
+            // NormalMipMapsCheck
             // 
-            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 188);
-            this.VmtDestinationPath.Name = "VmtDestinationPath";
-            this.VmtDestinationPath.Size = new System.Drawing.Size(191, 20);
-            this.VmtDestinationPath.TabIndex = 7;
+            this.NormalMipMapsCheck.AutoSize = true;
+            this.NormalMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NormalMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NormalMipMapsCheck.Location = new System.Drawing.Point(188, 32);
+            this.NormalMipMapsCheck.Name = "NormalMipMapsCheck";
+            this.NormalMipMapsCheck.Size = new System.Drawing.Size(27, 25);
+            this.NormalMipMapsCheck.TabIndex = 19;
+            this.NormalMipMapsCheck.UseVisualStyleBackColor = true;
             // 
-            // PhongAlbedoTintCheck
+            // ExponentMipMapsCheck
             // 
-            this.PhongAlbedoTintCheck.AutoSize = true;
-            this.PhongAlbedoTintCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.PhongAlbedoTintCheck.Location = new System.Drawing.Point(5, 136);
-            this.PhongAlbedoTintCheck.Name = "PhongAlbedoTintCheck";
-            this.PhongAlbedoTintCheck.Size = new System.Drawing.Size(62, 17);
-            this.PhongAlbedoTintCheck.TabIndex = 15;
-            this.PhongAlbedoTintCheck.Text = "Colored";
-            this.PhongAlbedoTintCheck.UseVisualStyleBackColor = true;
-            this.PhongAlbedoTintCheck.CheckedChanged += new System.EventHandler(this.PhongAlbedoTintCheck_CheckedChanged);
+            this.ExponentMipMapsCheck.AutoSize = true;
+            this.ExponentMipMapsCheck.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ExponentMipMapsCheck.Checked = true;
+            this.ExponentMipMapsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ExponentMipMapsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExponentMipMapsCheck.Location = new System.Drawing.Point(188, 63);
+            this.ExponentMipMapsCheck.Name = "ExponentMipMapsCheck";
+            this.ExponentMipMapsCheck.Size = new System.Drawing.Size(27, 24);
+            this.ExponentMipMapsCheck.TabIndex = 20;
+            this.ExponentMipMapsCheck.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            label7.Location = new System.Drawing.Point(2, 16);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(43, 13);
+            label7.TabIndex = 9;
+            label7.Text = "Texture";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            label8.ForeColor = System.Drawing.Color.Red;
+            label8.Location = new System.Drawing.Point(3, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(35, 29);
+            label8.TabIndex = 10;
+            label8.Text = "RGB";
+            label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            label9.Location = new System.Drawing.Point(3, 29);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(35, 31);
+            label9.TabIndex = 21;
+            label9.Text = "N";
+            label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            label10.ForeColor = System.Drawing.Color.ForestGreen;
+            label10.Location = new System.Drawing.Point(3, 60);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(35, 30);
+            label10.TabIndex = 22;
+            label10.Text = "E";
+            label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // GlossyFresnelCheck
+            // 
+            this.GlossyFresnelCheck.AutoSize = true;
+            this.GlossyFresnelCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.GlossyFresnelCheck.Location = new System.Drawing.Point(5, 161);
+            this.GlossyFresnelCheck.Name = "GlossyFresnelCheck";
+            this.GlossyFresnelCheck.Size = new System.Drawing.Size(91, 17);
+            this.GlossyFresnelCheck.TabIndex = 16;
+            this.GlossyFresnelCheck.Text = "Glossy fresnel";
+            this.GlossyFresnelCheck.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.38739F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.61261F));
+            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationButton, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationPath, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(label3, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 184);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74074F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25926F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(222, 54);
+            this.tableLayoutPanel2.TabIndex = 17;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(224, 485);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(224, 571);
+            this.Controls.Add(groupBox5);
+            this.Controls.Add(groupBox4);
+            this.Controls.Add(groupBox3);
+            this.Controls.Add(groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -385,16 +581,20 @@ namespace mwb_materials
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "MWB Mats";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PhongBoost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxExponent)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -402,16 +602,9 @@ namespace mwb_materials
         #endregion
 
         private System.Windows.Forms.Button FolderButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button VmtButton;
-        private System.Windows.Forms.TextBox VmtName;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox SrgbCheck;
         private System.Windows.Forms.CheckBox AoCheck;
         private System.Windows.Forms.NumericUpDown MaxExponent;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button HelpButton;
         private System.Windows.Forms.CheckBox AlbedoSrgbCheck;
         private System.Windows.Forms.Button VmtDestinationButton;
@@ -421,6 +614,14 @@ namespace mwb_materials
         private System.Windows.Forms.NumericUpDown PhongBoost;
         private System.Windows.Forms.CheckBox PhongAlbedoTintCheck;
         private System.Windows.Forms.TextBox VmtDestinationPath;
+        private System.Windows.Forms.ComboBox AlbedoCompression;
+        private System.Windows.Forms.CheckBox AlbedoMipMapsCheck;
+        private System.Windows.Forms.CheckBox ExponentMipMapsCheck;
+        private System.Windows.Forms.CheckBox NormalMipMapsCheck;
+        private System.Windows.Forms.ComboBox ExponentCompression;
+        private System.Windows.Forms.ComboBox NormalCompression;
+        private System.Windows.Forms.CheckBox GlossyFresnelCheck;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
 
