@@ -131,13 +131,13 @@ namespace mwb_materials
             toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
             toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT.");
-            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Note that this changes the final output of the exponent texture.\nIf your materials are fully metallic, keep this at 1.\nMake sure to experiment with what looks right, but 3 is usually good enough.");
+            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Note that this changes the final output of the normal texture.\nIf your materials are fully metallic, keep this at 1.\nMake sure to experiment with what looks right, but 3 is usually good enough.");
             toolTip1.SetToolTip(PhongAlbedoTintCheck, "Enable this if your metals are colored (enables phong albedo tint).");
             toolTip1.SetToolTip(GlossyFresnelCheck, "Enable this to have bright silhouettes (good for glossy and round objects).");
             toolTip1.SetToolTip(BatchMoveOutputCheck, "Move the output folder contents to VMT texture path.");
             toolTip1.SetToolTip(BatchIncludeFoldersCheck, "Add folder hierarchy to VMT texture paths (when doing more than one folder).");
 
-            string[] compressionFormats = new string[] { VtfCmdInterface.FormatDXT5, VtfCmdInterface.FormatRGBA8888 };
+            string[] compressionFormats = new string[] { VtfCmdInterface.FormatDXT5, VtfCmdInterface.FormatRGBA8888, VtfCmdInterface.FormatDXT1 };
 
             AlbedoCompression.Items.AddRange(compressionFormats);
             AlbedoCompression.SelectedIndex = 0;
