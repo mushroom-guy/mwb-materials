@@ -9,3 +9,6 @@ guns by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 ![lady](https://cdn.discordapp.com/attachments/839227966193795093/1078403571294404718/image.png)
 
 isaac and robot lady by
+
+![shotgun](https://cdn.discordapp.com/attachments/484785909099790346/1080133687598927942/image.png)
+g
