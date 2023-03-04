@@ -1,85 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using mwb_materials.MwbMats;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace mwb_materials
 {
     class VtfCmdInterface
     {
-        public static readonly string FormatDXT1 = "DXT1";
-        public static readonly string FormatDXT5 = "DXT5";
-        public static readonly string FormatRGBA8888 = "RGBA8888";
+        public const string FormatDXT1 = "DXT1";
+        public const string FormatDXT5 = "DXT5";
+        public const string FormatRGBA8888 = "RGBA8888";
 
-        private static void AddProcessArgument(ProcessStartInfo processInfo, string key, string val)
+        public static Task ExportFile(string file, string outputFolder, string format, bool bNoMips, string moveOutputPath)
         {
-            processInfo.Arguments += " -" + key;
-            processInfo.Arguments += " " + val;
-        }
-
-        private static void AddProcessArgument(ProcessStartInfo processInfo, string key)
-        {
-            processInfo.Arguments += " -" + key;
-        }
-
-        public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips, string moveOutputPath)
-        {
-            TaskCompletionSource<bool> completion = new TaskCompletionSource<bool>();
-
-            ProcessStartInfo programInfo = new ProcessStartInfo();
-            programInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            programInfo.CreateNoWindow = true;
-            programInfo.UseShellExecute = false;
-            programInfo.RedirectStandardOutput = true;
-            programInfo.FileName = "vtfcmd\\VTFCmd.exe";
-
-            programInfo.Arguments = string.Empty;
-            AddProcessArgument(programInfo, "file", file);
-            AddProcessArgument(programInfo, "output", outputFolder);
-            AddProcessArgument(programInfo, "format", format);
-            AddProcessArgument(programInfo, "alphaformat", format);
-            
-            if (bNoMips)
+            if (VtfLib.vlImageLoad(file, false))
             {
-                AddProcessArgument(programInfo, "nomipmaps");
-            }
-            else
-            {
-                AddProcessArgument(programInfo, "mfilter", "GAUSSIAN");
-                AddProcessArgument(programInfo, "msharpen", "SHARPENSOFT");
-            }
-
-            Process runProgram = new Process();
-            runProgram.StartInfo = programInfo;
-            runProgram.EnableRaisingEvents = true;
-            runProgram.Start();
-            runProgram.Exited += (object sender, EventArgs a) =>
-            {
-                File.Delete(file);
-
-                if (moveOutputPath != string.Empty)
+                if (bNoMips)
                 {
-                    string fileSrc = outputFolder + Path.GetFileNameWithoutExtension(file) + ".vtf";
-                    string fileDest = moveOutputPath + "\\" + Path.GetFileNameWithoutExtension(file) + ".vtf";
-
-                    Directory.CreateDirectory(moveOutputPath);
-
-                    if (File.Exists(fileDest))
-                    {
-                        File.Delete(fileDest);
-                    }
-
-                    File.Move(fileSrc, fileDest);
+                    VtfLib.vlImageSetFlag(VTFImageFlag.TEXTUREFLAGS_NOMIP, true);
+                }
+                else
+                {
+                    VtfLib.vlImageGenerateAllMipmaps(VTFMipmapFilter.MIPMAP_FILTER_GAUSSIAN, VTFSharpenFilter.SHARPEN_FILTER_SHARPENSOFT);
                 }
 
-                completion.TrySetResult(true);
-            };
+                VTFImageFormat f = VTFImageFormat.IMAGE_FORMAT_NONE;
 
-            await completion.Task;
+                switch (format)
+                {
+                    case FormatDXT1: f = VTFImageFormat.IMAGE_FORMAT_DXT1; break;
+                    case FormatDXT5: f = VTFImageFormat.IMAGE_FORMAT_DXT1; break;
+                    case FormatRGBA8888: f = VTFImageFormat.IMAGE_FORMAT_DXT1; break;
+
+                }
+
+                //VtfLib.vlImageCreate(VtfLib.vlImageGetWidth(), VtfLib.vlImageGetHeight(), 
+                //    VtfLib.vlImageGetFrameCount(), VtfLib.vlImageGetFaceCount(), 
+                //    VtfLib.vlImageGetDepth(), f, true, true, true);
+                //
+                //bool s = VtfLib.vlImageConvertFromRGBA8888(VtfLib.vlImageGetData(0, 0, 0, 0), );
+
+                if (VtfLib.vlImageSave(outputFolder))
+                {
+                    File.Delete(file);
+
+                    if (moveOutputPath != string.Empty)
+                    {
+                        string fileSrc = outputFolder + Path.GetFileNameWithoutExtension(file) + ".vtf";
+                        string fileDest = moveOutputPath + "\\" + Path.GetFileNameWithoutExtension(file) + ".vtf";
+
+                        Directory.CreateDirectory(moveOutputPath);
+
+                        if (File.Exists(fileDest)) File.Delete(fileDest);
+                        File.Move(fileSrc, fileDest);
+                    }
+                };
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
