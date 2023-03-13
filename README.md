@@ -14,3 +14,4 @@ isaac and robot lady by
 g
 
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1083467596147470437/image.png)
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1084865393186852954/groza.jpg)
