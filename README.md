@@ -15,3 +15,6 @@ g
 
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1083467596147470437/image.png)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1084865393186852954/groza.jpg)
+
+![gun](https://media.discordapp.net/attachments/962102265408282644/1085911164355084319/Screenshot_2023-03-16_125938.png)
+mp7 by [Aiden](https://steamcommunity.com/id/24123351/)
