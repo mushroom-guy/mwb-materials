@@ -15,6 +15,7 @@ g
 
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1083467596147470437/image.png)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1084865393186852954/groza.jpg)
+bocw groza
 
 ![gun](https://media.discordapp.net/attachments/962102265408282644/1085911164355084319/Screenshot_2023-03-16_125938.png)
 ![gun](https://media.discordapp.net/attachments/962102265408282644/1085902493441065000/Screenshot_2023-03-16_122758.png)
@@ -23,6 +24,7 @@ g
 mp7&9 by [Aiden](https://steamcommunity.com/id/24123351/)
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1085944654924611665/the_leon_gun.jpg)
+re4 pistol
 
 ![gun](https://media.discordapp.net/attachments/484785909099790346/1090253766764281897/image.png)
 ![gun](https://cdn.discordapp.com/attachments/1080446080170328105/1090261760386281522/cs2_ak47.jpg)
