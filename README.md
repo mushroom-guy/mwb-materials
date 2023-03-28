@@ -25,4 +25,5 @@ mp7&9 by [Aiden](https://steamcommunity.com/id/24123351/)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1085944654924611665/the_leon_gun.jpg)
 
 ![gun](https://media.discordapp.net/attachments/484785909099790346/1090253766764281897/image.png)
-cs2 cz
+![gun](https://cdn.discordapp.com/attachments/1080446080170328105/1090261760386281522/cs2_ak47.jpg)
+cs2 stuff
