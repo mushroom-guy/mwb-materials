@@ -28,4 +28,5 @@ re4 pistol
 
 ![gun](https://media.discordapp.net/attachments/484785909099790346/1090253766764281897/image.png)
 ![gun](https://cdn.discordapp.com/attachments/1080446080170328105/1090261760386281522/cs2_ak47.jpg)
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1090290356928651285/deagle.jpg)
 cs2 stuff
