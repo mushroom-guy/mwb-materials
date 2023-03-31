@@ -32,3 +32,6 @@ re4 pistol
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1090309880105152682/g3sg1.jpg)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1090656155010867320/image.png)
 cs2 stuff
+
+![gun](https://cdn.discordapp.com/attachments/1080440462797705258/1091363008938262600/image.png)
+mw2 deagle by [thatrtxdude](https://steamcommunity.com/id/thatrtxdude/)
