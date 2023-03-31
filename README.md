@@ -35,3 +35,7 @@ cs2 stuff
 
 ![gun](https://cdn.discordapp.com/attachments/1080440462797705258/1091363008938262600/image.png)
 mw2 deagle by [thatrtxdude](https://steamcommunity.com/id/thatrtxdude/)
+
+![axe](https://media.discordapp.net/attachments/1080446080170328105/1091421531751587970/image.png)
+![axe](https://media.discordapp.net/attachments/1080446080170328105/1091421603587432561/image.png)
+axe by [Viper](https://steamcommunity.com/id/dirtysionmain/)
