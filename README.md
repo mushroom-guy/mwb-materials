@@ -39,3 +39,7 @@ mw2 deagle by [thatrtxdude](https://steamcommunity.com/id/thatrtxdude/)
 ![axe](https://media.discordapp.net/attachments/1080446080170328105/1091421531751587970/image.png)
 ![axe](https://media.discordapp.net/attachments/1080446080170328105/1091421603587432561/image.png)
 axe by [Viper](https://steamcommunity.com/id/dirtysionmain/)
+
+![gun](https://media.discordapp.net/attachments/1080446080170328105/1093967636599156746/image.png)
+![gun](https://media.discordapp.net/attachments/1080446080170328105/1093967636867588146/image.png)
+725 bp by [Viper](https://steamcommunity.com/id/dirtysionmain/)
