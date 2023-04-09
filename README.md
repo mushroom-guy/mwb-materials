@@ -43,3 +43,5 @@ axe by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1093967636599156746/image.png)
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1093967636867588146/image.png)
 725 bp by [Viper](https://steamcommunity.com/id/dirtysionmain/)
+
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1094658206736842772/image.png)
