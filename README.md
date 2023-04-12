@@ -45,3 +45,6 @@ axe by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 725 bp by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1094658206736842772/image.png)
+
+![gun](https://cdn.discordapp.com/attachments/973910088576303174/1095727242488860763/VIPER2.jpg)
+pistol from ron's nexusmods (ported by [Nizc](https://steamcommunity.com/id/iron_man_mark_42/))
