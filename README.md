@@ -48,3 +48,6 @@ axe by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 
 ![gun](https://cdn.discordapp.com/attachments/973910088576303174/1095727242488860763/VIPER2.jpg)
 pistol from ron's nexusmods (ported by [Nizc](https://steamcommunity.com/id/iron_man_mark_42/))
+
+![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416830995837059/image.png)
+mw2 m4 by [.8fps](https://steamcommunity.com/id/kyo-h/) and [Zero](https://steamcommunity.com/id/2lewd2me/)
