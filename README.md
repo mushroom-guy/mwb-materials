@@ -51,4 +51,5 @@ pistol from ron's nexusmods (ported by [Nizc](https://steamcommunity.com/id/iron
 
 ![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416830995837059/image.png)
 ![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416831910195251/image.png)
+![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416830656106688/image.png)
 mw2 m4 by [.8fps](https://steamcommunity.com/id/kyo-h/) and [Zero](https://steamcommunity.com/id/2lewd2me/)
