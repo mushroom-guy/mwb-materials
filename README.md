@@ -53,3 +53,6 @@ pistol from ron's nexusmods (ported by [Nizc](https://steamcommunity.com/id/iron
 ![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416831910195251/image.png)
 ![gun](https://cdn.discordapp.com/attachments/973910088576303174/1096416830656106688/image.png)
 mw2 m4 by [.8fps](https://steamcommunity.com/id/kyo-h/) and [Zero](https://steamcommunity.com/id/2lewd2me/)
+
+![guy](https://steamuserimages-a.akamaihd.net/ugc/2018217493634513024/AA47D6EF5B67DE87CEA6E511E0BDBD2D2924F6ED/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=#000000&letterbox=false)
+big guy by [Bread](https://steamcommunity.com/profiles/76561198215364196)
