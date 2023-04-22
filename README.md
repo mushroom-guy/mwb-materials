@@ -56,3 +56,5 @@ mw2 m4 by [.8fps](https://steamcommunity.com/id/kyo-h/) and [Zero](https://steam
 
 ![guy](https://steamuserimages-a.akamaihd.net/ugc/2018217493634513024/AA47D6EF5B67DE87CEA6E511E0BDBD2D2924F6ED/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=#000000&letterbox=false)
 big guy by [Bread](https://steamcommunity.com/profiles/76561198215364196)
+
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1099399875348676689/mike97.jpg)
