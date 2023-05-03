@@ -58,7 +58,8 @@ mw2 m4 by [.8fps](https://steamcommunity.com/id/kyo-h/) and [Zero](https://steam
 big guy by [Bread](https://steamcommunity.com/profiles/76561198215364196)
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1099399875348676689/mike97.jpg)
-vanguard trench gun by viper
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1103410797209718924/mpapa40.jpg)
+vanguard trench gun and mp40 by viper
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1103058688186535966/image.png)
 iw spas12 by viper
