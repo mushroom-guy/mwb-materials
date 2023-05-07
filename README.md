@@ -1,4 +1,4 @@
-
+all of these are in gmod engine on latest (1.3) release
 ![gun](https://media.discordapp.net/attachments/484785909099790346/1078421049185681418/image.png)
 ![gun](https://cdn.discordapp.com/attachments/424661475282649101/1078433411842191601/image.png)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1078433866156613683/image.png)
