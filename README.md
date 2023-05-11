@@ -62,6 +62,7 @@ big guy by [Bread](https://steamcommunity.com/profiles/76561198215364196)
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1099399875348676689/mike97.jpg)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1103410797209718924/mpapa40.jpg)
+![gun](https://cdn.discordapp.com/attachments/484785909099790346/1106231345434349779/mpapa40_2.jpg)
 vanguard trench gun and mp40 by viper
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1103058688186535966/image.png)
