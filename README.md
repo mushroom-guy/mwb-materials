@@ -8,6 +8,9 @@ guns by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 ![uzi](https://cdn.discordapp.com/attachments/484785909099790346/1104062185912664085/arnold.jpg)
 arnold by [Viper](https://steamcommunity.com/id/dirtysionmain/)
 
+![bigguys](https://media.discordapp.net/attachments/956264503136370698/1115953213011664918/poster-23-06-07_17-35-02.png)
+decently sized gentlemen by [archom](https://steamcommunity.com/profiles/76561199131947772)
+
 ![isaac](https://cdn.discordapp.com/attachments/839227966193795093/1078764570300133446/image.png)
 ![lady](https://cdn.discordapp.com/attachments/839227966193795093/1078403571294404718/image.png)
 
