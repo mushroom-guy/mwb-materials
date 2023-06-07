@@ -16,9 +16,6 @@ decently sized gentlemen by [archom](https://steamcommunity.com/profiles/7656119
 
 isaac and robot lady by
 
-![shotgun](https://cdn.discordapp.com/attachments/484785909099790346/1080133687598927942/image.png)
-g
-
 ![gun](https://media.discordapp.net/attachments/1080446080170328105/1083467596147470437/image.png)
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1084865393186852954/groza.jpg)
 bocw groza
