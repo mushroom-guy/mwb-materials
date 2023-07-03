@@ -67,3 +67,5 @@ vanguard trench gun and mp40 by viper
 
 ![gun](https://cdn.discordapp.com/attachments/484785909099790346/1103058688186535966/image.png)
 iw spas12 by viper
+
+![gun](https://cdn.discordapp.com/attachments/956264595805319241/1125419586079162480/lima86_v17.jpg)
