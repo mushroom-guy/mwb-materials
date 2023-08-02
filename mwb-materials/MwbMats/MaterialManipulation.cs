@@ -300,39 +300,13 @@ namespace mwb_materials
                 //phong
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
 
-                if (metalness != null)
+                //(x + 0.2)^6.5
+                for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
                 {
-                    if (props.bPhongAlbedoTint)
-                    {
-                        //we darken the non metals so when we phong boost by the same amount they appear normal
-                        //and the metals will behave normally
-                        DivideColorChannel(sourceNormal, (byte)props.PhongBoost, TextureChannel.Alpha);
-                    }
-
-                    //make metals brighter depending on roughness
-                    for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
-                    {
-                        float metal = metalness.ReadGrayscale(cursor);
-                        metal /= 255.0f;
-
-                        float rough = 0.0f;
-
-                        if (roughness != null)
-                        {
-                            rough = roughness.ReadGrayscale(cursor);
-                            rough /= 255.0f;
-                        }
-
-                        float metallic = 255.0f;
-                        float nonMetallic = 0.0f;
-
-                        /*float alb = albedo.ReadColor(cursor).GetLuminance();
-                        alb = (float)Math.Pow(alb, 6);
-                        alb *= 0.25f;*/
-
-                        float result = nonMetallic.Lerp(metallic, Math.Min((/*alb + */rough) * metal, 1.0f));
-                        sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)Math.Min(sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] + result, 255);
-                    }
+                    double delta = sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] / 255.0;
+                    delta = Math.Min(delta + 0.2, 1.0);
+                    delta = Math.Pow(delta, 3.14);
+                    sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)(delta * 255.0);
                 }
 
                 if (props.bAoMasks)
@@ -362,25 +336,33 @@ namespace mwb_materials
                 //phong exponent
                 DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Red);
 
-                //make metals tighter
-                //DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Red, TextureOperation.Add);
-
-                DivideColorChannel(sourceExponent, (byte)(155 / props.MaxExponent), TextureChannel.Red);
-            }
-
-            if (metalness != null)
-            {
-                //phong albedo tint
-                DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green);
-                MultiplyColorChannel(sourceExponent, 255.0f, TextureChannel.Green);
-
                 //rimlight
-                DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Alpha);
+                DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha);
+                
+                for (int cursor = 0; cursor < sourceExponent.Bytes.Length; cursor += 4)
+                {
+                    //exponent: (x + 0.1)^7
+                    double delta = sourceExponent.Bytes[cursor + (int)TextureChannel.Red] / 255.0;
+                    delta = Math.Min(delta + 0.1, 1.0);
+                    delta = Math.Pow(delta, 7.0);
+                    sourceExponent.Bytes[cursor + (int)TextureChannel.Red] = (byte)(delta * 255.0);
+
+                    //rimlight: sqrt(x)
+                    //delta = sourceExponent.Bytes[cursor + (int)TextureChannel.Alpha] / 255.0;
+                    //delta = Math.Sqrt(delta);
+                    //sourceExponent.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)(delta * 255.0);
+                }
 
                 if (props.bAoMasks)
                 {
                     DumpGrayscaleInChannel(sourceExponent, ambientOcclusion, TextureChannel.Alpha, TextureOperation.Multiply);
                 }
+            }
+
+            if (metalness != null)
+            {
+                //phong albedo tint
+                DumpGrayscaleInChannel(sourceExponent, metalness, TextureChannel.Green); 
             }
 
             sourceExponent.Stop();
@@ -394,14 +376,8 @@ namespace mwb_materials
 
         public struct GenerateProperties
         {
-            public bool bSrgb { get; internal set; }
-            public bool bAlbedoSrgb { get; internal set; }
             public bool bAoMasks { get; internal set; }
-            public int MaxExponent { get; internal set; }
             public bool bOpenGlNormal { get; internal set; }
-            public bool bPhongAlbedoTint { get; internal set; }
-            public int PhongBoost { get; internal set; }
-            public bool bGlossyFresnel { get; internal set; }
         }
 
         private static void SetBiggestWidthAndHeight(ref int width, ref int height, FastBitmap bmp)
@@ -493,69 +469,28 @@ namespace mwb_materials
             ResizeIfSmaller(metalness, biggestWidth, biggestHeight);
             ResizeIfSmaller(normal, biggestWidth, biggestHeight);
 
-            //apply rgb conversion to the masks we need to use
-
-            //roughness: srgb -> rgb, ao
+            //invert roughness
             Task roughnessTask = Task.Run(() =>
             {
                 roughness?.Start(ImageLockMode.ReadWrite);
-
                 Invert(roughness);
-
-                if (props.bSrgb)
-                    ConvertImageToRGB(roughness);
-
                 roughness?.Stop();
             });
 
-            //gloss: srgb -> rgb, ao
-            Task glossTask = Task.Run(() =>
-            {
-                gloss?.Start(ImageLockMode.ReadWrite);
-                
-                if (props.bSrgb)
-                    ConvertImageToRGB(gloss);
-
-                gloss?.Stop();
-            });
-
-            //metalness: ao
-            Task metalnessTask = Task.Run(() =>
-            {
-                metalness?.Start(ImageLockMode.ReadWrite);
-
-                if (props.bSrgb)
-                    ConvertImageToRGB(metalness);
-
-                metalness?.Stop();
-            });
-
-            if (props.bAlbedoSrgb)
-            {
-                Task albedoSrgbTask = Task.Run(() =>
-                {
-                    albedo?.Start(ImageLockMode.ReadWrite);
-                    ConvertImageToRGB(albedo);
-                    albedo?.Stop();
-                });
-
-                await albedoSrgbTask;
-            }
+            Task normalOpenGlTask = Task.CompletedTask;
 
             if (props.bOpenGlNormal)
             {
                 //invert green channel
-                Task normalOpenGlTask = Task.Run(() =>
+                normalOpenGlTask = Task.Run(() =>
                 {
                     normal?.Start(ImageLockMode.ReadWrite);
                     Invert(normal, TextureChannel.Green);
                     normal?.Stop();
-                });
-
-                await normalOpenGlTask;
+                });  
             }
 
-            await roughnessTask; await glossTask; await metalnessTask;
+            await normalOpenGlTask; await roughnessTask;
 
             //start edits
             albedo?.Start(ImageLockMode.ReadOnly);
@@ -600,3 +535,25 @@ namespace mwb_materials
         }
     }
 }
+
+/*	//exp
+	//[0 - 0.1] = 150
+	//[0.2] = 100
+	//[0.25] = 50
+	//[0.3] = 25
+	//[0.35] = 12
+	//[0.4] = 8
+	//[0.45] = 5
+	//[0.5] = 3
+	//[1] = 1
+	
+	//val
+	//[0 - 0.2] = 1
+	//[0.25] = 0.7
+	//[0.3] = 0.5
+	//[0.35] = 0.4
+	//[0.4] = 0.25
+	//[0.45] = 0.15
+	//[0.5] = 0.1
+	//[1] = 0
+*/

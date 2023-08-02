@@ -130,7 +130,7 @@ namespace mwb_materials.MwbMats
 
             string vmtPath = movePath;
 
-            if (props.VmtRootPath != string.Empty)
+            if (props.VmtRootPath != string.Empty && vmtPath.Contains("materials"))
             {
                 vmtPath = vmtPath.Substring(vmtPath.IndexOf("materials"));
                 vmtPath = vmtPath.Replace("materials", string.Empty);
@@ -138,9 +138,6 @@ namespace mwb_materials.MwbMats
             }
 
             vmtValues.Add("EXPORTPATH", vmtPath);
-            vmtValues.Add("PHONGALBEDOTINT", props.GenerateProps.bPhongAlbedoTint ? 1 : 0);
-            vmtValues.Add("PHONGBOOST", props.GenerateProps.bPhongAlbedoTint ? Math.Max(props.GenerateProps.PhongBoost, 1) : 1);
-            vmtValues.Add("FRESNEL", props.GenerateProps.bGlossyFresnel ? "[1 2.5 0]" : "[1 0.5 0]");
 
             VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);

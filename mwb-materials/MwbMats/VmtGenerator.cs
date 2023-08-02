@@ -10,16 +10,21 @@ namespace mwb_materials.MwbMats
     class VmtGenerator
     {
         private static readonly byte[] VmtBytes = Properties.Resources.default_vmt;
-
+       
         private static void SanitizeName(ref string name)
         {
             name = name.Trim().Replace(".vmt", string.Empty);
         }
 
+        private static string GetVmtContent()
+        {
+            return Encoding.UTF8.GetString(VmtBytes);
+        }
+
         public static void Generate(string path, string name, Dictionary<string, object> values, string movePath)
         {
             SanitizeName(ref name);
-            string content = Encoding.UTF8.GetString(VmtBytes);
+            string content = GetVmtContent();
 
             foreach (KeyValuePair<string, object> pair in values)
             {

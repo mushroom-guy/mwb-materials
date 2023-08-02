@@ -108,8 +108,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\default_vmt_old.vmt" />
     <None Include="Properties\default_vmt.vmt" />
-    <None Include="Properties\default_vmt1.vmt" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

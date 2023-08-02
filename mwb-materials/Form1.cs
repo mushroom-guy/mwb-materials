@@ -34,14 +34,8 @@ namespace mwb_materials
                 Stopwatch timer = new Stopwatch();
                 MaterialManipulation.GenerateProperties props = new MaterialManipulation.GenerateProperties()
                 {
-                    bSrgb = SrgbCheck.Checked,
-                    bAlbedoSrgb = AlbedoSrgbCheck.Checked,
                     bAoMasks = AoCheck.Checked,
-                    MaxExponent = Math.Max((int)MaxExponent.Value, 1),
-                    bOpenGlNormal = OpenGlNormalCheck.Checked,
-                    PhongBoost = Math.Max((int)PhongBoost.Value, 1),
-                    bPhongAlbedoTint = PhongAlbedoTintCheck.Checked,
-                    bGlossyFresnel = GlossyFresnelCheck.Checked
+                    bOpenGlNormal = OpenGlNormalCheck.Checked
                 };
 
                 BatchExporter.BatchProperties bProps = new BatchExporter.BatchProperties()
@@ -105,10 +99,6 @@ namespace mwb_materials
                     VmtDestinationPath.Text = string.Empty;
                     MessageBox.Show("Not a valid Source material path");
                 }
-                /*else
-                {
-                    VmtDestinationPath.Text = VmtDestinationPath.Text.Substring(VmtDestinationPath.Text.IndexOf("materials"));
-                }*/
             }
         }
 
@@ -125,15 +115,9 @@ namespace mwb_materials
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
 
-            toolTip1.SetToolTip(SrgbCheck, "Most PBR workflows use sRGB colorspace for their masks. Tick this off if your textures don't.");
-            toolTip1.SetToolTip(AlbedoSrgbCheck, "Some assets may use sRGB colorspace for albedo. Tick this off if your texture doesn't.");
             toolTip1.SetToolTip(AoCheck, "Apply ambient occlusion to masks.");
-            toolTip1.SetToolTip(MaxExponent, "Tool won't generate a higher exponent value than this.");
             toolTip1.SetToolTip(OpenGlNormalCheck, "Inverts green channel.");
             toolTip1.SetToolTip(VmtDestinationPath, "Sets the textures' path in the VMT.");
-            toolTip1.SetToolTip(PhongBoost, "Sets phongboost value. Note that this changes the final output of the normal texture.\nIf your materials are fully metallic, keep this at 1.\nMake sure to experiment with what looks right, but 3 is usually good enough.");
-            toolTip1.SetToolTip(PhongAlbedoTintCheck, "Enable this if your metals are colored (enables phong albedo tint).");
-            toolTip1.SetToolTip(GlossyFresnelCheck, "Enable this to have bright silhouettes (good for glossy and round objects).");
             toolTip1.SetToolTip(BatchMoveOutputCheck, "Move the output folder contents to VMT texture path.");
             toolTip1.SetToolTip(BatchIncludeFoldersCheck, "Add folder hierarchy to VMT texture paths (when doing more than one folder).");
 
@@ -149,10 +133,8 @@ namespace mwb_materials
             ExponentCompression.SelectedIndex = 0;
         }
 
-        private void PhongAlbedoTintCheck_CheckedChanged(object sender, EventArgs e)
+        private void GamesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PhongBoost.Enabled = PhongAlbedoTintCheck.Checked;
         }
-
     }
 }
