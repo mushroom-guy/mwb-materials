@@ -300,15 +300,6 @@ namespace mwb_materials
                 //phong
                 DumpGrayscaleInChannel(sourceNormal, roughness, TextureChannel.Alpha);
 
-                //(x + 0.2)^6.5
-                for (int cursor = 0; cursor < sourceNormal.Bytes.Length; cursor += 4)
-                {
-                    double delta = sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] / 255.0;
-                    delta = Math.Min(delta + 0.2, 1.0);
-                    delta = Math.Pow(delta, 3.14);
-                    sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)(delta * 255.0);
-                }
-
                 if (props.bAoMasks)
                 {
                     DumpGrayscaleInChannel(sourceNormal, ambientOcclusion, TextureChannel.Alpha, TextureOperation.Multiply);
@@ -335,23 +326,19 @@ namespace mwb_materials
             {
                 //phong exponent
                 DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Red);
+                //ConvertImageToRGB(sourceExponent);
 
-                //rimlight
-                DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha);
-                
                 for (int cursor = 0; cursor < sourceExponent.Bytes.Length; cursor += 4)
                 {
                     //exponent: (x + 0.1)^7
                     double delta = sourceExponent.Bytes[cursor + (int)TextureChannel.Red] / 255.0;
-                    delta = Math.Min(delta + 0.1, 1.0);
-                    delta = Math.Pow(delta, 7.0);
-                    sourceExponent.Bytes[cursor + (int)TextureChannel.Red] = (byte)(delta * 255.0);
-
-                    //rimlight: sqrt(x)
-                    //delta = sourceExponent.Bytes[cursor + (int)TextureChannel.Alpha] / 255.0;
-                    //delta = Math.Sqrt(delta);
-                    //sourceExponent.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)(delta * 255.0);
+                    //delta = Math.Min(delta + 0.1, 1.0);
+                    delta = Math.Pow(delta, 3.0);
+                    sourceExponent.Bytes[cursor + (int)TextureChannel.Red] = (byte)Math.Min((delta * 255.0) + 1.0, 255.0);
                 }
+
+                //rimlight
+                DumpGrayscaleInChannel(sourceExponent, roughness, TextureChannel.Alpha);
 
                 if (props.bAoMasks)
                 {
@@ -492,6 +479,22 @@ namespace mwb_materials
 
             await normalOpenGlTask; await roughnessTask;
 
+            /*Task glossTask = Task.Run(() =>
+            {
+                gloss?.Start(ImageLockMode.ReadWrite);
+                ConvertImageToRGB(gloss);
+                gloss?.Stop();
+            });
+
+            roughnessTask = Task.Run(() =>
+            {
+                roughness?.Start(ImageLockMode.ReadWrite);
+                ConvertImageToRGB(roughness);
+                roughness?.Stop();
+            });
+
+            await glossTask; await roughnessTask;*/
+
             //start edits
             albedo?.Start(ImageLockMode.ReadOnly);
             ambientOcclusion?.Start(ImageLockMode.ReadOnly);
@@ -528,8 +531,8 @@ namespace mwb_materials
             normal?.StopAndDispose();
 
             //collect garbage from fastbitmaps
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
+            //System.GC.Collect();
+            //System.GC.WaitForPendingFinalizers();
 
             return new SourceTextureSet(sourceAlbedo?.Source, sourceExponent?.Source, sourceNormal?.Source);
         }
