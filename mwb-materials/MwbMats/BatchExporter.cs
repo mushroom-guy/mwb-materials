@@ -25,6 +25,13 @@ namespace mwb_materials.MwbMats
             public bool bExponentMipMaps { get; internal set; }
         }
 
+        private static string GetVMTVector(Color color)
+        {
+            string vec = "[" + Math.Round(color.R / 255.0, 3) + " " + Math.Round(color.G / 255.0, 3) + " " + Math.Round(color.B / 255.0, 3) + "]";
+            vec = vec.Replace(",", ".");
+            return vec;
+        }
+
         private static async Task GenerateInFolder(string path, BatchProperties props, string startPath, Action<string> folderFunc)
         {
             //before we do files, we have to first look in other folders, we can't run the tool
@@ -126,6 +133,7 @@ namespace mwb_materials.MwbMats
 
             await albedoTask; await exponentTask; await normalTask;
 
+            Color metallicColor = textures.MetallicColor;
             textures.Dispose();
 
             string vmtPath = movePath;
@@ -138,6 +146,7 @@ namespace mwb_materials.MwbMats
             }
 
             vmtValues.Add("EXPORTPATH", vmtPath);
+            vmtValues.Add("ENVMAPTINT", GetVMTVector(metallicColor));
 
             VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);

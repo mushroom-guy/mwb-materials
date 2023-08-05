@@ -12,7 +12,7 @@
     "$phong" "1"
     "$phongboost" "1"
     "$phongalbedotint" "1"
-    "$phongalbedoboost" "10"                                //change this if not bright enough
+    "$phongalbedoboost" "30"                                //change this if not bright enough
     "$phongfresnelranges" "[1 0.1 0]"
 
     //rimlight doesn't properly show in hlmv, make sure you're changing these values in game
@@ -26,7 +26,7 @@
     /////////////////
 
     "$envmap" "env_cubemap"
-    "$envmaptint" "[0.1 0.1 0.1]"                           //change this to match albedo's color if metallic
+    "$envmaptint" "${ENVMAPTINT}"                 
 
     //remove this if not using MWB
     "Proxies"
@@ -34,7 +34,8 @@
         "MwEnvMapTint"
         {
             "min" "0"
-            "max" "0.1"                                     //change this if too bright in game
+            "max" "1"
+            "color" "${ENVMAPTINT}"
         }
     }
 }

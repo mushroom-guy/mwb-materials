@@ -100,7 +100,7 @@ namespace mwb_materials
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(194, 22);
             label3.TabIndex = 8;
-            label3.Text = "VMT textures root path";
+            label3.Text = "Generated textures destination";
             label3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // tableLayoutPanel1
@@ -324,9 +324,9 @@ namespace mwb_materials
             this.BatchMoveOutputCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BatchMoveOutputCheck.Location = new System.Drawing.Point(8, 42);
             this.BatchMoveOutputCheck.Name = "BatchMoveOutputCheck";
-            this.BatchMoveOutputCheck.Size = new System.Drawing.Size(148, 17);
+            this.BatchMoveOutputCheck.Size = new System.Drawing.Size(152, 17);
             this.BatchMoveOutputCheck.TabIndex = 15;
-            this.BatchMoveOutputCheck.Text = "Move output to VMT path";
+            this.BatchMoveOutputCheck.Text = "Move output to destination";
             this.BatchMoveOutputCheck.UseVisualStyleBackColor = true;
             // 
             // BatchIncludeFoldersCheck
@@ -335,9 +335,9 @@ namespace mwb_materials
             this.BatchIncludeFoldersCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BatchIncludeFoldersCheck.Location = new System.Drawing.Point(8, 19);
             this.BatchIncludeFoldersCheck.Name = "BatchIncludeFoldersCheck";
-            this.BatchIncludeFoldersCheck.Size = new System.Drawing.Size(188, 17);
+            this.BatchIncludeFoldersCheck.Size = new System.Drawing.Size(169, 17);
             this.BatchIncludeFoldersCheck.TabIndex = 14;
-            this.BatchIncludeFoldersCheck.Text = "Include folders in generated VMTs";
+            this.BatchIncludeFoldersCheck.Text = "Generate folders in destination";
             this.BatchIncludeFoldersCheck.UseVisualStyleBackColor = true;
             // 
             // FolderButton
