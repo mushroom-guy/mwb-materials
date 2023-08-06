@@ -337,7 +337,7 @@ namespace mwb_materials
                 double ratioHeight = (double)clampSize / (double)bmp.Source.Height;
                 double ratio = ratioWidth < ratioHeight ? ratioWidth : ratioHeight;
 
-                if (ratio != 1.0)
+                if (ratio < 1.0)
                 {
                     bmp.Resize((int)(bmp.Source.Width * ratio), (int)(bmp.Source.Height * ratio));
                 }
