@@ -1,3 +1,0 @@
-VtfCmd.exe  -file "C:\\Users\Alessio\\Downloads\\scar mother fucking h\\_images\weapon_vm_ar_scharlie_barrel\\temp\\weapon_vm_ar_scharlie_barrel_rgb.png" -output "C:\\Users\\Alessio\\Downloads\\scar mother fucking h\\_images\\weapon_vm_ar_scharlie_barrel\\temp" -rclampwidth "512" -rclampheight "512"
-REM VtfCmd.exe -file "C:\Users\Alessio\Downloads\scar mother fucking h\_images\weapon_vm_ar_scharlie_barrel\temp\weapon_vm_ar_scharlie_barrel_rgb.png" -output "C:\Users\Alessio\Downloads\scar mother fucking h\_images\weapon_vm_ar_scharlie_barrel\temp"
-pause
