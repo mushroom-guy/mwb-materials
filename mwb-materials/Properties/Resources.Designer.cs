@@ -69,5 +69,55 @@ namespace mwb_materials.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] specularity_00 {
+            get {
+                object obj = ResourceManager.GetObject("specularity_00", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] specularity_100 {
+            get {
+                object obj = ResourceManager.GetObject("specularity_100", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] specularity_25 {
+            get {
+                object obj = ResourceManager.GetObject("specularity_25", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] specularity_50 {
+            get {
+                object obj = ResourceManager.GetObject("specularity_50", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] specularity_75 {
+            get {
+                object obj = ResourceManager.GetObject("specularity_75", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

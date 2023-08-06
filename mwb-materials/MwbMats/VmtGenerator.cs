@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace mwb_materials.MwbMats
     class VmtGenerator
     {
         private static readonly byte[] VmtBytes = Properties.Resources.default_vmt;
-       
+
         private static void SanitizeName(ref string name)
         {
             name = name.Trim().Replace(".vmt", string.Empty);

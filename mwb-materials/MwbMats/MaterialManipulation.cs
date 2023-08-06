@@ -49,18 +49,20 @@ namespace mwb_materials
 
         public struct SourceTextureSet : IDisposable
         {
-            public SourceTextureSet(Bitmap albedo, Bitmap exponent, Bitmap normal, Color metallicColor)
+            public SourceTextureSet(Bitmap albedo, Bitmap exponent, Bitmap normal, Color metallicColor, double averageRoughness)
             {
                 Albedo = albedo;
                 Exponent = exponent;
                 Normal = normal;
-                MetallicColor = metallicColor;
+                AverageMetallicColor = metallicColor;
+                AverageRoughness = averageRoughness;
             }
 
             public Bitmap Albedo { get; }
             public Bitmap Exponent { get; }
             public Bitmap Normal { get; }
-            public Color MetallicColor { get; }
+            public Color AverageMetallicColor { get; }
+            public double AverageRoughness { get; }
 
             public void Dispose()
             {
@@ -189,7 +191,7 @@ namespace mwb_materials
                     float metal = metalness.ReadGrayscale(cursor);
                     metal /= 255.0f;
 
-                    float metallic = 245f;
+                    float metallic = 255f;
                     float nonMetallic = 0f;
 
                     float result = nonMetallic.Lerp(metallic, metal);
@@ -226,7 +228,6 @@ namespace mwb_materials
                 {
                     double delta = sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] / 255.0;
                     delta = Math.Pow(delta, 2.5);
-                    //delta *= 2.0;
                     sourceNormal.Bytes[cursor + (int)TextureChannel.Alpha] = (byte)Math.Min((delta * 255.0) + 1.0, 255.0);
                 }
 
@@ -298,6 +299,7 @@ namespace mwb_materials
         {
             public bool bAoMasks { get; internal set; }
             public bool bOpenGlNormal { get; internal set; }
+            public int ClampSize { get; internal set; }
         }
 
         private static void SetBiggestWidthAndHeight(ref int width, ref int height, FastBitmap bmp)
@@ -320,6 +322,26 @@ namespace mwb_materials
             }
 
             bmp.Resize(width, height);
+        }
+
+        private static void ResizeToClampSize(int clampSize, FastBitmap[] bitmaps)
+        {
+            foreach (FastBitmap bmp in bitmaps)
+            {
+                if (bmp == null)
+                {
+                    continue;
+                }
+
+                double ratioWidth = (double)clampSize / (double)bmp.Source.Width;
+                double ratioHeight = (double)clampSize / (double)bmp.Source.Height;
+                double ratio = ratioWidth < ratioHeight ? ratioWidth : ratioHeight;
+
+                if (ratio != 1.0)
+                {
+                    bmp.Resize((int)(bmp.Source.Width * ratio), (int)(bmp.Source.Height * ratio));
+                }
+            }
         }
 
         private static Color GetAverageMetallicColor(FastBitmap albedo, FastBitmap metalness)
@@ -356,6 +378,24 @@ namespace mwb_materials
             blue /= (albedo.Source.Width * albedo.Source.Height);
 
             return Color.FromArgb((int)red, (int)green, (int)blue);
+        }
+
+        private static double GetAverageRoughness(FastBitmap roughness)
+        {
+            if (roughness == null)
+            {
+                return 0.5;
+            }
+
+            double avgRoughness = 0.0;
+
+            for (int cursor = 0; cursor < roughness.Bytes.Length; cursor += 4)
+            {
+                avgRoughness += Math.Max(roughness.ReadGrayscale(cursor) / 255.0, 0.5);
+            }
+
+            avgRoughness /= (roughness.Source.Width * roughness.Source.Height);
+            return avgRoughness;
         }
 
         public static async Task<SourceTextureSet> GenerateTextures(List<string> files, GenerateProperties props)
@@ -418,12 +458,17 @@ namespace mwb_materials
             }
 
             //resize textures
+            biggestWidth = Math.Min(props.ClampSize, biggestWidth);
+            biggestHeight = Math.Min(props.ClampSize, biggestHeight);
+
             ResizeIfSmaller(albedo, biggestWidth, biggestHeight);
             ResizeIfSmaller(ambientOcclusion, biggestWidth, biggestHeight);
             ResizeIfSmaller(roughness, biggestWidth, biggestHeight);
             ResizeIfSmaller(gloss, biggestWidth, biggestHeight);
             ResizeIfSmaller(metalness, biggestWidth, biggestHeight);
             ResizeIfSmaller(normal, biggestWidth, biggestHeight);
+
+            ResizeToClampSize(props.ClampSize, new FastBitmap[] { albedo, ambientOcclusion, roughness, gloss, metalness, normal });
 
             //invert roughness
             Task roughnessTask = Task.Run(() =>
@@ -471,12 +516,21 @@ namespace mwb_materials
                 return CreateSourceExponent((gloss != null) ? gloss : roughness, metalness, ambientOcclusion, ref props);
             });
 
+            Task<Color> getMetallicColor = Task.Run(() =>
+            {
+                return GetAverageMetallicColor(albedo, metalness);
+            });
+
+            Task<double> getAverageRoughness = Task.Run(() =>
+            {
+                return GetAverageRoughness((gloss != null) ? gloss : roughness);
+            });
+
             FastBitmap sourceAlbedo = await albedoTask;
             FastBitmap sourceNormal = await normalTask;
             FastBitmap sourceExponent = await exponentTask;
-
-            //get average metallic color
-            Color metallicColor = GetAverageMetallicColor(albedo, metalness);
+            Color averageMetallicColor = await getMetallicColor;
+            double averageRoughness = await getAverageRoughness;
 
             //stop edits
             albedo?.StopAndDispose();
@@ -486,7 +540,7 @@ namespace mwb_materials
             metalness?.StopAndDispose();
             normal?.StopAndDispose();
 
-            return new SourceTextureSet(sourceAlbedo?.Source, sourceExponent?.Source, sourceNormal?.Source, metallicColor);
+            return new SourceTextureSet(sourceAlbedo?.Source, sourceExponent?.Source, sourceNormal?.Source, averageMetallicColor, averageRoughness);
         }
     }
 }

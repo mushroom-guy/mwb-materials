@@ -29,8 +29,6 @@ namespace mwb_materials
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label label2;
-            System.Windows.Forms.Label label3;
             System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
             System.Windows.Forms.Label label10;
             System.Windows.Forms.Label label9;
@@ -42,6 +40,8 @@ namespace mwb_materials
             System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox3;
             System.Windows.Forms.GroupBox groupBox4;
+            System.Windows.Forms.Label label3;
+            System.Windows.Forms.Label label1;
             this.ExponentMipMapsCheck = new System.Windows.Forms.CheckBox();
             this.NormalMipMapsCheck = new System.Windows.Forms.CheckBox();
             this.ExponentCompression = new System.Windows.Forms.ComboBox();
@@ -52,13 +52,12 @@ namespace mwb_materials
             this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
             this.FolderButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.VmtDestinationButton = new System.Windows.Forms.Button();
+            this.ClampComboBox = new System.Windows.Forms.ComboBox();
+            this.EnvMapsDestination = new System.Windows.Forms.TextBox();
             this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AoCheck = new System.Windows.Forms.CheckBox();
-            label2 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -70,38 +69,14 @@ namespace mwb_materials
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox4 = new System.Windows.Forms.GroupBox();
+            label3 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            label2.Location = new System.Drawing.Point(5, 15);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(137, 78);
-            label2.TabIndex = 2;
-            label2.Text = "_rgb - albedo\r\n_alpha, _m - metalness\r\n_g - gloss\r\n_r - roughness\r\n_o, _ao - ambi" +
-    "ent occlusion\r\n_n - normal\r\n";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.BackColor = System.Drawing.SystemColors.Control;
-            label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            label3.Location = new System.Drawing.Point(0, 0);
-            label3.Margin = new System.Windows.Forms.Padding(0);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(194, 22);
-            label3.TabIndex = 8;
-            label3.Text = "Generated textures destination";
-            label3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // tableLayoutPanel1
             // 
@@ -240,7 +215,7 @@ namespace mwb_materials
             groupBox5.Controls.Add(tableLayoutPanel1);
             groupBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox5.ForeColor = System.Drawing.SystemColors.ControlDark;
-            groupBox5.Location = new System.Drawing.Point(0, 219);
+            groupBox5.Location = new System.Drawing.Point(0, 220);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new System.Drawing.Size(224, 129);
             groupBox5.TabIndex = 7;
@@ -280,25 +255,25 @@ namespace mwb_materials
             // groupBox1
             // 
             groupBox1.Controls.Add(this.HelpButton);
-            groupBox1.Controls.Add(label2);
             groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             groupBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             groupBox1.Location = new System.Drawing.Point(0, 0);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            groupBox1.Size = new System.Drawing.Size(224, 99);
+            groupBox1.Size = new System.Drawing.Size(224, 62);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Texture Layout";
+            groupBox1.Text = "Help";
             // 
             // HelpButton
             // 
-            this.HelpButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.HelpButton.Location = new System.Drawing.Point(195, 10);
+            this.HelpButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HelpButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.HelpButton.Location = new System.Drawing.Point(2, 15);
             this.HelpButton.Name = "HelpButton";
-            this.HelpButton.Size = new System.Drawing.Size(23, 23);
-            this.HelpButton.TabIndex = 3;
-            this.HelpButton.Text = "?";
+            this.HelpButton.Size = new System.Drawing.Size(222, 47);
+            this.HelpButton.TabIndex = 1;
+            this.HelpButton.Text = "How do I use this?";
             this.HelpButton.UseVisualStyleBackColor = true;
             this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
             // 
@@ -309,7 +284,7 @@ namespace mwb_materials
             groupBox3.Controls.Add(this.FolderButton);
             groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            groupBox3.Location = new System.Drawing.Point(0, 348);
+            groupBox3.Location = new System.Drawing.Point(0, 349);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(224, 99);
             groupBox3.TabIndex = 4;
@@ -354,57 +329,70 @@ namespace mwb_materials
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(this.tableLayoutPanel2);
+            groupBox4.Controls.Add(this.label2);
+            groupBox4.Controls.Add(this.ClampComboBox);
+            groupBox4.Controls.Add(label3);
+            groupBox4.Controls.Add(this.EnvMapsDestination);
+            groupBox4.Controls.Add(label1);
+            groupBox4.Controls.Add(this.VmtDestinationPath);
             groupBox4.Controls.Add(this.OpenGlNormalCheck);
             groupBox4.Controls.Add(this.AoCheck);
-            groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            groupBox4.Location = new System.Drawing.Point(0, 99);
+            groupBox4.Location = new System.Drawing.Point(0, 63);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
-            groupBox4.Size = new System.Drawing.Size(224, 118);
+            groupBox4.Size = new System.Drawing.Size(224, 157);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
             groupBox4.Text = "Settings";
             // 
-            // tableLayoutPanel2
+            // ClampComboBox
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.38739F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.61261F));
-            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationButton, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.VmtDestinationPath, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(label3, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 60);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74074F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25926F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(222, 54);
-            this.tableLayoutPanel2.TabIndex = 17;
+            this.ClampComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ClampComboBox.FormattingEnabled = true;
+            this.ClampComboBox.Location = new System.Drawing.Point(97, 130);
+            this.ClampComboBox.Name = "ClampComboBox";
+            this.ClampComboBox.Size = new System.Drawing.Size(121, 21);
+            this.ClampComboBox.TabIndex = 22;
             // 
-            // VmtDestinationButton
+            // label3
             // 
-            this.VmtDestinationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.VmtDestinationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.VmtDestinationButton.Location = new System.Drawing.Point(197, 27);
-            this.VmtDestinationButton.Name = "VmtDestinationButton";
-            this.VmtDestinationButton.Size = new System.Drawing.Size(22, 22);
-            this.VmtDestinationButton.TabIndex = 7;
-            this.VmtDestinationButton.Text = "...";
-            this.VmtDestinationButton.UseVisualStyleBackColor = true;
-            this.VmtDestinationButton.Click += new System.EventHandler(this.VmtDestinationButton_Click);
+            label3.AutoSize = true;
+            label3.ForeColor = System.Drawing.SystemColors.ControlText;
+            label3.Location = new System.Drawing.Point(2, 61);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(80, 13);
+            label3.TabIndex = 20;
+            label3.Text = "Envmaps folder";
+            // 
+            // EnvMapsDestination
+            // 
+            this.EnvMapsDestination.Location = new System.Drawing.Point(5, 74);
+            this.EnvMapsDestination.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.EnvMapsDestination.Name = "EnvMapsDestination";
+            this.EnvMapsDestination.Size = new System.Drawing.Size(213, 20);
+            this.EnvMapsDestination.TabIndex = 21;
+            this.EnvMapsDestination.TextChanged += new System.EventHandler(this.EnvMapsDestination_TextChanged);
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            label1.Location = new System.Drawing.Point(2, 94);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(93, 13);
+            label1.TabIndex = 3;
+            label1.Text = "Output destination\r\n";
             // 
             // VmtDestinationPath
             // 
-            this.VmtDestinationPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.VmtDestinationPath.Location = new System.Drawing.Point(3, 28);
+            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 107);
             this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.VmtDestinationPath.Name = "VmtDestinationPath";
-            this.VmtDestinationPath.Size = new System.Drawing.Size(188, 20);
-            this.VmtDestinationPath.TabIndex = 7;
+            this.VmtDestinationPath.Size = new System.Drawing.Size(213, 20);
+            this.VmtDestinationPath.TabIndex = 19;
+            this.VmtDestinationPath.TextChanged += new System.EventHandler(this.VmtDestinationPath_TextChanged);
             // 
             // OpenGlNormalCheck
             // 
@@ -430,16 +418,26 @@ namespace mwb_materials
             this.AoCheck.Text = "Apply AO to masks";
             this.AoCheck.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(38, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Clamp size";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(224, 447);
-            this.Controls.Add(groupBox5);
-            this.Controls.Add(groupBox4);
-            this.Controls.Add(groupBox3);
+            this.ClientSize = new System.Drawing.Size(224, 448);
             this.Controls.Add(groupBox1);
+            this.Controls.Add(groupBox4);
+            this.Controls.Add(groupBox5);
+            this.Controls.Add(groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -452,13 +450,10 @@ namespace mwb_materials
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -467,19 +462,20 @@ namespace mwb_materials
 
         private System.Windows.Forms.Button FolderButton;
         private System.Windows.Forms.CheckBox AoCheck;
-        private System.Windows.Forms.Button HelpButton;
-        private System.Windows.Forms.Button VmtDestinationButton;
         private System.Windows.Forms.CheckBox OpenGlNormalCheck;
         private System.Windows.Forms.CheckBox BatchMoveOutputCheck;
         private System.Windows.Forms.CheckBox BatchIncludeFoldersCheck;
-        private System.Windows.Forms.TextBox VmtDestinationPath;
         private System.Windows.Forms.ComboBox AlbedoCompression;
         private System.Windows.Forms.CheckBox AlbedoMipMapsCheck;
         private System.Windows.Forms.CheckBox ExponentMipMapsCheck;
         private System.Windows.Forms.CheckBox NormalMipMapsCheck;
         private System.Windows.Forms.ComboBox ExponentCompression;
         private System.Windows.Forms.ComboBox NormalCompression;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TextBox VmtDestinationPath;
+        private System.Windows.Forms.Button HelpButton;
+        private System.Windows.Forms.TextBox EnvMapsDestination;
+        private System.Windows.Forms.ComboBox ClampComboBox;
+        private System.Windows.Forms.Label label2;
     }
 }
 

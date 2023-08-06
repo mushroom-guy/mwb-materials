@@ -17,13 +17,13 @@ namespace mwb_materials
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key, string val)
         {
-            processInfo.Arguments += " -" + key;
-            processInfo.Arguments += " " + val;
+            processInfo.Arguments += "-" + key + " ";
+            processInfo.Arguments += "\"" + val + "\" ";
         }
 
         private static void AddProcessArgument(ProcessStartInfo processInfo, string key)
         {
-            processInfo.Arguments += " -" + key;
+            processInfo.Arguments += "-" + key + " ";
         }
 
         public static async Task ExportFile(string file, string outputFolder, string format, bool bNoMips, string moveOutputPath)
@@ -37,9 +37,10 @@ namespace mwb_materials
             programInfo.RedirectStandardOutput = true;
             programInfo.FileName = "vtfcmd\\VTFCmd.exe";
 
+            programInfo.WorkingDirectory = Path.GetDirectoryName(file);
             programInfo.Arguments = string.Empty;
-            AddProcessArgument(programInfo, "file", file);
-            AddProcessArgument(programInfo, "output", outputFolder);
+            AddProcessArgument(programInfo, "file", Path.GetFileName(file));
+            AddProcessArgument(programInfo, "output", Path.GetDirectoryName(outputFolder));
             AddProcessArgument(programInfo, "format", format);
             AddProcessArgument(programInfo, "alphaformat", format);
             
@@ -56,7 +57,6 @@ namespace mwb_materials
             Process runProgram = new Process();
             runProgram.StartInfo = programInfo;
             runProgram.EnableRaisingEvents = true;
-            runProgram.Start();
             runProgram.Exited += (object sender, EventArgs a) =>
             {
                 File.Delete(file);
@@ -78,6 +78,8 @@ namespace mwb_materials
 
                 completion.TrySetResult(true);
             };
+
+            runProgram.Start();
 
             await completion.Task;
         }
