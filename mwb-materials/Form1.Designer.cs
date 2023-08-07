@@ -37,7 +37,6 @@ namespace mwb_materials
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label5;
-            System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox3;
             System.Windows.Forms.GroupBox groupBox4;
             System.Windows.Forms.Label label3;
@@ -48,16 +47,15 @@ namespace mwb_materials
             this.NormalCompression = new System.Windows.Forms.ComboBox();
             this.AlbedoCompression = new System.Windows.Forms.ComboBox();
             this.AlbedoMipMapsCheck = new System.Windows.Forms.CheckBox();
-            this.HelpButton = new System.Windows.Forms.Button();
             this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
             this.FolderButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.ClampComboBox = new System.Windows.Forms.ComboBox();
             this.EnvMapsDestination = new System.Windows.Forms.TextBox();
-            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AoCheck = new System.Windows.Forms.CheckBox();
+            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -66,14 +64,12 @@ namespace mwb_materials
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
-            groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox3 = new System.Windows.Forms.GroupBox();
             groupBox4 = new System.Windows.Forms.GroupBox();
             label3 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             groupBox5.SuspendLayout();
-            groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
             this.SuspendLayout();
@@ -215,7 +211,7 @@ namespace mwb_materials
             groupBox5.Controls.Add(tableLayoutPanel1);
             groupBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox5.ForeColor = System.Drawing.SystemColors.ControlDark;
-            groupBox5.Location = new System.Drawing.Point(0, 220);
+            groupBox5.Location = new System.Drawing.Point(0, 161);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new System.Drawing.Size(224, 129);
             groupBox5.TabIndex = 7;
@@ -252,31 +248,6 @@ namespace mwb_materials
             label5.TabIndex = 7;
             label5.Text = "Compression";
             // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(this.HelpButton);
-            groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            groupBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            groupBox1.Location = new System.Drawing.Point(0, 0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            groupBox1.Size = new System.Drawing.Size(224, 62);
-            groupBox1.TabIndex = 3;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Help";
-            // 
-            // HelpButton
-            // 
-            this.HelpButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HelpButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.HelpButton.Location = new System.Drawing.Point(2, 15);
-            this.HelpButton.Name = "HelpButton";
-            this.HelpButton.Size = new System.Drawing.Size(222, 47);
-            this.HelpButton.TabIndex = 1;
-            this.HelpButton.Text = "How do I use this?";
-            this.HelpButton.UseVisualStyleBackColor = true;
-            this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
-            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(this.BatchMoveOutputCheck);
@@ -284,7 +255,7 @@ namespace mwb_materials
             groupBox3.Controls.Add(this.FolderButton);
             groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            groupBox3.Location = new System.Drawing.Point(0, 349);
+            groupBox3.Location = new System.Drawing.Point(0, 290);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(224, 99);
             groupBox3.TabIndex = 4;
@@ -339,10 +310,10 @@ namespace mwb_materials
             groupBox4.Controls.Add(this.AoCheck);
             groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
             groupBox4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            groupBox4.Location = new System.Drawing.Point(0, 63);
+            groupBox4.Location = new System.Drawing.Point(0, 0);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 0, 4);
-            groupBox4.Size = new System.Drawing.Size(224, 157);
+            groupBox4.Size = new System.Drawing.Size(224, 161);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
             groupBox4.Text = "Settings";
@@ -351,17 +322,18 @@ namespace mwb_materials
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(38, 133);
+            this.label2.Location = new System.Drawing.Point(19, 136);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.Size = new System.Drawing.Size(72, 13);
             this.label2.TabIndex = 23;
-            this.label2.Text = "Clamp size";
+            this.label2.Text = "Maximum size";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ClampComboBox
             // 
             this.ClampComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ClampComboBox.FormattingEnabled = true;
-            this.ClampComboBox.Location = new System.Drawing.Point(97, 130);
+            this.ClampComboBox.Location = new System.Drawing.Point(97, 133);
             this.ClampComboBox.Name = "ClampComboBox";
             this.ClampComboBox.Size = new System.Drawing.Size(121, 21);
             this.ClampComboBox.TabIndex = 22;
@@ -385,34 +357,15 @@ namespace mwb_materials
             this.EnvMapsDestination.TabIndex = 21;
             this.EnvMapsDestination.TextChanged += new System.EventHandler(this.EnvMapsDestination_TextChanged);
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            label1.Location = new System.Drawing.Point(2, 94);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(93, 13);
-            label1.TabIndex = 3;
-            label1.Text = "Output destination\r\n";
-            // 
-            // VmtDestinationPath
-            // 
-            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 107);
-            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.VmtDestinationPath.Name = "VmtDestinationPath";
-            this.VmtDestinationPath.Size = new System.Drawing.Size(213, 20);
-            this.VmtDestinationPath.TabIndex = 19;
-            this.VmtDestinationPath.TextChanged += new System.EventHandler(this.VmtDestinationPath_TextChanged);
-            // 
             // OpenGlNormalCheck
             // 
             this.OpenGlNormalCheck.AutoSize = true;
             this.OpenGlNormalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 41);
             this.OpenGlNormalCheck.Name = "OpenGlNormalCheck";
-            this.OpenGlNormalCheck.Size = new System.Drawing.Size(100, 17);
+            this.OpenGlNormalCheck.Size = new System.Drawing.Size(211, 17);
             this.OpenGlNormalCheck.TabIndex = 12;
-            this.OpenGlNormalCheck.Text = "OpenGL normal";
+            this.OpenGlNormalCheck.Text = "Flip green channel on normal (OpenGL)";
             this.OpenGlNormalCheck.UseVisualStyleBackColor = true;
             // 
             // AoCheck
@@ -428,18 +381,38 @@ namespace mwb_materials
             this.AoCheck.Text = "Apply AO to masks";
             this.AoCheck.UseVisualStyleBackColor = true;
             // 
+            // VmtDestinationPath
+            // 
+            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 107);
+            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.VmtDestinationPath.Name = "VmtDestinationPath";
+            this.VmtDestinationPath.Size = new System.Drawing.Size(213, 20);
+            this.VmtDestinationPath.TabIndex = 19;
+            this.VmtDestinationPath.TextChanged += new System.EventHandler(this.VmtDestinationPath_TextChanged);
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            label1.Location = new System.Drawing.Point(2, 94);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(93, 13);
+            label1.TabIndex = 3;
+            label1.Text = "Output destination\r\n";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(224, 448);
-            this.Controls.Add(groupBox1);
+            this.ClientSize = new System.Drawing.Size(224, 389);
             this.Controls.Add(groupBox4);
             this.Controls.Add(groupBox5);
             this.Controls.Add(groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.HelpButton = true;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -449,7 +422,6 @@ namespace mwb_materials
             tableLayoutPanel1.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
-            groupBox1.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
@@ -471,11 +443,10 @@ namespace mwb_materials
         private System.Windows.Forms.CheckBox NormalMipMapsCheck;
         private System.Windows.Forms.ComboBox ExponentCompression;
         private System.Windows.Forms.ComboBox NormalCompression;
-        private System.Windows.Forms.TextBox VmtDestinationPath;
-        private System.Windows.Forms.Button HelpButton;
         private System.Windows.Forms.TextBox EnvMapsDestination;
         private System.Windows.Forms.ComboBox ClampComboBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox VmtDestinationPath;
     }
 }
 

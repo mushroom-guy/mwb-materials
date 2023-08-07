@@ -144,7 +144,7 @@ namespace mwb_materials
 
             for (int cursor = 0; cursor < src.Bytes.Length; cursor += 4)
             {
-                src.Bytes[cursor + (int)channel] = (byte)(255 - src.Bytes[cursor]);
+                src.Bytes[cursor + (int)channel] = (byte)(255 - src.Bytes[cursor + (int)channel]);
             }
         }
 

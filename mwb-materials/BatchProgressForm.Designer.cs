@@ -38,21 +38,19 @@ namespace mwb_materials
             this.BatchFolderLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.BatchFolderLabel.Location = new System.Drawing.Point(0, 0);
             this.BatchFolderLabel.Name = "BatchFolderLabel";
-            this.BatchFolderLabel.Size = new System.Drawing.Size(255, 24);
+            this.BatchFolderLabel.Size = new System.Drawing.Size(255, 35);
             this.BatchFolderLabel.TabIndex = 1;
-            this.BatchFolderLabel.Text = "Generating bitches";
+            this.BatchFolderLabel.Text = "Generating";
             this.BatchFolderLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TexturesLabel
             // 
-            this.TexturesLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.TexturesLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TexturesLabel.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.TexturesLabel.Location = new System.Drawing.Point(0, 51);
+            this.TexturesLabel.Location = new System.Drawing.Point(0, 35);
             this.TexturesLabel.Name = "TexturesLabel";
-            this.TexturesLabel.Size = new System.Drawing.Size(255, 78);
+            this.TexturesLabel.Size = new System.Drawing.Size(255, 94);
             this.TexturesLabel.TabIndex = 2;
-            this.TexturesLabel.Text = "texture_name_rgb\r\ntexture_name_m\r\ntexture_name_ao\r\ntexture_name_n\r\ntexture_name_r" +
-    "";
             this.TexturesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BatchProgressForm

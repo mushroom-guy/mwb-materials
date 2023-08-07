@@ -18,6 +18,15 @@ namespace mwb_materials
 {
     public partial class Form1 : Form
     {
+        private ToolTip ToolTip = new ToolTip()
+        {
+            InitialDelay = 100,
+            ReshowDelay = 100,
+            ShowAlways = true,
+            UseAnimation = false,
+            UseFading = false
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -94,10 +103,15 @@ namespace mwb_materials
             ClampComboBox.SelectedIndex = 0;
 
             EnvMapsDestination.Text = Properties.Settings.Default.EnvMapsFolder;
+            ToolTip.SetToolTip(EnvMapsDestination, EnvMapsDestination.Text);
+
             VmtDestinationPath.Text = Properties.Settings.Default.DestinationFolder;
+            ToolTip.SetToolTip(VmtDestinationPath, VmtDestinationPath.Text);
+
+            HelpButtonClicked += Form1_HelpButtonClicked;
         }
 
-        private void HelpButton_Click(object sender, EventArgs e)
+        private void Form1_HelpButtonClicked(object sender, EventArgs e)
         {
             Process.Start("https://github.com/mushroom-guy/mwb-materials/#help.md");
         }
@@ -105,12 +119,14 @@ namespace mwb_materials
         private void EnvMapsDestination_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.EnvMapsFolder = EnvMapsDestination.Text;
+            ToolTip.SetToolTip(EnvMapsDestination, EnvMapsDestination.Text);
             Properties.Settings.Default.Save();
         }
 
         private void VmtDestinationPath_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.DestinationFolder = VmtDestinationPath.Text;
+            ToolTip.SetToolTip(VmtDestinationPath, VmtDestinationPath.Text);
             Properties.Settings.Default.Save();
         }
     }
