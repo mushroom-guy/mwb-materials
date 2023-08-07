@@ -30,9 +30,6 @@ namespace mwb_materials
         private void InitializeComponent()
         {
             System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-            System.Windows.Forms.Label label10;
-            System.Windows.Forms.Label label9;
-            System.Windows.Forms.Label label8;
             System.Windows.Forms.GroupBox groupBox5;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label label6;
@@ -41,6 +38,9 @@ namespace mwb_materials
             System.Windows.Forms.GroupBox groupBox4;
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label1;
+            this.ExponentLabel = new System.Windows.Forms.Label();
+            this.NormalLabel = new System.Windows.Forms.Label();
+            this.AlbedoLabel = new System.Windows.Forms.Label();
             this.ExponentMipMapsCheck = new System.Windows.Forms.CheckBox();
             this.NormalMipMapsCheck = new System.Windows.Forms.CheckBox();
             this.ExponentCompression = new System.Windows.Forms.ComboBox();
@@ -53,13 +53,10 @@ namespace mwb_materials
             this.label2 = new System.Windows.Forms.Label();
             this.ClampComboBox = new System.Windows.Forms.ComboBox();
             this.EnvMapsDestination = new System.Windows.Forms.TextBox();
+            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AoCheck = new System.Windows.Forms.CheckBox();
-            this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            label10 = new System.Windows.Forms.Label();
-            label9 = new System.Windows.Forms.Label();
-            label8 = new System.Windows.Forms.Label();
             groupBox5 = new System.Windows.Forms.GroupBox();
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
@@ -80,9 +77,9 @@ namespace mwb_materials
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 144F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            tableLayoutPanel1.Controls.Add(label10, 0, 2);
-            tableLayoutPanel1.Controls.Add(label9, 0, 1);
-            tableLayoutPanel1.Controls.Add(label8, 0, 0);
+            tableLayoutPanel1.Controls.Add(this.ExponentLabel, 0, 2);
+            tableLayoutPanel1.Controls.Add(this.NormalLabel, 0, 1);
+            tableLayoutPanel1.Controls.Add(this.AlbedoLabel, 0, 0);
             tableLayoutPanel1.Controls.Add(this.ExponentMipMapsCheck, 2, 2);
             tableLayoutPanel1.Controls.Add(this.NormalMipMapsCheck, 2, 1);
             tableLayoutPanel1.Controls.Add(this.ExponentCompression, 1, 2);
@@ -99,41 +96,41 @@ namespace mwb_materials
             tableLayoutPanel1.Size = new System.Drawing.Size(218, 90);
             tableLayoutPanel1.TabIndex = 6;
             // 
-            // label10
+            // ExponentLabel
             // 
-            label10.AutoSize = true;
-            label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            label10.ForeColor = System.Drawing.Color.ForestGreen;
-            label10.Location = new System.Drawing.Point(3, 60);
-            label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(35, 30);
-            label10.TabIndex = 22;
-            label10.Text = "E";
-            label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ExponentLabel.AutoSize = true;
+            this.ExponentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExponentLabel.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ExponentLabel.Location = new System.Drawing.Point(3, 60);
+            this.ExponentLabel.Name = "ExponentLabel";
+            this.ExponentLabel.Size = new System.Drawing.Size(35, 30);
+            this.ExponentLabel.TabIndex = 22;
+            this.ExponentLabel.Text = "E";
+            this.ExponentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label9
+            // NormalLabel
             // 
-            label9.AutoSize = true;
-            label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            label9.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            label9.Location = new System.Drawing.Point(3, 29);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(35, 31);
-            label9.TabIndex = 21;
-            label9.Text = "N";
-            label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NormalLabel.AutoSize = true;
+            this.NormalLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NormalLabel.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.NormalLabel.Location = new System.Drawing.Point(3, 29);
+            this.NormalLabel.Name = "NormalLabel";
+            this.NormalLabel.Size = new System.Drawing.Size(35, 31);
+            this.NormalLabel.TabIndex = 21;
+            this.NormalLabel.Text = "N";
+            this.NormalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label8
+            // AlbedoLabel
             // 
-            label8.AutoSize = true;
-            label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            label8.ForeColor = System.Drawing.Color.Red;
-            label8.Location = new System.Drawing.Point(3, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(35, 29);
-            label8.TabIndex = 10;
-            label8.Text = "RGB";
-            label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.AlbedoLabel.AutoSize = true;
+            this.AlbedoLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AlbedoLabel.ForeColor = System.Drawing.Color.Red;
+            this.AlbedoLabel.Location = new System.Drawing.Point(3, 0);
+            this.AlbedoLabel.Name = "AlbedoLabel";
+            this.AlbedoLabel.Size = new System.Drawing.Size(35, 29);
+            this.AlbedoLabel.TabIndex = 10;
+            this.AlbedoLabel.Text = "RGB";
+            this.AlbedoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ExponentMipMapsCheck
             // 
@@ -357,15 +354,34 @@ namespace mwb_materials
             this.EnvMapsDestination.TabIndex = 21;
             this.EnvMapsDestination.TextChanged += new System.EventHandler(this.EnvMapsDestination_TextChanged);
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            label1.Location = new System.Drawing.Point(2, 94);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(93, 13);
+            label1.TabIndex = 3;
+            label1.Text = "Output destination\r\n";
+            // 
+            // VmtDestinationPath
+            // 
+            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 107);
+            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.VmtDestinationPath.Name = "VmtDestinationPath";
+            this.VmtDestinationPath.Size = new System.Drawing.Size(213, 20);
+            this.VmtDestinationPath.TabIndex = 19;
+            this.VmtDestinationPath.TextChanged += new System.EventHandler(this.VmtDestinationPath_TextChanged);
+            // 
             // OpenGlNormalCheck
             // 
             this.OpenGlNormalCheck.AutoSize = true;
             this.OpenGlNormalCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.OpenGlNormalCheck.Location = new System.Drawing.Point(5, 41);
             this.OpenGlNormalCheck.Name = "OpenGlNormalCheck";
-            this.OpenGlNormalCheck.Size = new System.Drawing.Size(211, 17);
+            this.OpenGlNormalCheck.Size = new System.Drawing.Size(196, 17);
             this.OpenGlNormalCheck.TabIndex = 12;
-            this.OpenGlNormalCheck.Text = "Flip green channel on normal (OpenGL)";
+            this.OpenGlNormalCheck.Text = "Flip normal green channel (OpenGL)";
             this.OpenGlNormalCheck.UseVisualStyleBackColor = true;
             // 
             // AoCheck
@@ -380,25 +396,6 @@ namespace mwb_materials
             this.AoCheck.TabIndex = 1;
             this.AoCheck.Text = "Apply AO to masks";
             this.AoCheck.UseVisualStyleBackColor = true;
-            // 
-            // VmtDestinationPath
-            // 
-            this.VmtDestinationPath.Location = new System.Drawing.Point(5, 107);
-            this.VmtDestinationPath.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.VmtDestinationPath.Name = "VmtDestinationPath";
-            this.VmtDestinationPath.Size = new System.Drawing.Size(213, 20);
-            this.VmtDestinationPath.TabIndex = 19;
-            this.VmtDestinationPath.TextChanged += new System.EventHandler(this.VmtDestinationPath_TextChanged);
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            label1.Location = new System.Drawing.Point(2, 94);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(93, 13);
-            label1.TabIndex = 3;
-            label1.Text = "Output destination\r\n";
             // 
             // Form1
             // 
@@ -447,6 +444,9 @@ namespace mwb_materials
         private System.Windows.Forms.ComboBox ClampComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox VmtDestinationPath;
+        private System.Windows.Forms.Label ExponentLabel;
+        private System.Windows.Forms.Label NormalLabel;
+        private System.Windows.Forms.Label AlbedoLabel;
     }
 }
 

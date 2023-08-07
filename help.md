@@ -79,4 +79,4 @@ That'd be nice but no.
 - For best effect, you should split the mesh into separate vmts for metallic parts.  
 - Phong albedo boost is only available in CS:GO and Garry's Mod, you can use phong boost in other games.  
 - Manual adjustments of the vmts are required sometimes.
-- Completely glossy materials aren't possible with a phong exponent texture (max is 150 - way too big).
+- Completely glossy materials aren't possible with a phong exponent texture (max is 150 - way too diffuse).

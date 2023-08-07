@@ -109,11 +109,15 @@ namespace mwb_materials
             ToolTip.SetToolTip(VmtDestinationPath, VmtDestinationPath.Text);
 
             HelpButtonClicked += Form1_HelpButtonClicked;
+
+            ToolTip.SetToolTip(AlbedoLabel, "basetexture");
+            ToolTip.SetToolTip(NormalLabel, "bumpmap");
+            ToolTip.SetToolTip(ExponentLabel, "phongexponent");
         }
 
         private void Form1_HelpButtonClicked(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/mushroom-guy/mwb-materials/#help.md");
+            Process.Start("https://github.com/mushroom-guy/mwb-materials/blob/main/help.md");
         }
 
         private void EnvMapsDestination_TextChanged(object sender, EventArgs e)
