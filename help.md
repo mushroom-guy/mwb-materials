@@ -18,6 +18,7 @@ In that folder you're going to place a few textures:
 
 After that, you can press the Open Folders button and select your folder.
 
+
 # Envmaps
 
 Tool comes with a few envmaps that it uses to generate accurate roughness.  
@@ -30,6 +31,7 @@ You can find the textures needed for this to work in the envmaps folder of the t
 ![help4](https://cdn.discordapp.com/attachments/1137688979743981648/1137695457137664110/image.png)
 
 **Do not change the names!**
+
 
 # Batch
 
@@ -68,11 +70,13 @@ Yes, the tool will invert your roughness texture automatically. Just make sure y
 No.
 
 
-> Can I use this with old Source games (CS:S, HL2, ...)
-
-Yes, with limited features (phong tinting won't work, I don't know if rimlight works as good).
-
-
 > Do I have to credit you?
 
 That'd be nice but no.
+
+# Known limitations
+
+- For best effect, you should split the mesh into separate vmts for metallic parts.  
+- Phong albedo boost is only available in CS:GO and Garry's Mod, you can use phong boost in other games.  
+- Manual adjustments of the vmts are required sometimes.
+- Completely glossy materials aren't possible with a phong exponent texture (max is 150 - way too big).
