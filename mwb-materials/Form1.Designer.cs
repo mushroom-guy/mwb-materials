@@ -52,12 +52,12 @@ namespace mwb_materials
             this.BatchMoveOutputCheck = new System.Windows.Forms.CheckBox();
             this.BatchIncludeFoldersCheck = new System.Windows.Forms.CheckBox();
             this.FolderButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.ClampComboBox = new System.Windows.Forms.ComboBox();
             this.EnvMapsDestination = new System.Windows.Forms.TextBox();
             this.VmtDestinationPath = new System.Windows.Forms.TextBox();
             this.OpenGlNormalCheck = new System.Windows.Forms.CheckBox();
             this.AoCheck = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
@@ -347,6 +347,16 @@ namespace mwb_materials
             groupBox4.TabStop = false;
             groupBox4.Text = "Settings";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(38, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Clamp size";
+            // 
             // ClampComboBox
             // 
             this.ClampComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -417,16 +427,6 @@ namespace mwb_materials
             this.AoCheck.TabIndex = 1;
             this.AoCheck.Text = "Apply AO to masks";
             this.AoCheck.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(38, 133);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Clamp size";
             // 
             // Form1
             // 
