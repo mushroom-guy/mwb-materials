@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,15 @@ namespace mwb_materials.MwbMats
             name = name.Trim().Replace(".vmt", string.Empty);
         }
 
+        private static string GetVmtContent()
+        {
+            return Encoding.UTF8.GetString(VmtBytes);
+        }
+
         public static void Generate(string path, string name, Dictionary<string, object> values, string movePath)
         {
             SanitizeName(ref name);
-            string content = Encoding.UTF8.GetString(VmtBytes);
+            string content = GetVmtContent();
 
             foreach (KeyValuePair<string, object> pair in values)
             {

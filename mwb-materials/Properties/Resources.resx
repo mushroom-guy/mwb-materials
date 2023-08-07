@@ -121,4 +121,19 @@
   <data name="default_vmt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>default_vmt.vmt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="specularity_00" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\envmaps\specularity_00.vtf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="specularity_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\envmaps\specularity_100.vtf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="specularity_25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\envmaps\specularity_25.vtf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="specularity_50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\envmaps\specularity_50.vtf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="specularity_75" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\envmaps\specularity_75.vtf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

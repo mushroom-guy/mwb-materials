@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 namespace mwb_materials.MwbMats
 {
     class BatchExporter
-    {
+    { 
         public struct BatchProperties
         {
             public string VmtRootPath { get; internal set; }
+            public string EnvRootPath { get; internal set; }
             public bool bMoveOutput { get; internal set; }
             public bool bIncludeFolders { get; internal set; }
             public MaterialManipulation.GenerateProperties GenerateProps { get; set; }
@@ -25,7 +26,7 @@ namespace mwb_materials.MwbMats
             public bool bExponentMipMaps { get; internal set; }
         }
 
-        private static async Task GenerateInFolder(string path, BatchProperties props, string startPath, Action<string> folderFunc)
+        private static async Task GenerateInFolder(string path, BatchProperties props, string startPath, Action<string, List<string>> progressFunc)
         {
             //before we do files, we have to first look in other folders, we can't run the tool
             //more than once or we are gonna eat a lot of memory
@@ -38,7 +39,7 @@ namespace mwb_materials.MwbMats
                     continue;
                 }
 
-                await GenerateInFolder(folder, props, startPath, folderFunc);
+                await GenerateInFolder(folder, props, startPath, progressFunc);
             }
 
             //after the recursion is done we can hopefully do images
@@ -65,7 +66,7 @@ namespace mwb_materials.MwbMats
             }
 
             string folderName = Path.GetFileName(path);
-            folderFunc(folderName);
+            progressFunc(folderName, sanitizedFiles);
 
             MaterialManipulation.SourceTextureSet textures = await MaterialManipulation.GenerateTextures(sanitizedFiles, props.GenerateProps);
 
@@ -126,27 +127,35 @@ namespace mwb_materials.MwbMats
 
             await albedoTask; await exponentTask; await normalTask;
 
+            Color averageMetallicColor = textures.AverageMetallicColor;
+            double averageRoughness = textures.AverageRoughness;
+
             textures.Dispose();
 
-            string vmtPath = movePath;
+            vmtValues.Add("EXPORTPATH", VmtUtils.GetVMTPath(movePath));
 
-            if (props.VmtRootPath != string.Empty)
+            //envmap
+            VmtUtils.EnvMapFile envmapTexture = VmtUtils.GetEnvMapTextureFromRoughness(averageRoughness);
+            vmtValues.Add("ENVMAP", envmapTexture.Name);
+            vmtValues.Add("ENVMAPTINT", VmtUtils.GetVMTVector(averageMetallicColor));
+
+            string envPath = props.EnvRootPath != string.Empty ? props.EnvRootPath : movePath;
+            vmtValues.Add("ENVMAPPATH", VmtUtils.GetVMTPath(envPath));
+
+            if (envPath != string.Empty)
             {
-                vmtPath = vmtPath.Substring(vmtPath.IndexOf("materials"));
-                vmtPath = vmtPath.Replace("materials", string.Empty);
-                vmtPath = vmtPath.Trim(new char[] { '\\' });
+                using (StreamWriter sw = File.CreateText(envPath + "\\" + envmapTexture.Name + ".vtf"))
+                {
+                    sw.BaseStream.Write(envmapTexture.Content, 0, envmapTexture.Content.Length);
+                }
             }
 
-            vmtValues.Add("EXPORTPATH", vmtPath);
-            vmtValues.Add("PHONGALBEDOTINT", props.GenerateProps.bPhongAlbedoTint ? 1 : 0);
-            vmtValues.Add("PHONGBOOST", props.GenerateProps.bPhongAlbedoTint ? Math.Max(props.GenerateProps.PhongBoost, 1) : 1);
-            vmtValues.Add("FRESNEL", props.GenerateProps.bGlossyFresnel ? "[1 2.5 0]" : "[1 0.5 0]");
-
+            //generate vmt
             VmtGenerator.Generate(outputPath, folderName, vmtValues, movePath);
             Directory.Delete(tempPath);
         }
 
-        public static async Task StartBatch(string path, BatchProperties props, Action<string> folderFunc)
+        public static async Task StartBatch(string path, BatchProperties props, Action<string, List<string>> folderFunc)
         {
             await GenerateInFolder(path, props, path, folderFunc);
         }
