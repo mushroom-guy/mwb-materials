@@ -22,6 +22,7 @@ namespace mwb_materials
     class MaterialManipulation
     {
         private static readonly string AlbedoNomenclature = "_rgb";
+        private static readonly string AlbedoAltNomenclature = "_c";
         private static readonly string AmbientOcclusionNomenclature = "_o";
         private static readonly string AmbientOcclusionAltNomenclature = "_ao";
         private static readonly string RoughnessNomenclature = "_r";
@@ -359,11 +360,12 @@ namespace mwb_materials
             {
                 double metal = metalness.ReadGrayscale(cursor) / 255.0;
 
-                if (metal > 0.1)
+                if (metal > 0.5)
                 {
-                    red += albedo.Bytes[cursor + (int)TextureChannel.Red] * metal;
-                    green += albedo.Bytes[cursor + (int)TextureChannel.Green] * metal;
-                    blue += albedo.Bytes[cursor + (int)TextureChannel.Blue] * metal;
+                    Color col = albedo.ReadColor(cursor);
+                    red += col.R * metal;
+                    green += col.G * metal;
+                    blue += col.B * metal;
                 }
                 else
                 {
@@ -415,7 +417,7 @@ namespace mwb_materials
                 string name = Path.GetFileNameWithoutExtension(file);
                 name = name.ToLower();
 
-                if (name.EndsWith(AlbedoNomenclature))
+                if (name.EndsWith(AlbedoNomenclature) || name.EndsWith(AlbedoAltNomenclature))
                 {
                     albedo = LoadImage(file);
                     SetBiggestWidthAndHeight(ref biggestWidth, ref biggestHeight, albedo);

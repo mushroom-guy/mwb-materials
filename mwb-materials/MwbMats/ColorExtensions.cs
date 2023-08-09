@@ -35,5 +35,11 @@ namespace mwb_materials.MwbMats
         {
             return (0.299f * (c.R / 255.0f) + 0.587f * (c.G / 255.0f) + 0.114f * (c.B / 255.0f));
         }
+
+        public static Color GetNormalized(this Color c)
+        {
+            double distance = Math.Sqrt(c.R * c.R + c.G * c.G + c.B * c.B);
+            return Color.FromArgb((int)(c.R / distance * 255.0), (int)(c.G / distance * 255.0), (int)(c.B / distance * 255.0));
+        }
     }
 }
