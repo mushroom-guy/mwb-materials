@@ -6,7 +6,7 @@ Make a folder and name it like you want the vmt to be named:
 
 In that folder you're going to place a few textures:
 
-- albedo (**_rgb**)
+- albedo (**_rgb** or **_c**)
 - normal (**_n**)
 - roughness/gloss (**_r**/**_g**)
 - metalness (**_m** or **_alpha**)
@@ -80,3 +80,4 @@ That'd be nice but no.
 - Phong albedo boost is only available in CS:GO and Garry's Mod, you can use phong boost in other games.  
 - Manual adjustments of the vmts are required sometimes.
 - Completely glossy materials aren't possible with a phong exponent texture (max is 150 - way too diffuse).
+- Opacity is not an option with the current vmt setup.
