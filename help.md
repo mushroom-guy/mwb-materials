@@ -81,3 +81,4 @@ That'd be nice but no.
 - Manual adjustments of the vmts are required sometimes.
 - Completely glossy materials aren't possible with a phong exponent texture (max is 150 - way too diffuse).
 - Opacity is not an option with the current vmt setup.
+- Note that every game/engine has its own PBR implementation; this means results may differ from your reference pictures. The tool tends to be more accurate when assets are rendered using Substance, Sketchfab, Maya or 3ds Max.
